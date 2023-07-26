@@ -29,6 +29,10 @@
 </script>
 
 <div
+	draggable="true"
+	on:dragstart
+	on:contextmenu|preventDefault={() => console.log('asdf')}
+	role="listitem"
 	class={`select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3`}
 >
 	<div class="flex flex-row justify-between">

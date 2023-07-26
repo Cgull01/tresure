@@ -3,7 +3,7 @@
 	import Column from '../../../components/Column.svelte';
 	import TaskDialog from '../../../components/TaskDialog.svelte';
 	import { CURRENT_PROJECT as CURRENT_PROJECT } from '../../../components/store';
-	import type { IColumn, IProject } from '../../../types';
+	import type { IColumn, IProject, ITask } from '../../../types';
 	let initialProjectData: IProject = {
 		title: 'Untitled project',
 		columns: [
@@ -108,7 +108,7 @@
 
 <div class="flex flex-row justify-center">
 	{#if $CURRENT_PROJECT.columns}
-		{#each $CURRENT_PROJECT.columns as column}
+		{#each $CURRENT_PROJECT.columns as column, i}
 			<Column {column} />
 		{/each}
 	{/if}

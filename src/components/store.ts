@@ -8,3 +8,5 @@ export const DIALOG_IS_OPEN: Writable<boolean> = writable(false);
 export const CURRENT_PROJECT: Writable<IProject> = writable(<IProject>{});
 
 export const CURRENT_COLUMN: Writable<IColumn> = writable(<IColumn>{});
+
+export const DESTINATION_COLUMN_INDEX: Writable<number | null> = writable(<number | null>null)

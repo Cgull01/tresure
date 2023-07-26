@@ -3,17 +3,56 @@
 	import type { IColumn, ITask } from '../types';
 	import PlusButton from './PlusButton.svelte';
 
-	import { CURRENT_COLUMN, DIALOG_TASK, DIALOG_IS_OPEN } from './store';
+	import { CURRENT_COLUMN, DIALOG_TASK, DIALOG_IS_OPEN, CURRENT_PROJECT } from './store';
 
 	export let column: IColumn;
+
 	function handleClick() {
 		DIALOG_TASK.set({});
 		CURRENT_COLUMN.set(column);
 		DIALOG_IS_OPEN.set(true);
 	}
+
+	function handleDrop(event: DragEvent) {
+		event.preventDefault();
+
+		const json = event.dataTransfer?.getData('text/plain');
+
+		if (!json) return;
+
+		const data: {
+			task: ITask;
+			origin_column_ID: Number;
+		} = JSON.parse(json);
+
+		const originalColumn = $CURRENT_PROJECT.columns.find((col) => col.id === data.origin_column_ID);
+		const taskIndex = originalColumn!.tasks?.findIndex((t) => t.id === data.task.id);
+
+		let movedTask = originalColumn!.tasks?.splice(taskIndex!, 1)[0] || {};
+
+		let destinationColumn = $CURRENT_PROJECT.columns.find((col) => col.id == column.id);
+
+		if (!destinationColumn) return;
+
+		destinationColumn.tasks = [...(destinationColumn.tasks || []), movedTask];
+
+		$CURRENT_PROJECT = $CURRENT_PROJECT;
+	}
+	function dragDropTask(event: DragEvent, task: ITask, origin_column_ID: Number) {
+		const data = { task, origin_column_ID };
+		event.dataTransfer?.setData('text/plain', JSON.stringify(data));
+	}
 </script>
 
-<div class="w-96 h-max m-2 flex flex-col bg-background">
+<div
+	class="w-96 h-max m-2 flex flex-col bg-background"
+	on:drop|preventDefault={handleDrop}
+	on:dragover|preventDefault
+	on:dragenter
+	on:dragleave
+	role="listbox"
+	tabindex="0"
+>
 	<button class="text-white bg-accent flex flex-row justify-between px-3">
 		<h1 class="font-sans py-3 text-3xl">{column.title}</h1>
 		<div class="self-center">
@@ -41,7 +80,7 @@
 			<!--{ children } -->
 			{#if column.tasks}
 				{#each column.tasks as task (task.id)}
-					<Task {task} {column} />
+					<Task {task} {column} on:dragstart={(event) => dragDropTask(event, task, column.id)} />
 				{/each}
 			{/if}
 		</section>

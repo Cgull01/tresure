@@ -54,7 +54,6 @@
 
 		if ($DIALOG_TASK.id) {
 			// updates column with modified task
-			console.log($DIALOG_TASK);
 			let index = $CURRENT_COLUMN.tasks!.findIndex((task) => task.id === $DIALOG_TASK.id);
 			$CURRENT_COLUMN.tasks![index] = $DIALOG_TASK;
 		} else {

@@ -7,7 +7,9 @@ TODO:
 
 -edit task V
 
--drag tasks, try using svelte-dnd-action, if doesnt work, remove tauri, implement svelte dragndrop which previously worked
+-drag tasks, re-do with dataTransfer, do not let other things to be dragged in
+
+- clean code, types and check for question marks
 
 -create project
 -save project to JSON
