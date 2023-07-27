@@ -33,17 +33,15 @@
 	on:dragstart
 	on:contextmenu|preventDefault={() => console.log('asdf')}
 	role="listitem"
-	class={`select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3`}
+	class="select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
 >
 	<div class="flex flex-row justify-between">
 		<div class="flex flex-row text-white gap-2 font-semibold overflow-x-auto">
-			{#if task.tags}
-				{#each task.tags as tag}
-					<div class={`w-max h-max px-1 bg-${tag.color} opacity-80`}>
-						{tag.tag}
-					</div>
-				{/each}
-			{/if}
+			{#each task.tags || [] as tag}
+				<div class={`w-max h-max px-1 bg-${tag.color} opacity-80`}>
+					{tag.tag}
+				</div>
+			{/each}
 		</div>
 		<button class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100" on:click={handleClick}>
 			<svg
@@ -65,7 +63,7 @@
 	</div>
 	<div class="flex flex-row justify-between pb-2">
 		<div class="flex flex-col items-start">
-			<div class="text-2xl font-semibold">{task.title}</div>
+			<div class="text-2xl font-semibold">{task.title ?? ''}</div>
 			<div class={task.title ? 'text-base' : 'text-xl'}>{task.details || ''}</div>
 		</div>
 	</div>

@@ -107,9 +107,7 @@
 <TaskDialog />
 
 <div class="flex flex-row justify-center">
-	{#if $CURRENT_PROJECT.columns}
-		{#each $CURRENT_PROJECT.columns as column, i}
-			<Column {column} />
-		{/each}
-	{/if}
+	{#each $CURRENT_PROJECT.columns || [] as column, i}
+		<Column {column} />
+	{/each}
 </div>

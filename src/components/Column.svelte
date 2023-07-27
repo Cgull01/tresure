@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Task from './Task.svelte';
-	import type { IColumn, ITask } from '../types';
+	import type { IColumn, ITag, ITask } from '../types';
 	import PlusButton from './PlusButton.svelte';
 
 	import { CURRENT_COLUMN, DIALOG_TASK, DIALOG_IS_OPEN, CURRENT_PROJECT } from './store';
@@ -15,10 +15,7 @@
 
 	function handleDrop(event: DragEvent) {
 		event.preventDefault();
-
-		const json = event.dataTransfer?.getData('text/plain');
-
-		if (!json) return;
+		const json = event.dataTransfer?.getData('text/plain') || '';
 
 		const data: {
 			task: ITask;
@@ -30,17 +27,19 @@
 
 		let movedTask = originalColumn!.tasks?.splice(taskIndex!, 1)[0] || {};
 
-		let destinationColumn = $CURRENT_PROJECT.columns.find((col) => col.id == column.id);
-
-		if (!destinationColumn) return;
+		let destinationColumn =
+			$CURRENT_PROJECT.columns.find((col) => col.id == column.id) || originalColumn!;
 
 		destinationColumn.tasks = [...(destinationColumn.tasks || []), movedTask];
 
 		$CURRENT_PROJECT = $CURRENT_PROJECT;
 	}
+
 	function dragDropTask(event: DragEvent, task: ITask, origin_column_ID: Number) {
 		const data = { task, origin_column_ID };
 		event.dataTransfer?.setData('text/plain', JSON.stringify(data));
+
+		// event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
 	}
 </script>
 
@@ -78,11 +77,9 @@
 	<div class="border border-black">
 		<section class="flex flex-col pb-6">
 			<!--{ children } -->
-			{#if column.tasks}
-				{#each column.tasks as task (task.id)}
-					<Task {task} {column} on:dragstart={(event) => dragDropTask(event, task, column.id)} />
-				{/each}
-			{/if}
+			{#each column.tasks || [] as task (task.id)}
+				<Task {task} {column} on:dragstart={(event) => dragDropTask(event, task, column.id)} />
+			{/each}
 		</section>
 		<div class="flex flex-row">
 			<PlusButton size={28} bonusStyles="border-r border-t" on:click={handleClick} />

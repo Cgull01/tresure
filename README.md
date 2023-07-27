@@ -7,12 +7,20 @@ TODO:
 
 -edit task V
 
--drag tasks, re-do with dataTransfer, do not let other things to be dragged in
+-drag tasks
 
 - clean code, types and check for question marks
+- add right click to perform actions
+
+- do not create empty task V
+- delete task in task edit V
+
+- check if i can call functions from components to svelte files .ts
+
+- show dragImage created in figma
 
 -create project
--save project to JSON
+-save project to JSON/db
 
 EXTRAS:
 attachments

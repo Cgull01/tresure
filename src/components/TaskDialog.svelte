@@ -49,9 +49,26 @@
 		dueDateInput = new Date();
 	}
 
-	function submitDialog() {
-		if ($DIALOG_TASK.title == '' && $DIALOG_TASK.details == '') return;
+	function removeTask() {
+		if ($DIALOG_TASK.id) {
+			$CURRENT_COLUMN.tasks = $CURRENT_COLUMN.tasks?.filter((t) => t.id !== $DIALOG_TASK.id);
 
+			// updates project with new column
+			$CURRENT_PROJECT.columns = $CURRENT_PROJECT.columns.map((column) => {
+				if (column.id === $CURRENT_COLUMN.id) {
+					return $CURRENT_COLUMN;
+				}
+				return column;
+			});
+			CURRENT_PROJECT.set($CURRENT_PROJECT);
+
+			closeDialog();
+		}
+	}
+
+	function submitDialog() {
+		if (!$DIALOG_TASK.title && !$DIALOG_TASK.details) return;
+		console.log($DIALOG_TASK.title + ' ' + $DIALOG_TASK.details);
 		if ($DIALOG_TASK.id) {
 			// updates column with modified task
 			let index = $CURRENT_COLUMN.tasks!.findIndex((task) => task.id === $DIALOG_TASK.id);
@@ -124,11 +141,44 @@
 >
 	<div class="sticky w-1/2 m-auto">
 		<div class="flex flex-row justify-between">
-			<h1 class="text-white bg-accent font-sans text-3xl px-4 pb-2 py-2 w-full">
-				{$DIALOG_TASK ? 'New Task' : 'Edit Task'}
-			</h1>
+			<div class="flex flex-row gap-4 bg-accent text-white w-full items-center">
+				<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">
+					{$DIALOG_TASK.id ? 'Edit Task' : 'New Task'}
+				</h1>
+				{#if $DIALOG_TASK.id}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<div
+						tabindex="0"
+						title="Click to remove the task"
+						class=" cursor-pointer active:scale-105 stroke-formBackground"
+						on:click={removeTask}
+						role="button"
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="24"
+							height="24"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							class="feather feather-trash-2"
+							><polyline points="3 6 5 6 21 6" /><path
+								d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+							/><line x1="10" y1="11" x2="10" y2="17" /><line
+								x1="14"
+								y1="11"
+								x2="14"
+								y2="17"
+							/></svg
+						>
+					</div>
+				{/if}
+			</div>
 			<button
-				class="bg-accent text-white border-l font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"
+				class="bg-accent text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"
 				on:click={closeDialog}>Cancel</button
 			>
 		</div>
