@@ -2,15 +2,11 @@
 	import Task from './Task.svelte';
 	import type { IColumn, ITag, ITask } from '../types';
 	import PlusButton from './PlusButton.svelte';
-
-	import { CURRENT_COLUMN, DIALOG_TASK, DIALOG_IS_OPEN, CURRENT_PROJECT } from './store';
-
+	import { CURRENT_COLUMN, DIALOG_TASK, CURRENT_PROJECT, DIALOG_IS_OPEN } from './store';
+	import { showDialog, moveTask } from '../functions';
 	export let column: IColumn;
-
 	function handleClick() {
-		DIALOG_TASK.set({});
-		CURRENT_COLUMN.set(column);
-		DIALOG_IS_OPEN.set(true);
+		showDialog({}, column);
 	}
 
 	function handleDrop(event: DragEvent) {
@@ -22,17 +18,17 @@
 			origin_column_ID: Number;
 		} = JSON.parse(json);
 
-		const originalColumn = $CURRENT_PROJECT.columns.find((col) => col.id === data.origin_column_ID);
-		const taskIndex = originalColumn!.tasks?.findIndex((t) => t.id === data.task.id);
+		const originalColumn = $CURRENT_PROJECT.columns.find(
+			(col) => col.id === data.origin_column_ID
+		)!;
 
-		let movedTask = originalColumn!.tasks?.splice(taskIndex!, 1)[0] || {};
+		const taskIndex = originalColumn.tasks?.findIndex((t) => t.id === data.task.id);
+		const movedTask = originalColumn.tasks?.splice(taskIndex!, 1)[0] || {};
 
-		let destinationColumn =
+		const destinationColumn =
 			$CURRENT_PROJECT.columns.find((col) => col.id == column.id) || originalColumn!;
 
-		destinationColumn.tasks = [...(destinationColumn.tasks || []), movedTask];
-
-		$CURRENT_PROJECT = $CURRENT_PROJECT;
+		moveTask(movedTask, originalColumn, destinationColumn);
 	}
 
 	function dragDropTask(event: DragEvent, task: ITask, origin_column_ID: Number) {

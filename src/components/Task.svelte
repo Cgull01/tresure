@@ -1,15 +1,14 @@
 <script lang="ts">
+	import { showDialog } from '../functions';
 	import type { IColumn, ITask } from '../types';
 
 	export let task: ITask;
 	export let column: IColumn;
 
-	import { CURRENT_COLUMN, DIALOG_TASK, DIALOG_IS_OPEN } from './store';
+	import { CURRENT_COLUMN, DIALOG_IS_OPEN, DIALOG_TASK } from './store';
 
 	function handleClick() {
-		DIALOG_TASK.set(task);
-		CURRENT_COLUMN.set(column);
-		DIALOG_IS_OPEN.set(true);
+		showDialog(task, column);
 	}
 
 	const currentDate = new Date();

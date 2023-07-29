@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import Column from '../../../components/Column.svelte';
 	import TaskDialog from '../../../components/TaskDialog.svelte';
-	import { CURRENT_PROJECT as CURRENT_PROJECT } from '../../../components/store';
+	import { CURRENT_PROJECT as CURRENT_PROJECT, DIALOG_IS_OPEN } from '../../../components/store';
 	import type { IColumn, IProject, ITask } from '../../../types';
 	let initialProjectData: IProject = {
 		title: 'Untitled project',
