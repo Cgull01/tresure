@@ -7,21 +7,21 @@ TODO:
 
 -edit task V
 
-- fix taskdialog just like netninja
-
--drag tasks
-
-- clean code, types and check for question marks
-- add right click to perform actions
+- drag tasks V
 
 - do not create empty task V
 - delete task in task edit V
 
-- check if i can call functions from components to svelte files .ts
+- clean code, types and check for question marks V
+-finish moving svgs, check if all properties are needed, check types V
+-dueDate not showing, also dialog cant submit on duedate modify V
 
-- global functions, phind.com answer, just create .ts file with exports and import them
+- add right click to perform actions
+- rename project
+- move color picker to separate compoennt
 
 - show dragImage created in figma
+
 
 -create project
 -save project to JSON/db

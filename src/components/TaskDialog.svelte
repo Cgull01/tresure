@@ -2,9 +2,9 @@
 	import { onDestroy } from 'svelte';
 	import PlusButton from './PlusButton.svelte';
 	import type { ITag, ITask } from '../types';
-	import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_IS_OPEN, DIALOG_TASK } from './store';
-	import { v4 as uuidv4 } from 'uuid';
+	import { CURRENT_COLUMN, DIALOG_IS_OPEN, DIALOG_TASK } from './store';
 	import { addTask, removeTask, updateTask } from '../functions';
+	import Icon from './Icon.svelte';
 
 	const TAG_COLORS = [
 		'red-700',
@@ -18,7 +18,7 @@
 	];
 
 	let TagInput: ITag = { tag: '', color: TAG_COLORS[0] };
-	let dueDateInput: Date;
+	let dueDateInput: Date = new Date();
 
 	function addTag() {
 		if (TagInput.tag.length === 0) return;
@@ -38,6 +38,7 @@
 	}
 
 	function addDueDate() {
+		if (dueDateInput.toString().length > 14) return;
 		$DIALOG_TASK.dueDate = dueDateInput;
 	}
 
@@ -46,12 +47,18 @@
 		dueDateInput = new Date();
 	}
 
+	function closeDialog() {
+		DIALOG_IS_OPEN.set(false);
+
+		dueDateInput = new Date();
+		TagInput = { tag: '', color: TAG_COLORS[0] };
+	}
+
 	function handleRemove() {
 		if ($DIALOG_TASK.id) {
 			removeTask($CURRENT_COLUMN, $DIALOG_TASK);
-
-			DIALOG_IS_OPEN.set(false);
 		}
+		closeDialog();
 	}
 
 	function submitDialog() {
@@ -61,32 +68,8 @@
 			addTask($CURRENT_COLUMN, $DIALOG_TASK);
 		}
 
-		DIALOG_IS_OPEN.set(false);
+		closeDialog();
 	}
-
-	/**
-	 * Formats the selected dueDate to MM-DD or YYYY-MM-DD
-	 * if current year and dueDate are equal -> MM-DD
-	 * else YYYY-MM-DD
-	 */
-	$: {
-		const currentDate = new Date();
-		const day = currentDate.getDate();
-		const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-		const year = currentDate.getFullYear();
-
-		if (!$DIALOG_TASK.dueDate) {
-			formattedDate = '';
-		} else {
-			const dueDate = new Date($DIALOG_TASK.dueDate);
-			if (year === dueDate.getFullYear()) {
-				formattedDate = `${day}-${month}`;
-			} else {
-				formattedDate = `${dueDate.getFullYear()}-${day}-${month}`;
-			}
-		}
-	}
-	let formattedDate: string;
 
 	let isColorDropdownVisible = false;
 	let dropdownElement: HTMLElement;
@@ -109,7 +92,7 @@
 		class="absolute flex-col justify-center items-center w-full h-5/6 z-10 bg-transparent backdrop-blur-sm"
 		id="task-dialog"
 		open={true}
-		on:dblclick|self={() => DIALOG_IS_OPEN.set(false)}
+		on:dblclick|self={closeDialog}
 	>
 		<div class="sticky w-1/2 m-auto">
 			<div class="flex flex-row justify-between">
@@ -126,32 +109,13 @@
 							on:click={handleRemove}
 							role="button"
 						>
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="24"
-								height="24"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								class="feather feather-trash-2"
-								><polyline points="3 6 5 6 21 6" /><path
-									d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-								/><line x1="10" y1="11" x2="10" y2="17" /><line
-									x1="14"
-									y1="11"
-									x2="14"
-									y2="17"
-								/></svg
-							>
+							<Icon name="trash" stroke_width="2" />
 						</div>
 					{/if}
 				</div>
 				<button
 					class="bg-accent text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"
-					on:click={() => DIALOG_IS_OPEN.set(false)}>Cancel</button
+					on:click={closeDialog}>Cancel</button
 				>
 			</div>
 			<form class="border-black border bg-white">
@@ -159,7 +123,7 @@
 					<div class="flex flex-col gap-2">
 						<h3 class="text-lg font-semibold">Tags</h3>
 						<div
-							class="flex flex-row gap-2 text-white font-semibold overflow-hidden w-64 overflow-x-auto"
+							class="flex flex-row gap-2 text-white font-semibold overflow-hidden w-max overflow-x-auto"
 						>
 							{#if $DIALOG_TASK.tags}
 								{#each $DIALOG_TASK.tags as tag, index}
@@ -168,22 +132,11 @@
 									>
 										{tag.tag}
 										<button on:click={() => removeTag(index)}>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-x-circle w-5 h-5 hover:scale-105 cursor-pointer"
-												><circle cx="12" cy="12" r="10" /><line
-													x1="15"
-													y1="9"
-													x2="9"
-													y2="15"
-												/><line x1="9" y1="9" x2="15" y2="15" /></svg
-											>
+											<Icon
+												name="x-circle"
+												stroke_width="2"
+												styles="feather feather-x-circle w-5 h-5 hover:scale-105 cursor-pointer"
+											/>
 										</button>
 									</div>
 								{/each}
@@ -198,21 +151,13 @@
 									}}
 								>
 									<div class="h-6 w-6 cursor-pointer active:scale-100 hover:scale-105">
-										<svg
-											xmlns="http://www.w3.org/2000/svg"
-											width="24"
-											height="24"
-											viewBox="0 0 24 24"
-											fill="none"
-											stroke="currentColor"
-											stroke-width="2"
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											class="feather feather-hexagon stroke-{TagInput.color}"
-											><path
-												d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
-											/></svg
-										>
+										<Icon
+											name="colors"
+											stroke_width="0"
+											styles="fill-{TagInput.color}"
+											width={24}
+											height={24}
+										/>
 									</div>
 								</button>
 								{#if isColorDropdownVisible}
@@ -280,26 +225,15 @@
 										class="flex flex-row w-max justify-between items-center px-1 h-max gap-2 my-1 font-mono border border-accent"
 									>
 										<div class="h-max text-lg">
-											{formattedDate}
+											{$DIALOG_TASK.dueDate}
 										</div>
 
 										<button on:click={removeDueDate}>
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												viewBox="0 0 24 24"
-												fill="none"
-												stroke="currentColor"
-												stroke-width="2"
-												stroke-linecap="round"
-												stroke-linejoin="round"
-												class="feather feather-x-circle w-5 h-5 hover:scale-105 cursor-pointer"
-												><circle cx="12" cy="12" r="10" /><line
-													x1="15"
-													y1="9"
-													x2="9"
-													y2="15"
-												/><line x1="9" y1="9" x2="15" y2="15" /></svg
-											>
+											<Icon
+												name="x-circle"
+												stroke_width="2"
+												styles="w-5 h-5 hover:scale-105 cursor-pointer"
+											/>
 										</button>
 									</div>
 								{/if}
@@ -340,16 +274,13 @@
 					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
 				>
 					<button on:click={submitDialog}>Save changes</button>
-					<svg
-						class="group-active:translate-x-11 group-active:transition-none group-hover:translate-x-6 transition-transform group-hover:fill-white"
-						xmlns="http://www.w3.org/2000/svg"
-						height="48"
-						viewBox="0 -960 960 960"
-						width="48"
-						><path
-							d="m242-200 210-280-210-280h74l210 280-210 280h-74Zm252 0 210-280-210-280h74l210 280-210 280h-74Z"
-						/></svg
-					>
+
+					<Icon
+						height={48}
+						width={48}
+						name="directions-right"
+						styles="fill-black group-active:translate-x-11 group-active:transition-none group-hover:translate-x-6 transition-transform group-hover:fill-white"
+					/>
 				</div>
 			</form>
 		</div>

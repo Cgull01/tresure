@@ -2,8 +2,9 @@
 	import Task from './Task.svelte';
 	import type { IColumn, ITag, ITask } from '../types';
 	import PlusButton from './PlusButton.svelte';
-	import { CURRENT_COLUMN, DIALOG_TASK, CURRENT_PROJECT, DIALOG_IS_OPEN } from './store';
+	import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_IS_OPEN } from './store';
 	import { showDialog, moveTask } from '../functions';
+	import Icon from './Icon.svelte';
 	export let column: IColumn;
 	function handleClick() {
 		showDialog({}, column);
@@ -51,23 +52,7 @@
 	<button class="text-white bg-accent flex flex-row justify-between px-3">
 		<h1 class="font-sans py-3 text-3xl">{column.title}</h1>
 		<div class="self-center">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="feather feather-more-horizontal"
-				><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle
-					cx="5"
-					cy="12"
-					r="1"
-				/></svg
-			>
+			<Icon name={'more-horizontal'} stroke_width="2" />
 		</div>
 	</button>
 	<div class="border border-black">

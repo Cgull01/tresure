@@ -1,11 +1,10 @@
 <script lang="ts">
 	import { showDialog } from '../functions';
 	import type { IColumn, ITask } from '../types';
+	import Icon from './Icon.svelte';
 
 	export let task: ITask;
 	export let column: IColumn;
-
-	import { CURRENT_COLUMN, DIALOG_IS_OPEN, DIALOG_TASK } from './store';
 
 	function handleClick() {
 		showDialog(task, column);
@@ -15,16 +14,6 @@
 	const day = currentDate.getDate();
 	const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
 	const year = currentDate.getFullYear();
-	let formattedDate = '';
-
-	if (task.dueDate) {
-		const dueDate = new Date(task.dueDate);
-		if (year === dueDate.getFullYear()) {
-			formattedDate = `${day}-${month}`;
-		} else {
-			formattedDate = `${dueDate.getFullYear()}-${day}-${month}`;
-		}
-	}
 </script>
 
 <div
@@ -43,21 +32,7 @@
 			{/each}
 		</div>
 		<button class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100" on:click={handleClick}>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				width="24"
-				height="24"
-				viewBox="0 0 24 24"
-				fill="none"
-				stroke="currentColor"
-				stroke-width="2"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				class="feather feather-edit"
-				><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path
-					d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-				/></svg
-			>
+			<Icon name="edit" stroke_width="2" />
 		</button>
 	</div>
 	<div class="flex flex-row justify-between pb-2">
@@ -70,23 +45,11 @@
 		{#if task.dueDate}
 			<div class="flex flex-row w-max justify-between px-1 h-max place-self-end font-mono">
 				<div class="w-4 pr-8">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						class="feather feather-clock"
-						><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg
-					>
+					<Icon name="clock" stroke_width="2" />
 				</div>
 
 				<div class="h-max">
-					{formattedDate}
+					{task.dueDate}
 				</div>
 			</div>
 		{/if}
