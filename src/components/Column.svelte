@@ -2,12 +2,14 @@
 	import Task from './Task.svelte';
 	import type { IColumn, ITag, ITask } from '../types';
 	import PlusButton from './PlusButton.svelte';
-	import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_IS_OPEN } from './store';
-	import { showDialog, moveTask } from '../functions';
+	import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_MANAGER } from './store';
+	import { showTaskDialog, moveTask } from '../functions';
 	import Icon from './Icon.svelte';
 	export let column: IColumn;
+	let dragEntered = false;
+
 	function handleClick() {
-		showDialog({}, column);
+		showTaskDialog({}, column);
 	}
 
 	function handleDrop(event: DragEvent) {
@@ -30,6 +32,7 @@
 			$CURRENT_PROJECT.columns.find((col) => col.id == column.id) || originalColumn!;
 
 		moveTask(movedTask, originalColumn, destinationColumn);
+		dragEntered = false;
 	}
 
 	function dragDropTask(event: DragEvent, task: ITask, origin_column_ID: Number) {
@@ -43,19 +46,21 @@
 <div
 	class="w-96 h-max m-2 flex flex-col bg-background"
 	on:drop|preventDefault={handleDrop}
-	on:dragover|preventDefault
+	on:dragover|preventDefault={() => (dragEntered = true)}
 	on:dragenter
-	on:dragleave
+	on:dragleave={() => (dragEntered = false)}
 	role="listbox"
 	tabindex="0"
 >
-	<button class="text-white bg-accent flex flex-row justify-between px-3">
+	<button
+		class="text-white bg-accent flex flex-row justify-between px-3 {dragEntered && 'opacity-80'}"
+	>
 		<h1 class="font-sans py-3 text-3xl">{column.title}</h1>
 		<div class="self-center">
 			<Icon name={'more-horizontal'} stroke_width="2" />
 		</div>
 	</button>
-	<div class="border border-black">
+	<div class="border border-black {dragEntered && 'border-gray-700'}">
 		<section class="flex flex-col pb-6">
 			<!--{ children } -->
 			{#each column.tasks || [] as task (task.id)}

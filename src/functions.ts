@@ -1,12 +1,15 @@
 
-import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_IS_OPEN, DIALOG_TASK } from './components/store';
+import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_MANAGER, DIALOG_TASK } from './components/store';
 import type { IColumn, IProject, ITask } from './types';
 import { v4 as uuidv4 } from 'uuid';
 
-export function showDialog(task: ITask, column: IColumn) {
+export function showTaskDialog(task: ITask, column: IColumn) {
     DIALOG_TASK.set(task);
     CURRENT_COLUMN.set(column);
-    DIALOG_IS_OPEN.set(true);
+    DIALOG_MANAGER.update(state => ({ ...state, taskDialog: true }));
+}
+export function showProjectDialog() {
+    DIALOG_MANAGER.update(state => ({ ...state, projectDialog: true }));
 }
 
 export function moveTask(task: ITask, origin: IColumn, destination: IColumn) {

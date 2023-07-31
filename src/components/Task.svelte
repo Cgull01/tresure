@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { showDialog } from '../functions';
+	import { showTaskDialog } from '../functions';
 	import type { IColumn, ITask } from '../types';
 	import Icon from './Icon.svelte';
 
@@ -7,13 +7,8 @@
 	export let column: IColumn;
 
 	function handleClick() {
-		showDialog(task, column);
+		showTaskDialog(task, column);
 	}
-
-	const currentDate = new Date();
-	const day = currentDate.getDate();
-	const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-	const year = currentDate.getFullYear();
 </script>
 
 <div

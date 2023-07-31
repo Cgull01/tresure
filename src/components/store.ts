@@ -1,9 +1,17 @@
 import { writable, type Writable } from 'svelte/store';
 import type { IColumn, IProject, ITask } from '../types';
 
+interface DialogStates {
+    taskDialog: boolean,
+    projectDialog: boolean,
+}
+
 export const DIALOG_TASK: Writable<ITask> = writable(<ITask>{});
 
-export const DIALOG_IS_OPEN: Writable<boolean> = writable(false);
+export const DIALOG_MANAGER: Writable<DialogStates> = writable({
+    taskDialog: false,
+    projectDialog: false,
+});
 
 export const CURRENT_PROJECT: Writable<IProject> = writable(<IProject>{});
 

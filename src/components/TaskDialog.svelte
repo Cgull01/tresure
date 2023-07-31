@@ -2,7 +2,7 @@
 	import { onDestroy } from 'svelte';
 	import PlusButton from './PlusButton.svelte';
 	import type { ITag, ITask } from '../types';
-	import { CURRENT_COLUMN, DIALOG_IS_OPEN, DIALOG_TASK } from './store';
+	import { CURRENT_COLUMN, DIALOG_MANAGER, DIALOG_TASK } from './store';
 	import { addTask, removeTask, updateTask } from '../functions';
 	import Icon from './Icon.svelte';
 
@@ -19,6 +19,8 @@
 
 	let TagInput: ITag = { tag: '', color: TAG_COLORS[0] };
 	let dueDateInput: Date = new Date();
+
+	let dialogRef: HTMLDialogElement;
 
 	function addTag() {
 		if (TagInput.tag.length === 0) return;
@@ -48,7 +50,7 @@
 	}
 
 	function closeDialog() {
-		DIALOG_IS_OPEN.set(false);
+		$DIALOG_MANAGER.taskDialog = false;
 
 		dueDateInput = new Date();
 		TagInput = { tag: '', color: TAG_COLORS[0] };
@@ -80,21 +82,22 @@
 		}
 	}
 
-	window.addEventListener('click', handleClickOutside);
+	$: window.addEventListener('click', handleClickOutside);
+	$: if ($DIALOG_MANAGER.taskDialog && dialogRef) dialogRef.showModal();
 
 	onDestroy(() => {
 		window.removeEventListener('click', handleClickOutside);
 	});
 </script>
 
-{#if $DIALOG_IS_OPEN}
+{#if $DIALOG_MANAGER.taskDialog}
 	<dialog
-		class="absolute flex-col justify-center items-center w-full h-5/6 z-10 bg-transparent backdrop-blur-sm"
+		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/2 h-max"
 		id="task-dialog"
-		open={true}
 		on:dblclick|self={closeDialog}
+		bind:this={dialogRef}
 	>
-		<div class="sticky w-1/2 m-auto">
+		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
 				<div class="flex flex-row gap-4 bg-accent text-white w-full items-center">
 					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">

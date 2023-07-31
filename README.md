@@ -18,7 +18,8 @@ TODO:
 
 - add right click to perform actions
 - rename project
-- move color picker to separate compoennt
+
+- move color picker to separate component X
 
 - show dragImage created in figma
 
