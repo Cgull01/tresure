@@ -104,16 +104,14 @@
 						{$DIALOG_TASK.id ? 'Edit Task' : 'New Task'}
 					</h1>
 					{#if $DIALOG_TASK.id}
-						<!-- svelte-ignore a11y-click-events-have-key-events -->
-						<div
+						<button
 							tabindex="0"
 							title="Click to remove the task"
 							class=" cursor-pointer active:scale-105 stroke-formBackground"
 							on:click={handleRemove}
-							role="button"
 						>
 							<Icon name="trash" stroke_width="2" />
-						</div>
+						</button>
 					{/if}
 				</div>
 				<button

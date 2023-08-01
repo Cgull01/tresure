@@ -16,8 +16,10 @@ TODO:
 -finish moving svgs, check if all properties are needed, check types V
 -dueDate not showing, also dialog cant submit on duedate modify V
 
+- rename project V
+
+- rename columns / delete columns
 - add right click to perform actions
-- rename project
 
 - move color picker to separate component X
 
