@@ -1,5 +1,5 @@
 
-import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_MANAGER, DIALOG_TASK } from './components/store';
+import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_MANAGER, DIALOG_TASK, type DialogStates } from './components/store';
 import type { IColumn, IProject, ITask } from './types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,6 +11,12 @@ export function showTaskDialog(task: ITask, column: IColumn) {
 export function showProjectDialog() {
     DIALOG_MANAGER.update(state => ({ ...state, projectDialog: true }));
 }
+
+export function showColumnDialog(column: IColumn) {
+    CURRENT_COLUMN.set(column);
+    DIALOG_MANAGER.update(state => ({ ...state, columnDialog: true }));
+}
+
 
 export function moveTask(task: ITask, origin: IColumn, destination: IColumn) {
     destination.tasks = [...(destination.tasks || []), task];
@@ -42,12 +48,18 @@ export function updateTask(column: IColumn, task: ITask) {
 
 
 export function removeTask(column: IColumn, task: ITask) {
-
     column.tasks = column.tasks?.filter((t) => t.id !== task.id);
     updateProject(column);
 }
 
-function updateProject(column: IColumn) {
+export function removeColumn(columnID: number) {
+    CURRENT_PROJECT.update((p: IProject) => {
+        p.columns = p.columns.filter((col) => col.id != columnID)
+        return p;
+    })
+}
+
+export function updateProject(column: IColumn) {
     CURRENT_PROJECT.update((p: IProject) => {
         // Find the column in the project
         const columnToUpdate = p.columns.find((c) => c.id === column.id);

@@ -3,9 +3,11 @@
 	import type { IColumn, ITag, ITask } from '../types';
 	import PlusButton from './PlusButton.svelte';
 	import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_MANAGER } from './store';
-	import { showTaskDialog, moveTask } from '../functions';
+	import { showTaskDialog, moveTask, showColumnDialog } from '../functions';
 	import Icon from './Icon.svelte';
+
 	export let column: IColumn;
+
 	let dragEntered = false;
 
 	function handleClick() {
@@ -14,6 +16,7 @@
 
 	function handleDrop(event: DragEvent) {
 		event.preventDefault();
+		isDraggingTask = false;
 		const json = event.dataTransfer?.getData('text/plain') || '';
 
 		const data: {
@@ -35,11 +38,13 @@
 		dragEntered = false;
 	}
 
+	let isDraggingTask: boolean = false;
+
 	function dragDropTask(event: DragEvent, task: ITask, origin_column_ID: Number) {
 		const data = { task, origin_column_ID };
 		event.dataTransfer?.setData('text/plain', JSON.stringify(data));
-
-		// event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
+		isDraggingTask = true;
+		event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
 	}
 </script>
 
@@ -56,15 +61,21 @@
 		class="text-white bg-accent flex flex-row justify-between px-3 {dragEntered && 'opacity-80'}"
 	>
 		<h1 class="font-sans py-3 text-3xl">{column.title}</h1>
-		<div class="self-center">
+		<button class="self-center active:scale-110" on:click={() => showColumnDialog(column)}>
 			<Icon name={'more-horizontal'} stroke_width="2" />
-		</div>
+		</button>
 	</button>
 	<div class="border border-black {dragEntered && 'border-gray-700'}">
 		<section class="flex flex-col pb-6">
 			<!--{ children } -->
 			{#each column.tasks || [] as task (task.id)}
-				<Task {task} {column} on:dragstart={(event) => dragDropTask(event, task, column.id)} />
+				<Task
+					{task}
+					{column}
+					on:dragstart={(event) => {
+						dragDropTask(event, task, column.id);
+					}}
+				/>
 			{/each}
 		</section>
 		<div class="flex flex-row">

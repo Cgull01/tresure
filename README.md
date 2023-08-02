@@ -18,13 +18,17 @@ TODO:
 
 - rename project V
 
-- rename columns / delete columns
-- add right click to perform actions
+- ! project title/ column title not shown when opening dialog V
+
+- rename columns / delete columns V
+- add right click to perform actions - on column: add task, on task: remove task, edit, on project: add column
 
 - move color picker to separate component X
 
-- show dragImage created in figma
+- show dragImage created in figma X
 
+
+- start prisma, postresql, connect
 
 -create project
 -save project to JSON/db

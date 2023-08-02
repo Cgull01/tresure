@@ -19,8 +19,10 @@
 
 	let TagInput: ITag = { tag: '', color: TAG_COLORS[0] };
 	let dueDateInput: Date = new Date();
-
 	let dialogRef: HTMLDialogElement;
+
+	let isColorDropdownVisible = false;
+	let dropdownElement: HTMLElement;
 
 	function addTag() {
 		if (TagInput.tag.length === 0) return;
@@ -73,9 +75,6 @@
 		closeDialog();
 	}
 
-	let isColorDropdownVisible = false;
-	let dropdownElement: HTMLElement;
-
 	function handleClickOutside(event: MouseEvent) {
 		if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
 			isColorDropdownVisible = false;
@@ -83,7 +82,9 @@
 	}
 
 	$: window.addEventListener('click', handleClickOutside);
-	$: if ($DIALOG_MANAGER.taskDialog && dialogRef) dialogRef.showModal();
+	$: if ($DIALOG_MANAGER.taskDialog && dialogRef) {
+		dialogRef.showModal();
+	}
 
 	onDestroy(() => {
 		window.removeEventListener('click', handleClickOutside);
@@ -93,9 +94,9 @@
 {#if $DIALOG_MANAGER.taskDialog}
 	<dialog
 		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/2 h-max"
-		id="task-dialog"
 		on:dblclick|self={closeDialog}
 		bind:this={dialogRef}
+		on:close={closeDialog}
 	>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">

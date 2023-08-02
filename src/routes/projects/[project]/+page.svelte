@@ -5,84 +5,30 @@
 	import { CURRENT_PROJECT as CURRENT_PROJECT, DIALOG_MANAGER } from '../../../components/store';
 	import type { IColumn, IProject, ITask } from '../../../types';
 	import Icon from '../../../components/Icon.svelte';
-	import { showProjectDialog } from '../../../functions';
+	import { showColumnDialog, showProjectDialog } from '../../../functions';
 	import ProjectDialog from '../../../components/ProjectDialog.svelte';
-	let initialProjectData: IProject = {
-		title: 'Untitled project',
-		columns: [
-			{
-				id: 1,
-				title: 'To do',
-				tasks: [
-					{
-						id: 1456,
-						title: 'asdf',
-						details: 'details',
-						tags: [
-							{
-								tag: 'important',
-								color: 'red-700'
-							},
-							{
-								tag: 'backend',
-								color: 'blue-700'
-							}
-						],
-						members: [
-							{
-								member: 'John Doe',
-								avatar: 'https://placehold.co/50'
-							}
-						]
-					}
-				]
-			},
-			{
-				id: 2,
-				title: 'Doing',
-				tasks: [
-					{
-						id: 98726,
-						title: 'title',
-						details: 'details',
-						tags: [
-							{
-								tag: 'important',
-								color: 'red-700'
-							}
-						],
-						members: [
-							{
-								member: 'John Doe',
-								avatar: 'https://placehold.co/50'
-							}
-						]
-					}
-				]
-			},
-			{
-				id: 3,
-				title: 'Done'
-			}
-		]
-	};
+	import ColumnDialog from '../../../components/ColumnDialog.svelte';
+	import type { PageData } from './$types';
 
-	onMount(async () => {
-		CURRENT_PROJECT.set(initialProjectData);
-	});
+	export let data: PageData;
+
+	CURRENT_PROJECT.set(data.project);
 </script>
 
 <div class="p-4">
 	<div class="flex flex-row items-center gap-4">
-		<Icon name="direction-left" stroke_width="1.5" styles="w-12 h-12 p-2" />
+		<a href="/" class="hover:scale-105">
+			<Icon name="direction-left" stroke_width="1.5" styles="w-12 h-12 p-2" />
+		</a>
 		<div class="text-2xl font-semibold">{$CURRENT_PROJECT.title}</div>
-		<button on:click={() => showProjectDialog()} class="active:scale-105">
+		<button on:click={showProjectDialog} class="active:scale-105">
 			<Icon name={'more-horizontal'} stroke_width="2" styles="w-12 h-12 p-2" />
 		</button>
 	</div>
 	<hr class="w-1/3 border-t-1 border-black self-center" />
 </div>
 
+<ColumnDialog />
 <ProjectDialog />
 <TaskDialog />
 

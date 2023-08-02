@@ -1,3 +1,27 @@
-<h1 class="text-3xl font-bold underline">Welcome to Svele</h1>
+<script lang="ts">
+	import Container from '../components/Container.svelte';
+	import PlusButton from '../components/PlusButton.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+</script>
 
 <a href="/projects/2">to projects</a>
+
+<div class="flex flex-row h-full items-center w-full justify-center">
+	<div class="w-96 h-24">
+		<h1 class="text-white bg-accent font-sans py-3 text-3xl mb-1 px-3">Your Projects</h1>
+		<div class="border border-black flex flex-col">
+			<div class="flex flex-col p-3 pb-48">
+				{#each data.projects as project}
+					<span
+						class="hover:bg-black hover:text-white transition-colors text-2xl px-2 py-2 w-full cursor-pointer active:scale-95 select-none"
+						>{project.title}</span
+					>
+					<hr class="w-full border-t-1 border-black self-center" />
+				{/each}
+			</div>
+			<PlusButton bonusStyles="border-r border-t" />
+		</div>
+	</div>
+</div>
