@@ -1,13 +1,16 @@
 <script lang="ts">
-	import { showTaskDialog } from '../functions';
-	import type { IColumn, ITask } from '../types';
+	import type { Column, Task } from '@prisma/client';
+	import type { IColumn, ITask } from '$lib/types';
 	import Icon from './Icon.svelte';
+	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
 
 	export let task: ITask;
 	export let column: IColumn;
 
 	function handleClick() {
-		showTaskDialog(task, column);
+		$SELECTED_TASK = task;
+		$SELECTED_COLUMN = column;
+		$DIALOG_MANAGER.taskDialog = true;
 	}
 </script>
 
@@ -44,7 +47,10 @@
 				</div>
 
 				<div class="h-max">
-					{task.dueDate}
+					{`${task.dueDate.getFullYear()}-${String(task.dueDate.getMonth() + 1).padStart(
+						2,
+						'0'
+					)}-${String(task.dueDate.getDate()).padStart(2, '0')}`}
 				</div>
 			</div>
 		{/if}

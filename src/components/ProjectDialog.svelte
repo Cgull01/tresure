@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_MANAGER, DIALOG_TASK } from './store';
-	import { addTask, removeTask, updateTask } from '../functions';
+	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
 	import Icon from './Icon.svelte';
 
 	let dialogRef: HTMLDialogElement;
-	let projectTitleInput: string = $CURRENT_PROJECT.title;
+	let projectTitleInput: string = $SELECTED_PROJECT ? $SELECTED_PROJECT.title : '';
 
 	function closeDialog() {
 		$DIALOG_MANAGER.projectDialog = false;
-		projectTitleInput = $CURRENT_PROJECT.title;
+
+		projectTitleInput = $SELECTED_PROJECT!.title;
 	}
 
 	function handleDeleteProject() {
@@ -18,7 +18,6 @@
 
 	function submitDialog() {
 		if (projectTitleInput.length < 0) return;
-		$CURRENT_PROJECT.title = projectTitleInput;
 		closeDialog();
 	}
 

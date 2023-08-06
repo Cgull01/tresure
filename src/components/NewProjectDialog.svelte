@@ -1,35 +1,27 @@
 <script lang="ts">
-	import { DIALOG_MANAGER } from '../routes/projects/[slug]/stores';
 	import Icon from './Icon.svelte';
+	import { enhance } from '$app/forms';
+	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
 
 	let dialogRef: HTMLDialogElement;
-	let columnTitleInput: string;
-	let originalColumnTitle: string;
+	let projectTitleInput: string;
 
 	function closeDialog() {
-		$DIALOG_MANAGER.columnDialog = false;
-	}
-
-	function handleDeleteColumn() {
-		// removeColumn($CURRENT_COLUMN.id);
-		closeDialog();
+		$DIALOG_MANAGER.newProjectDialog = false;
+		projectTitleInput = '';
 	}
 
 	function submitDialog() {
-		// $CURRENT_COLUMN.title = columnTitleInput;
-		// updateProject($CURRENT_COLUMN);
+		if (projectTitleInput.length < 0) return;
 		closeDialog();
 	}
 
-	$: if ($DIALOG_MANAGER.columnDialog && dialogRef) {
+	$: if ($DIALOG_MANAGER.newProjectDialog && dialogRef) {
 		dialogRef.showModal();
-		// originalColumnTitle = $CURRENT_COLUMN.title;
 	}
-
-	$: columnTitleInput = originalColumnTitle;
 </script>
 
-{#if $DIALOG_MANAGER.columnDialog}
+{#if $DIALOG_MANAGER.newProjectDialog}
 	<dialog
 		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/2 h-max"
 		bind:this={dialogRef}
@@ -39,29 +31,28 @@
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
 				<div class="flex flex-row gap-4 bg-accent text-white w-full items-center">
-					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">Edit Column</h1>
-					<button
-						tabindex="0"
-						title="Click to remove the task"
-						class=" cursor-pointer active:scale-105 stroke-formBackground"
-						on:click={handleDeleteColumn}
-					>
-						<Icon name="trash" stroke_width="2" />
-					</button>
+					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">New Project</h1>
 				</div>
 				<button
 					class="bg-accent text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"
 					on:click={closeDialog}>Cancel</button
 				>
 			</div>
-			<form class="border-black border bg-white">
+			<form
+				class="border-black border bg-white"
+				method="POST"
+				action="?/createProject"
+				use:enhance
+				on:submit={submitDialog}
+			>
 				<div class="px-3">
 					<div>
-						<div class="text-lg font-semibold">Column title</div>
+						<div class="text-lg font-semibold">Project title</div>
 						<input
 							type="text"
-							bind:value={columnTitleInput}
-							placeholder="Task title"
+							name="project_title"
+							bind:value={projectTitleInput}
+							placeholder="Project title"
 							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full resize-y row-auto"
 						/>
 					</div>
@@ -69,7 +60,7 @@
 				<div
 					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
 				>
-					<button on:click={submitDialog}>Save changes</button>
+					<button>Create New Project</button>
 
 					<Icon
 						height={48}

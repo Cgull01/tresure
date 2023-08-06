@@ -31,7 +31,19 @@ TODO:
 - start prisma, postresql, connect
 
 -create project
--save project to JSON/db
+-save project to db
+
+- add task V
+- editing dueDate scuffed
+
+- await blocks in projects page
+- remove task V
+- move task
+
+
+- rename column
+- delete column
+
 
 EXTRAS:
 attachments

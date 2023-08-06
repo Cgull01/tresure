@@ -1,4 +1,6 @@
+
 export interface IProject {
+    id: string,
     title: string,
     columns: IColumn[],
 }
@@ -9,16 +11,20 @@ export interface ITag {
 }
 
 export interface IColumn {
-    id: number;
+    id: string;
     title: string;
     tasks?: ITask[];
+    projectId: string;
 }
 
+
 export interface ITask {
-    id?: number;
-    tags?: ITag[];
-    title?: string;
-    details?: string;
-    dueDate?: Date;
-    members?: { member: string, avatar: string }[];
+    id: string;
+    title: string;
+    details: string;
+    tags?: {
+        color: string;
+        tag: string;
+    }[];
+    dueDate?: Date | null;
 }

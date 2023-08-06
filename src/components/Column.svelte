@@ -1,46 +1,47 @@
 <script lang="ts">
-	import Task from './Task.svelte';
-	import type { IColumn, ITag, ITask } from '../types';
+	import type { IColumn, ITag, ITask } from '$lib/types';
 	import PlusButton from './PlusButton.svelte';
-	import { CURRENT_COLUMN, CURRENT_PROJECT, DIALOG_MANAGER } from './store';
-	import { showTaskDialog, moveTask, showColumnDialog } from '../functions';
 	import Icon from './Icon.svelte';
+	import Task from './Task.svelte';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import { DIALOG_MANAGER, SELECTED_COLUMN } from '../routes/projects/[slug]/stores';
 
 	export let column: IColumn;
 
 	let dragEntered = false;
-
-	function handleClick() {
-		showTaskDialog({}, column);
-	}
-
-	function handleDrop(event: DragEvent) {
-		event.preventDefault();
-		isDraggingTask = false;
-		const json = event.dataTransfer?.getData('text/plain') || '';
-
-		const data: {
-			task: ITask;
-			origin_column_ID: Number;
-		} = JSON.parse(json);
-
-		const originalColumn = $CURRENT_PROJECT.columns.find(
-			(col) => col.id === data.origin_column_ID
-		)!;
-
-		const taskIndex = originalColumn.tasks?.findIndex((t) => t.id === data.task.id);
-		const movedTask = originalColumn.tasks?.splice(taskIndex!, 1)[0] || {};
-
-		const destinationColumn =
-			$CURRENT_PROJECT.columns.find((col) => col.id == column.id) || originalColumn!;
-
-		moveTask(movedTask, originalColumn, destinationColumn);
-		dragEntered = false;
-	}
-
 	let isDraggingTask: boolean = false;
 
-	function dragDropTask(event: DragEvent, task: ITask, origin_column_ID: Number) {
+	function handleClick() {
+		$SELECTED_COLUMN = column;
+		$DIALOG_MANAGER.taskDialog = true;
+	}
+
+	// function handleDrop(event: DragEvent) {
+	// 	event.preventDefault();
+	// 	isDraggingTask = false;
+	// 	const json = event.dataTransfer?.getData('text/plain') || '';
+
+	// 	const data: {
+	// 		task: ITask;
+	// 		origin_column_ID: String;
+	// 	} = JSON.parse(json);
+
+	// 	const originalColumn = $CURRENT_PROJECT.columns.find(
+	// 		(col) => col.id === data.origin_column_ID
+	// 	)!;
+
+	// 	const taskIndex = originalColumn.tasks?.findIndex((t) => t.id === data.task.id);
+	// 	const movedTask = originalColumn.tasks?.splice(taskIndex!, 1)[0] || {};
+
+	// 	const destinationColumn =
+	// 		$CURRENT_PROJECT.columns.find((col) => col.id == column.id) || originalColumn!;
+
+	// 	// moveTask(movedTask, originalColumn, destinationColumn);
+	// 	dragEntered = false;
+	// }
+
+	function dragDropTask(event: DragEvent, task: ITask, origin_column_ID: String) {
 		const data = { task, origin_column_ID };
 		event.dataTransfer?.setData('text/plain', JSON.stringify(data));
 		isDraggingTask = true;
@@ -50,7 +51,9 @@
 
 <div
 	class="w-96 h-max m-2 flex flex-col bg-background"
-	on:drop|preventDefault={handleDrop}
+	on:drop|preventDefault={() => {
+		/*handleDrop*/
+	}}
 	on:dragover|preventDefault={() => (dragEntered = true)}
 	on:dragenter
 	on:dragleave={() => (dragEntered = false)}
@@ -61,7 +64,12 @@
 		class="text-white bg-accent flex flex-row justify-between px-3 {dragEntered && 'opacity-80'}"
 	>
 		<h1 class="font-sans py-3 text-3xl">{column.title}</h1>
-		<button class="self-center active:scale-110" on:click={() => showColumnDialog(column)}>
+		<button
+			class="self-center active:scale-110"
+			on:click={() => {
+				//TODO: show column edit dialog
+			}}
+		>
 			<Icon name={'more-horizontal'} stroke_width="2" />
 		</button>
 	</button>
