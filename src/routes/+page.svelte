@@ -3,7 +3,7 @@
 	import NewProjectDialog from '../components/NewProjectDialog.svelte';
 	import PlusButton from '../components/PlusButton.svelte';
 	import type { PageData } from './$types';
-	import { DIALOG_MANAGER } from './projects/[slug]/stores';
+	import { DIALOG_MANAGER, SELECTED_PROJECT } from './projects/[slug]/stores';
 
 	export let data: PageData;
 </script>

@@ -13,41 +13,29 @@
 
 	export let data: PageData;
 
-	let projectColumns: IColumn[] = [];
-
-	if (!data.project) {
-		throw new Error('no data fetched');
+	function isIProject(obj: any): obj is IProject {
+		return (
+			obj &&
+			typeof obj.id === 'string' &&
+			typeof obj.title === 'string' &&
+			Array.isArray(obj.columns)
+		);
 	}
 
 	$: {
-		projectColumns = [];
-		if (data.project)
-			data.project.columns.forEach((col) => {
-				let tasks: ITask[] = [];
-				col.tasks.forEach((task) => {
-					tasks.push({
-						id: task.id,
-						title: task.title || '',
-						details: task.details || '',
-						dueDate: task.dueDate,
-						tags: task.tags as { color: string; tag: string }[]
-					});
-				});
+		if (data.project && isIProject(data.project)) {
+			$SELECTED_PROJECT = data.project;
+		} else {
+			$SELECTED_PROJECT = null;
+		}
+	}
 
-				projectColumns.push({
-					id: col.id,
-					title: col.title,
-					projectId: col.projectId,
-					tasks: tasks
-				});
-			});
-		let project: IProject = {
-			id: data.project!.id,
-			title: data.project!.title,
-			columns: projectColumns
-		};
+	async function refreshColumns() {
+		const response = await fetch(`/projects/${$SELECTED_PROJECT!.id}`);
 
-		$SELECTED_PROJECT = project;
+		const updatedData = await response.json();
+
+		$SELECTED_PROJECT = updatedData;
 	}
 </script>
 
@@ -70,8 +58,8 @@
 
 <div class="flex flex-row justify-center">
 	{#if $SELECTED_PROJECT}
-		{#each $SELECTED_PROJECT.columns as column, i}
-			<Column {column} />
+		{#each $SELECTED_PROJECT.columns as column}
+			<Column {column} on:taskMoved={refreshColumns} />
 		{/each}
 	{/if}
 </div>

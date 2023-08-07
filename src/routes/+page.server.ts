@@ -6,11 +6,13 @@ const userID = '1a7816c1-99c4-4971-a74c-abaebf4cd49d'
 export async function load() {
     const response = await prisma.project.findMany();
 
+
     return { "projects": response };
+
 }
 
 export const actions = {
-    createProject: async ({ request }) => {
+    createProject: async ({ request }: any) => {
         const data = await request.formData();
         const project_title = data.get('project_title');
         await prisma.project.create({

@@ -45,7 +45,6 @@
 
 	function removeTag(index: number) {
 		Task.tags?.splice(index, 1);
-		Task = Task;
 	}
 
 	function closeDialog() {
@@ -64,7 +63,6 @@
 	}
 	function onSubmitDialog({ formData }: any) {
 		if ($SELECTED_TASK) {
-			console.log('edit');
 			formData.set('task_id', Task.id);
 		} else {
 			if (!Task.title && !Task.details) {

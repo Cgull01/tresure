@@ -3,14 +3,16 @@
 	import type { IColumn, ITask } from '$lib/types';
 	import Icon from './Icon.svelte';
 	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
+	import { createEventDispatcher } from 'svelte';
 
 	export let task: ITask;
-	export let column: IColumn;
+
+	const dispatch = createEventDispatcher();
 
 	function handleClick() {
-		$SELECTED_TASK = task;
-		$SELECTED_COLUMN = column;
-		$DIALOG_MANAGER.taskDialog = true;
+		dispatch('edit', {
+			task: task
+		});
 	}
 </script>
 
@@ -47,10 +49,7 @@
 				</div>
 
 				<div class="h-max">
-					{`${task.dueDate.getFullYear()}-${String(task.dueDate.getMonth() + 1).padStart(
-						2,
-						'0'
-					)}-${String(task.dueDate.getDate()).padStart(2, '0')}`}
+					{`${task.dueDate}`}
 				</div>
 			</div>
 		{/if}

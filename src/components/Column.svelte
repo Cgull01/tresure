@@ -3,56 +3,70 @@
 	import PlusButton from './PlusButton.svelte';
 	import Icon from './Icon.svelte';
 	import Task from './Task.svelte';
-	import { getContext } from 'svelte';
-	import type { Writable } from 'svelte/store';
-	import { DIALOG_MANAGER, SELECTED_COLUMN } from '../routes/projects/[slug]/stores';
+	import { createEventDispatcher, getContext, onMount } from 'svelte';
+	import { writable, type Writable } from 'svelte/store';
+	import {
+		DIALOG_MANAGER,
+		SELECTED_COLUMN,
+		SELECTED_PROJECT,
+		SELECTED_TASK
+	} from '../routes/projects/[slug]/stores';
+	import { page } from '$app/stores';
 
 	export let column: IColumn;
 
 	let dragEntered = false;
 	let isDraggingTask: boolean = false;
 
+	const dispatch = createEventDispatcher();
+
 	function handleClick() {
 		$SELECTED_COLUMN = column;
 		$DIALOG_MANAGER.taskDialog = true;
 	}
 
-	// function handleDrop(event: DragEvent) {
-	// 	event.preventDefault();
-	// 	isDraggingTask = false;
-	// 	const json = event.dataTransfer?.getData('text/plain') || '';
+	async function handleDrop(event: DragEvent) {
+		event.preventDefault();
+		isDraggingTask = false;
+		const task_ID = event.dataTransfer?.getData('text/plain') || '';
 
-	// 	const data: {
-	// 		task: ITask;
-	// 		origin_column_ID: String;
-	// 	} = JSON.parse(json);
+		const destinationColumn_ID = column.id;
 
-	// 	const originalColumn = $CURRENT_PROJECT.columns.find(
-	// 		(col) => col.id === data.origin_column_ID
-	// 	)!;
+		const response = await fetch(`/projects/${$page.params}`, {
+			method: 'PATCH',
+			body: JSON.stringify({
+				task_ID,
+				destinationColumn_ID
+			}),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
 
-	// 	const taskIndex = originalColumn.tasks?.findIndex((t) => t.id === data.task.id);
-	// 	const movedTask = originalColumn.tasks?.splice(taskIndex!, 1)[0] || {};
+		const result = await response.json();
 
-	// 	const destinationColumn =
-	// 		$CURRENT_PROJECT.columns.find((col) => col.id == column.id) || originalColumn!;
+		dispatch('taskMoved');
 
-	// 	// moveTask(movedTask, originalColumn, destinationColumn);
-	// 	dragEntered = false;
-	// }
+		dragEntered = false;
+	}
 
-	function dragDropTask(event: DragEvent, task: ITask, origin_column_ID: String) {
-		const data = { task, origin_column_ID };
-		event.dataTransfer?.setData('text/plain', JSON.stringify(data));
+	function dragDropTask(event: DragEvent, task_ID: string) {
+		event.dataTransfer?.setData('text/plain', task_ID);
 		isDraggingTask = true;
 		event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
+	}
+
+	function handleEdit(event: CustomEvent) {
+		$SELECTED_TASK = event.detail.task;
+		$SELECTED_COLUMN = column;
+		$DIALOG_MANAGER.taskDialog = true;
 	}
 </script>
 
 <div
 	class="w-96 h-max m-2 flex flex-col bg-background"
-	on:drop|preventDefault={() => {
-		/*handleDrop*/
+	on:drop|preventDefault={(event) => {
+		handleDrop(event);
 	}}
 	on:dragover|preventDefault={() => (dragEntered = true)}
 	on:dragenter
@@ -79,10 +93,10 @@
 			{#each column.tasks || [] as task (task.id)}
 				<Task
 					{task}
-					{column}
 					on:dragstart={(event) => {
-						dragDropTask(event, task, column.id);
+						dragDropTask(event, task.id);
 					}}
+					on:edit={handleEdit}
 				/>
 			{/each}
 		</section>

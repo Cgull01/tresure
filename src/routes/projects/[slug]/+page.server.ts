@@ -1,20 +1,20 @@
 import prisma from '$lib/server/prisma';
+import type { IProject } from '$lib/types.js';
+import { error } from '@sveltejs/kit';
+import { GET } from './+server';
 
 export async function load({ params }) {
-    const response = await prisma.project.findFirst({
-        where: {
-            id: params.slug
-        },
-        include: {
-            columns: {
-                include: {
-                    tasks: true,
-                }
-            }
-        }
-    });
-    return { "project": response, "slug": params.slug };
+
+    const response = await GET({ params });
+
+    if (response.status === 200) {
+        const result = await response.json();
+        return { "project": result, "slug": params.slug };
+    } else {
+        throw new Error('no project found');
+    }
 }
+
 
 export const actions = {
 
