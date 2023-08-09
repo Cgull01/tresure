@@ -3,7 +3,7 @@ import type { IProject } from '$lib/types.js';
 import { error } from '@sveltejs/kit';
 import { GET } from './+server';
 
-export async function load({ params }) {
+export async function load({ params }: any) {
 
     const response = await GET({ params });
 
@@ -18,7 +18,7 @@ export async function load({ params }) {
 
 export const actions = {
 
-    createTask: async ({ request }) => {
+    createTask: async ({ request }: any) => {
         const data = await request.formData();
         let payload: any = {};
 
@@ -53,7 +53,7 @@ export const actions = {
 
         return { success: true }
     },
-    editTask: async ({ request }) => {
+    editTask: async ({ request }: any) => {
         const data = await request.formData();
         let payload: any = {};
         let taskID = data.get('task_id') as string;
@@ -65,10 +65,6 @@ export const actions = {
         const task_details = data.get('task_details') as string;
         if (task_details)
             payload.details = task_details;
-
-        const dueDateString = data.get('due_date') as string;
-        if (dueDateString)
-            payload.dueDate = new Date(dueDateString).toISOString();
 
         const tagJSON = data.get('tags');
         if (tagJSON)
@@ -90,7 +86,7 @@ export const actions = {
 
         return { success: true }
     },
-    deleteTask: async ({ request }) => {
+    deleteTask: async ({ request }: any) => {
         const data = await request.formData();
         let payload: any = {};
         payload.id = data.get('task_id');
@@ -100,7 +96,24 @@ export const actions = {
         })
 
         return { success: true }
-    }
+    },
+    editProject: async ({ request }: any) => {
+        const data = await request.formData();
+
+        const project_id = data.get('project_id');
+        const project_title = data.get('project_title');
+
+        if (project_title.length <= 0)
+            return;
+
+        await prisma.project.update({
+            where: { id: project_id },
+            data: { title: project_title }
+        })
+
+
+        return { success: true }
+    },
 
 
 }

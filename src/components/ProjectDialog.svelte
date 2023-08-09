@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
 	import Icon from './Icon.svelte';
 
@@ -11,16 +12,16 @@
 		projectTitleInput = $SELECTED_PROJECT!.title;
 	}
 
+	function submitDialog({ formData }: any) {
+		formData.set('project_id', $SELECTED_PROJECT?.id);
+
+		closeDialog();
+	}
+
 	function handleDeleteProject() {
 		//TODO: delete project
 		closeDialog();
 	}
-
-	function submitDialog() {
-		if (projectTitleInput.length < 0) return;
-		closeDialog();
-	}
-
 	$: if ($DIALOG_MANAGER.projectDialog && dialogRef) {
 		dialogRef.showModal();
 	}
@@ -51,30 +52,42 @@
 					on:click={closeDialog}>Cancel</button
 				>
 			</div>
-			<form class="border-black border bg-white">
+			<form
+				class="border-black border bg-white"
+				method="POST"
+				action="?/editProject"
+				use:enhance={submitDialog}
+			>
 				<div class="px-3">
 					<div>
-						<div class="text-lg font-semibold">Project title</div>
+						<div class="text-lg font-semibold {projectTitleInput.length <= 0 && 'text-red-600'}">
+							Project title
+						</div>
 						<input
 							type="text"
+							name="project_title"
 							bind:value={projectTitleInput}
-							placeholder="Task title"
-							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full resize-y row-auto"
+							placeholder="Project title"
+							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full resize-y row-auto {projectTitleInput.length <=
+								0 && 'border-red-600'}"
 						/>
 					</div>
 				</div>
-				<div
-					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
-				>
-					<button on:click={submitDialog}>Save changes</button>
+				{#if projectTitleInput.length > 0}
+					<div
+						class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
+					>
+						<button>Save changes</button>
 
-					<Icon
-						height={48}
-						width={48}
-						name="directions-right"
-						styles="fill-black group-active:translate-x-11 group-active:transition-none group-hover:translate-x-6 transition-transform group-hover:fill-white"
-					/>
-				</div>
+						<Icon
+							height={48}
+							width={48}
+							name="directions-right"
+							styles="fill-black group-active:translate-x-11 group-active:transition-none group-hover:translate-x-6 transition-transform group-hover:fill-white
+                        "
+						/>
+					</div>
+				{/if}
 			</form>
 		</div>
 	</dialog>

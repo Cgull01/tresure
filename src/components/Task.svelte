@@ -42,17 +42,17 @@
 		</div>
 	</div>
 	<div class="flex flex-row justify-between mb-3">
-		{#if task.dueDate}
+		<!-- {#if task.dueDate}
 			<div class="flex flex-row w-max justify-between px-1 h-max place-self-end font-mono">
 				<div class="w-4 pr-8">
 					<Icon name="clock" stroke_width="2" />
 				</div>
 
 				<div class="h-max">
-					{`${task.dueDate}`}
+					{`${new Date(task.dueDate).toISOString().slice(0, 10)}`}
 				</div>
 			</div>
-		{/if}
+		{/if} -->
 		<!-- <div class="flex flex-row gap-1 justify-center items-center">
 			{#if task.members}
 				{#each task.members.slice(0, 3) as member, i}

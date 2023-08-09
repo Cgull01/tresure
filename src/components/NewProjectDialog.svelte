@@ -12,7 +12,6 @@
 	}
 
 	function submitDialog() {
-		if (projectTitleInput.length < 0) return;
 		closeDialog();
 	}
 

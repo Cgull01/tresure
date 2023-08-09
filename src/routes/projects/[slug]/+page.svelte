@@ -8,7 +8,7 @@
 	import ColumnDialog from '../../../components/ColumnDialog.svelte';
 	import type { PageData } from './$types';
 	import type { Prisma } from '@prisma/client';
-	import { SELECTED_PROJECT } from './stores';
+	import { DIALOG_MANAGER, SELECTED_PROJECT } from './stores';
 	import { json } from '@sveltejs/kit';
 
 	export let data: PageData;
@@ -20,6 +20,10 @@
 			typeof obj.title === 'string' &&
 			Array.isArray(obj.columns)
 		);
+	}
+
+	function showProjectDialog() {
+		$DIALOG_MANAGER.projectDialog = true;
 	}
 
 	$: {
@@ -45,7 +49,7 @@
 			<Icon name="direction-left" stroke_width="1.5" styles="w-12 h-12 p-2" />
 		</a>
 		<div class="text-2xl font-semibold">{$SELECTED_PROJECT && $SELECTED_PROJECT.title}</div>
-		<button on:click={() => {}} class="active:scale-105">
+		<button on:click={showProjectDialog} class="active:scale-105">
 			<Icon name={'more-horizontal'} stroke_width="2" styles="w-12 h-12 p-2" />
 		</button>
 	</div>

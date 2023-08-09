@@ -6,8 +6,7 @@ const userID = '1a7816c1-99c4-4971-a74c-abaebf4cd49d'
 export async function load() {
     const response = await prisma.project.findMany();
 
-
-    return { "projects": response };
+    return { projects: response };
 
 }
 

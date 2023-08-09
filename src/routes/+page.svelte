@@ -8,8 +8,6 @@
 	export let data: PageData;
 </script>
 
-<a href="/projects/2">to projects</a>
-
 <NewProjectDialog />
 
 <div class="flex flex-row h-full items-center w-full justify-center">
@@ -29,7 +27,7 @@
 			<PlusButton
 				bonusStyles="border-r border-t"
 				on:click={() => {
-					DIALOG_MANAGER.update((state) => ({ ...state, newProjectDialog: true }));
+					$DIALOG_MANAGER.newProjectDialog = true;
 				}}
 			/>
 		</div>

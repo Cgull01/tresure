@@ -26,10 +26,8 @@
 	let isColorDropdownVisible = false;
 	let dropdownElement: HTMLElement;
 
-	$: Task = $SELECTED_TASK ?? <ITask>{};
-	$: dueDateInput = $SELECTED_TASK?.dueDate
-		? new Date($SELECTED_TASK?.dueDate).toISOString().slice(0, 10)
-		: null;
+	$: task = $SELECTED_TASK ?? <ITask>{};
+	// $: dueDateInput = task && task.dueDate ? task.dueDate.toISOString().slice(0, 10) : '';
 
 	function addTag() {
 		if (TagInput.tag.length === 0) return;
@@ -37,14 +35,14 @@
 		// Create a new object and copy newTag values
 		const newTag = { ...TagInput };
 
-		Task.tags = Task ? [...(Task.tags || []), newTag] : [newTag];
+		task.tags = task ? [...(task.tags || []), newTag] : [newTag];
 
 		// reset input fields
 		TagInput = { tag: '', color: TAG_COLORS[0] };
 	}
 
 	function removeTag(index: number) {
-		Task.tags?.splice(index, 1);
+		task.tags = task.tags?.filter((t, i) => i != index);
 	}
 
 	function closeDialog() {
@@ -52,41 +50,49 @@
 		$SELECTED_COLUMN = null;
 		$SELECTED_TASK = null;
 
-		dueDateInput = null;
 		TagInput = { tag: '', color: TAG_COLORS[0] };
 	}
 
 	function onDeleteTask({ formData }: any) {
-		formData.set('task_id', Task.id);
+		formData.set('task_id', task.id);
 
 		closeDialog();
 	}
 	function onSubmitDialog({ formData }: any) {
 		if ($SELECTED_TASK) {
-			formData.set('task_id', Task.id);
+			formData.set('task_id', task.id);
 		} else {
-			if (!Task.title && !Task.details) {
+			if (!task.title && !task.details) {
 				throw new Error('no title or no details');
 			}
 		}
-		if (Task.tags) formData.set('tags', JSON.stringify(Task.tags));
+		if (task.tags) formData.set('tags', JSON.stringify(task.tags));
 		formData.set('columnID', $SELECTED_COLUMN?.id);
 		closeDialog();
 	}
 
-	function handleClickOutside(event: MouseEvent) {
+	function handleClickOutsideColors(event: MouseEvent) {
 		if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
 			isColorDropdownVisible = false;
 		}
 	}
 
-	$: window.addEventListener('click', handleClickOutside);
+	window.addEventListener('click', handleClickOutsideColors);
+
 	$: if ($DIALOG_MANAGER.taskDialog && dialogRef) {
 		dialogRef.showModal();
 	}
 
+	function formatDate(date = new Date()) {
+		date = new Date(date);
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const day = String(date.getDate()).padStart(2, '0');
+		return `${year}-${month}-${day}`;
+	}
+
 	onDestroy(() => {
-		window.removeEventListener('click', handleClickOutside);
+		window.removeEventListener('click', handleClickOutsideColors);
 	});
 </script>
 
@@ -101,9 +107,9 @@
 			<div class="flex flex-row justify-between">
 				<div class="flex flex-row gap-4 bg-accent text-white w-full items-center">
 					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">
-						{Task.id ? 'Edit Task' : 'New Task'}
+						{task.id ? 'Edit Task' : 'New Task'}
 					</h1>
-					{#if Task.id}
+					{#if task.id}
 						<form method="POST" action="?/deleteTask" use:enhance={onDeleteTask}>
 							<button
 								name="deleteTask"
@@ -133,9 +139,10 @@
 						<div
 							class="flex flex-row gap-2 text-white font-semibold overflow-hidden w-max overflow-x-auto"
 						>
-							{#if Task.tags}
-								{#each Task.tags as tag, index}
+							{#if task.tags}
+								{#each task.tags as tag, index}
 									<button
+										type="button"
 										on:click={() => removeTag(index)}
 										class="w-max h-max px-1 bg-{tag &&
 											tag.color} opacity-80 flex flex-row gap-2 items-center hover: shadow-md"
@@ -199,7 +206,7 @@
 						<input
 							type="text"
 							name="task_title"
-							bind:value={Task.title}
+							bind:value={task.title}
 							placeholder="Task title"
 							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full resize-y row-auto"
 						/>
@@ -209,14 +216,13 @@
 						<textarea
 							name="task_details"
 							placeholder="Task details"
-							bind:value={Task.details}
+							bind:value={task.details}
 							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full"
 						/>
 					</div>
 				</div>
 				<div class="flex flex-row justify-between px-3">
-					<div>
-						<div class="flex flex-col">
+					<!-- <div class="flex flex-col">
 							<div>Due date</div>
 							<div class="flex flex-row items-center gap-2">
 								<input
@@ -226,8 +232,7 @@
 									name="due_date"
 								/>
 							</div>
-						</div>
-					</div>
+						</div> -->
 				</div>
 				<div
 					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
