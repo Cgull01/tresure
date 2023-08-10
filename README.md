@@ -34,16 +34,28 @@ TODO:
 -save project to db
 
 - add task V
-- editing dueDate scuffed
+- editing dueDate scuffed X
 
-- await blocks in projects page
 - remove task V
-- move task
+- move task V
 
 
+
+---------------------------------------------------
+- delete project V
 - rename column
 - delete column
+- add more columns
+- task edit moves task to bottom, expected: stay in place
+-----------^ ok with abandoning here ^-------------
 
+- fix dueDate
+- move columns?
+
+- register/login - auth
+- dragImage
+- right click
+---------------------------------------------------
 
 EXTRAS:
 attachments

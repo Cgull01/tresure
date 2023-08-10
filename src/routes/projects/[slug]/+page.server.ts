@@ -1,6 +1,6 @@
 import prisma from '$lib/server/prisma';
 import type { IProject } from '$lib/types.js';
-import { error } from '@sveltejs/kit';
+import { error, redirect } from '@sveltejs/kit';
 import { GET } from './+server';
 
 export async function load({ params }: any) {
@@ -114,6 +114,17 @@ export const actions = {
 
         return { success: true }
     },
+    deleteProject: async ({ request }: any) => {
+        const data = await request.formData();
+
+        const project_id = data.get('project_id');
+
+        await prisma.project.delete({
+            where: { id: project_id }
+        });
+
+        throw redirect(303, '/')
+    }
 
 
 }
