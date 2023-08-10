@@ -1,32 +1,30 @@
 <script lang="ts">
-	import { DIALOG_MANAGER } from '../routes/projects/[slug]/stores';
+	import { enhance } from '$app/forms';
+	import { DIALOG_MANAGER, SELECTED_COLUMN } from '../routes/projects/[slug]/stores';
 	import Icon from './Icon.svelte';
 
 	let dialogRef: HTMLDialogElement;
-	let columnTitleInput: string;
-	let originalColumnTitle: string;
+	let columnTitle = '';
 
 	function closeDialog() {
 		$DIALOG_MANAGER.columnDialog = false;
 	}
 
 	function handleDeleteColumn() {
-		// removeColumn($CURRENT_COLUMN.id);
 		closeDialog();
 	}
 
-	function submitDialog() {
-		// $CURRENT_COLUMN.title = columnTitleInput;
-		// updateProject($CURRENT_COLUMN);
+	function submitDialog({ formData }: any) {
+		formData.set('column_id', $SELECTED_COLUMN!.id);
+
 		closeDialog();
 	}
 
 	$: if ($DIALOG_MANAGER.columnDialog && dialogRef) {
 		dialogRef.showModal();
-		// originalColumnTitle = $CURRENT_COLUMN.title;
 	}
 
-	$: columnTitleInput = originalColumnTitle;
+	$: columnTitle = $SELECTED_COLUMN ? $SELECTED_COLUMN.title : '';
 </script>
 
 {#if $DIALOG_MANAGER.columnDialog}
@@ -54,14 +52,20 @@
 					on:click={closeDialog}>Cancel</button
 				>
 			</div>
-			<form class="border-black border bg-white">
+			<form
+				action="?/renameColumn"
+				method="post"
+				class="border-black border bg-white"
+				use:enhance={submitDialog}
+			>
 				<div class="px-3">
 					<div>
 						<div class="text-lg font-semibold">Column title</div>
 						<input
 							type="text"
-							bind:value={columnTitleInput}
-							placeholder="Task title"
+							value={columnTitle}
+							name="column_title"
+							placeholder="Column title"
 							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full resize-y row-auto"
 						/>
 					</div>
@@ -69,7 +73,7 @@
 				<div
 					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
 				>
-					<button on:click={submitDialog}>Save changes</button>
+					<button>Save changes</button>
 
 					<Icon
 						height={48}

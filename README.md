@@ -43,8 +43,9 @@ TODO:
 
 ---------------------------------------------------
 - delete project V
-- rename column
+- rename column V
 - delete column
+- add column and task position in database
 - add more columns
 - task edit moves task to bottom, expected: stay in place
 -----------^ ok with abandoning here ^-------------

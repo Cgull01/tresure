@@ -81,7 +81,8 @@
 		<button
 			class="self-center active:scale-110"
 			on:click={() => {
-				//TODO: show column edit dialog
+				$DIALOG_MANAGER.columnDialog = true;
+				$SELECTED_COLUMN = column;
 			}}
 		>
 			<Icon name={'more-horizontal'} stroke_width="2" />

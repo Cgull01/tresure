@@ -124,6 +124,17 @@ export const actions = {
         });
 
         throw redirect(303, '/')
+    },
+    renameColumn: async ({ request }: any) => {
+        const data = await request.formData();
+
+        const column_id = data.get('column_id');
+        const column_title = data.get('column_title');
+
+        await prisma.column.update({
+            where: { id: column_id },
+            data: { title: column_title }
+        });
     }
 
 
