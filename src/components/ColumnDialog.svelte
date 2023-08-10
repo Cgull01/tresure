@@ -38,14 +38,15 @@
 			<div class="flex flex-row justify-between">
 				<div class="flex flex-row gap-4 bg-accent text-white w-full items-center">
 					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">Edit Column</h1>
-					<button
-						tabindex="0"
-						title="Click to remove the task"
-						class=" cursor-pointer active:scale-105 stroke-formBackground"
-						on:click={handleDeleteColumn}
-					>
-						<Icon name="trash" stroke_width="2" />
-					</button>
+					<form action="?/deleteColumn" method="POST" use:enhance={submitDialog}>
+						<button
+							tabindex="0"
+							title="Click to remove the task"
+							class="cursor-pointer active:scale-105 stroke-formBackground"
+						>
+							<Icon name="trash" stroke_width="2" />
+						</button>
+					</form>
 				</div>
 				<button
 					class="bg-accent text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"

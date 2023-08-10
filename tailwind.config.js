@@ -1,3 +1,6 @@
+const plugin = require('tailwindcss/plugin')
+
+
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -23,6 +26,14 @@ export default {
         'formBackground',
         'formBackgroundFocused'
     ],
-    plugins: [],
+    plugins: [
+        plugin(function ({ addVariant, e }) {
+            addVariant('not-last', ({ modifySelectors, separator }) => {
+                modifySelectors(({ className }) => {
+                    return `.${e(`not-last${separator}${className}`)}:not(:last-child)`
+                })
+            })
+        })
+    ]
 }
 

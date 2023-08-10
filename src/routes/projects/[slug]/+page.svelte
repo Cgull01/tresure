@@ -10,6 +10,7 @@
 	import type { Prisma } from '@prisma/client';
 	import { DIALOG_MANAGER, SELECTED_PROJECT } from './stores';
 	import { json } from '@sveltejs/kit';
+	import ProjectContextMenu from '../../../components/ProjectContextMenu.svelte';
 
 	export let data: PageData;
 
@@ -55,6 +56,8 @@
 	</div>
 	<hr class="w-1/3 border-t-1 border-black self-center" />
 </div>
+
+<ProjectContextMenu />
 
 <ColumnDialog />
 <ProjectDialog />

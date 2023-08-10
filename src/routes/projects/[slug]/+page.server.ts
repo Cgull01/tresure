@@ -135,6 +135,15 @@ export const actions = {
             where: { id: column_id },
             data: { title: column_title }
         });
+    },
+    deleteColumn: async ({ request }: any) => {
+        const data = await request.formData();
+
+        const column_id = data.get('column_id');
+
+        await prisma.column.delete({
+            where: { id: column_id }
+        });
     }
 
 
