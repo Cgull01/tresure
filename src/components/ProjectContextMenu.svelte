@@ -1,5 +1,9 @@
 <script lang="ts">
-	let showContextMenu = true;
+	import { enhance } from '$app/forms';
+	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
+	import Icon from './Icon.svelte';
+
+	let showContextMenu = false;
 	let contextMenu: HTMLElement;
 	let position = { x: 220, y: 420 };
 	function handleClickOutside(event: MouseEvent) {
@@ -9,27 +13,41 @@
 	}
 
 	function handleContextmenu(event: MouseEvent) {
-		console.log(event);
 		position = { x: event.clientX, y: event.clientY };
 		showContextMenu = true;
 	}
+
+	function handleSubmit({ formData }: any) {
+		formData.set('project_id', $SELECTED_PROJECT!.id);
+	}
 </script>
 
-<svelte:document on:contextmenu|preventDefault={handleContextmenu} on:click={handleClickOutside} />
+<svelte:document
+	on:contextmenu|preventDefault={handleContextmenu}
+	on:click={handleClickOutside}
+	on:scroll={() => (showContextMenu = false)}
+/>
 
 {#if showContextMenu}
 	<div bind:this={contextMenu} class="fixed" style="top: {position.y}px; left: {position.x}px;">
-		<h4 class="text-white bg-accent font-sans py-2 mb-1 px-2">Project tools</h4>
-		<ul class="border border-black w-full px-3 py-1">
+		<ul class="border border-black w-full bg-background">
 			<li
-				class="py-1 hover:bg-black hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
+				class="py-1 hover:bg-accent hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
 			>
-				<button>Project settings</button>
+				<button
+					class="flex gap-2"
+					on:click={() => {
+						$DIALOG_MANAGER.projectDialog = true;
+						showContextMenu = false;
+					}}><Icon name="settings" stroke_width="2" /> Project settings</button
+				>
 			</li>
 			<li
-				class="py-1 hover:bg-black hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
+				class="py-1 hover:bg-accent hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
 			>
-				<button>Add column</button>
+				<form action="?/addColumn" method="POST" use:enhance={handleSubmit}>
+					<button class="flex gap-2"> <Icon name="add" stroke_width="2" />Add column</button>
+				</form>
 			</li>
 		</ul>
 	</div>

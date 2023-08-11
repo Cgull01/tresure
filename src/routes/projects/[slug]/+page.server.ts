@@ -124,6 +124,7 @@ export const actions = {
         });
 
         throw redirect(303, '/')
+
     },
     renameColumn: async ({ request }: any) => {
         const data = await request.formData();
@@ -135,6 +136,8 @@ export const actions = {
             where: { id: column_id },
             data: { title: column_title }
         });
+        return { success: true }
+
     },
     deleteColumn: async ({ request }: any) => {
         const data = await request.formData();
@@ -144,6 +147,22 @@ export const actions = {
         await prisma.column.delete({
             where: { id: column_id }
         });
+        return { success: true }
+
+    },
+    addColumn: async ({ request }: any) => {
+        const data = await request.formData();
+
+        const project_id = data.get('project_id');
+
+        await prisma.column.create({
+            data: {
+                title: 'New Column',
+                projectId: project_id
+            }
+        });
+        return { success: true }
+
     }
 
 
