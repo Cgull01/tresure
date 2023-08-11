@@ -19,6 +19,7 @@
 
 	function handleSubmit({ formData }: any) {
 		formData.set('project_id', $SELECTED_PROJECT!.id);
+		showContextMenu = false;
 	}
 </script>
 

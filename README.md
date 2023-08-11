@@ -45,9 +45,10 @@ TODO:
 - delete project V
 - rename column V
 - delete column V
-- add more columns
-- add column and task position in database
+- add more columns V
+- add column and task position in database <---
 - task edit moves task to bottom, expected: stay in place
+- context menu on task to remove task
 -----------^ ok with abandoning here ^-------------
 
 - fix dueDate
@@ -55,7 +56,6 @@ TODO:
 
 - register/login - auth
 - dragImage
-- right click
 ---------------------------------------------------
 
 EXTRAS:

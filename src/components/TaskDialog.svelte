@@ -59,15 +59,12 @@
 		closeDialog();
 	}
 	function onSubmitDialog({ formData }: any) {
-		if ($SELECTED_TASK) {
-			formData.set('task_id', task.id);
-		} else {
-			if (!task.title && !task.details) {
-				throw new Error('no title or no details');
-			}
+		if (!task.title && !task.details) {
+			throw new Error('no title or no details');
 		}
-		if (task.tags) formData.set('tags', JSON.stringify(task.tags));
-		formData.set('columnID', $SELECTED_COLUMN?.id);
+
+		formData.set('column_id', $SELECTED_COLUMN?.id);
+		formData.set('task', JSON.stringify(task));
 		closeDialog();
 	}
 
@@ -81,14 +78,6 @@
 
 	$: if ($DIALOG_MANAGER.taskDialog && dialogRef) {
 		dialogRef.showModal();
-	}
-
-	function formatDate(date = new Date()) {
-		date = new Date(date);
-		const year = date.getFullYear();
-		const month = String(date.getMonth() + 1).padStart(2, '0');
-		const day = String(date.getDate()).padStart(2, '0');
-		return `${year}-${month}-${day}`;
 	}
 
 	onDestroy(() => {
@@ -205,7 +194,6 @@
 						<div class="text-lg font-semibold">Title</div>
 						<input
 							type="text"
-							name="task_title"
 							bind:value={task.title}
 							placeholder="Task title"
 							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full resize-y row-auto"
@@ -214,26 +202,13 @@
 					<div>
 						<div class="text-lg font-semibold">Details</div>
 						<textarea
-							name="task_details"
 							placeholder="Task details"
 							bind:value={task.details}
 							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full"
 						/>
 					</div>
 				</div>
-				<div class="flex flex-row justify-between px-3">
-					<!-- <div class="flex flex-col">
-							<div>Due date</div>
-							<div class="flex flex-row items-center gap-2">
-								<input
-									type="date"
-									class="border border-black my-1 bg-formBackground focus:bg-formBackgroundFocused"
-									bind:value={dueDateInput}
-									name="due_date"
-								/>
-							</div>
-						</div> -->
-				</div>
+
 				<div
 					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
 				>
