@@ -31,12 +31,14 @@
 		const task_ID = event.dataTransfer?.getData('text/plain') || '';
 
 		const destinationColumn_ID = column.id;
+		const task_position = column.tasks?.length;
 
 		const response = await fetch(`/projects/${$page.params}`, {
 			method: 'PATCH',
 			body: JSON.stringify({
 				task_ID,
-				destinationColumn_ID
+				destinationColumn_ID,
+				task_position
 			}),
 			headers: {
 				'content-type': 'application/json'

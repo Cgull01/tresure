@@ -1,14 +1,14 @@
 import prisma from '$lib/server/prisma';
-import type { IProject } from '$lib/types';
+import type { IColumn, IProject } from '$lib/types';
 import { json } from '@sveltejs/kit';
 
 export async function PATCH({ request }: any) {
 
-    const { task_ID, destinationColumn_ID } = await request.json();
+    const { task_ID, destinationColumn_ID, task_position } = await request.json();
 
     const response = await prisma.task.update({
         where: { id: task_ID },
-        data: { columnId: destinationColumn_ID }
+        data: { columnId: destinationColumn_ID, position: task_position }
 
     });
 
@@ -40,15 +40,19 @@ export async function GET({ params }: any) {
                 id: col.id,
                 title: col.title,
                 projectId: col.projectId,
+                position: col.position,
                 tasks: col.tasks.map(task => ({
                     id: task.id,
                     title: task.title || '',
                     details: task.details || '',
                     dueDate: task.dueDate,
+                    position: task.position,
                     tags: task.tags as { color: string; tag: string }[]
-                }))
-            }))
+                })).sort((a, b) => a.position - b.position)
+            })) as IColumn[]
         };
+
+        project.columns.sort((a, b) => a.position - b.position)
 
         return json(project);
     } catch (err) {

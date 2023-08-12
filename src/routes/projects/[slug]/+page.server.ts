@@ -31,6 +31,7 @@ export const actions = {
                 details: task.details,
                 dueDate: task.dueDate,
                 tags: task.tags,
+                position: task.position,
 
                 column: {
                     connect: {
@@ -45,11 +46,10 @@ export const actions = {
     editTask: async ({ request }: any) => {
         const data = await request.formData();
 
-        console.log(data);
-
         const task_json = data.get('task') as string;
         const task: ITask = JSON.parse(task_json);
-        console.log(task);
+
+        console.log(task.position);
 
         await prisma.task.update({
             where: { id: task.id },
@@ -57,6 +57,7 @@ export const actions = {
                 title: task.title,
                 details: task.details,
                 dueDate: task.dueDate,
+                position: task.position,
                 tags: task.tags ?? JSON.parse(task.tags || ''),
             }
         })
@@ -131,11 +132,13 @@ export const actions = {
         const data = await request.formData();
 
         const project_id = data.get('project_id');
+        const column_position = parseInt(data.get('column_position'));
 
         await prisma.column.create({
             data: {
                 title: 'New Column',
-                projectId: project_id
+                projectId: project_id,
+                position: column_position,
             }
         });
         return { success: true }

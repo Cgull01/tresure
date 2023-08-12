@@ -20,9 +20,9 @@ export const actions = {
                 userId: userID,
                 columns: {
                     create: [
-                        { title: 'To do' },
-                        { title: 'Doing' },
-                        { title: 'Done' },
+                        { title: 'To do', position: 1 },
+                        { title: 'Doing', position: 2 },
+                        { title: 'Done', position: 3 },
                     ],
                 },
             }

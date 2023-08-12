@@ -15,6 +15,7 @@ export interface IColumn {
     title: string;
     tasks?: ITask[];
     projectId: string;
+    position: number;
 }
 
 
@@ -27,4 +28,5 @@ export interface ITask {
         tag: string;
     }[];
     dueDate?: Date | null;
+    position: number;
 }

@@ -46,9 +46,11 @@ TODO:
 - rename column V
 - delete column V
 - add more columns V
-- add column and task position in database <---
-- task edit moves task to bottom, expected: stay in place
-- context menu on task to remove task
+- add column and task position in database V
+- context menu on task to remove task <-----
+- error pages, no network pages, 404 pages
+- stylize background a bit
+- renaming variable like taskID to task_id
 -----------^ ok with abandoning here ^-------------
 
 - fix dueDate

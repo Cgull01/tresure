@@ -19,6 +19,7 @@
 
 	function handleSubmit({ formData }: any) {
 		formData.set('project_id', $SELECTED_PROJECT!.id);
+		formData.set('column_position', $SELECTED_PROJECT?.columns.length);
 		showContextMenu = false;
 	}
 </script>

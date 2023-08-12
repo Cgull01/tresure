@@ -1,13 +1,10 @@
 <script lang="ts">
-	import { getContext, onDestroy } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import PlusButton from './PlusButton.svelte';
-	import type { IColumn, ITag, ITask } from '$lib/types';
+	import type { ITag, ITask } from '$lib/types';
 	import Icon from './Icon.svelte';
-	import type { Writable } from 'svelte/store';
 	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
-	import { addTask } from '../functions';
 	import { enhance } from '$app/forms';
-	import { error, type SubmitFunction } from '@sveltejs/kit';
 
 	const TAG_COLORS = [
 		'red-700',
@@ -32,12 +29,10 @@
 	function addTag() {
 		if (TagInput.tag.length === 0) return;
 
-		// Create a new object and copy newTag values
 		const newTag = { ...TagInput };
 
 		task.tags = task ? [...(task.tags || []), newTag] : [newTag];
 
-		// reset input fields
 		TagInput = { tag: '', color: TAG_COLORS[0] };
 	}
 
@@ -51,6 +46,7 @@
 		$SELECTED_TASK = null;
 
 		TagInput = { tag: '', color: TAG_COLORS[0] };
+		task = <ITask>{};
 	}
 
 	function onDeleteTask({ formData }: any) {
@@ -64,6 +60,7 @@
 		}
 
 		formData.set('column_id', $SELECTED_COLUMN?.id);
+		if (!task.id) task.position = $SELECTED_COLUMN?.tasks?.length || 0;
 		formData.set('task', JSON.stringify(task));
 		closeDialog();
 	}
