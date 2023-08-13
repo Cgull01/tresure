@@ -1,7 +1,7 @@
 import prisma from '$lib/server/prisma';
 import { json } from '@sveltejs/kit';
 
-const userID = '1a7816c1-99c4-4971-a74c-abaebf4cd49d'
+const user_id = '1a7816c1-99c4-4971-a74c-abaebf4cd49d'
 
 export async function load() {
     const response = await prisma.project.findMany();
@@ -17,7 +17,7 @@ export const actions = {
         await prisma.project.create({
             data: {
                 title: project_title!.toString(),
-                userId: userID,
+                userId: user_id,
                 columns: {
                     create: [
                         { title: 'To do', position: 1 },

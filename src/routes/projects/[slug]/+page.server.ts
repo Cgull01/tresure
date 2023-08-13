@@ -49,8 +49,6 @@ export const actions = {
         const task_json = data.get('task') as string;
         const task: ITask = JSON.parse(task_json);
 
-        console.log(task.position);
-
         await prisma.task.update({
             where: { id: task.id },
             data: {
@@ -144,6 +142,4 @@ export const actions = {
         return { success: true }
 
     }
-
-
 }

@@ -14,7 +14,7 @@ export interface IColumn {
     id: string;
     title: string;
     tasks?: ITask[];
-    projectId: string;
+    project_id: string;
     position: number;
 }
 

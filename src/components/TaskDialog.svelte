@@ -18,23 +18,22 @@
 		'indigo-700'
 	];
 
-	let TagInput: ITag = { tag: '', color: TAG_COLORS[0] };
-	let dialogRef: HTMLDialogElement;
+	let tag_input: ITag = { tag: '', color: TAG_COLORS[0] };
+	let dialog_ref: HTMLDialogElement;
 
-	let isColorDropdownVisible = false;
-	let dropdownElement: HTMLElement;
+	let color_dropdown_visible = false;
+	let dropdown_element: HTMLElement;
 
 	$: task = $SELECTED_TASK ?? <ITask>{};
-	// $: dueDateInput = task && task.dueDate ? task.dueDate.toISOString().slice(0, 10) : '';
 
 	function addTag() {
-		if (TagInput.tag.length === 0) return;
+		if (tag_input.tag.length === 0) return;
 
-		const newTag = { ...TagInput };
+		const newTag = { ...tag_input };
 
 		task.tags = task ? [...(task.tags || []), newTag] : [newTag];
 
-		TagInput = { tag: '', color: TAG_COLORS[0] };
+		tag_input = { tag: '', color: TAG_COLORS[0] };
 	}
 
 	function removeTag(index: number) {
@@ -42,11 +41,11 @@
 	}
 
 	function closeDialog() {
-		$DIALOG_MANAGER.taskDialog = false;
+		$DIALOG_MANAGER.task_dialog = false;
 		$SELECTED_COLUMN = null;
 		$SELECTED_TASK = null;
 
-		TagInput = { tag: '', color: TAG_COLORS[0] };
+		tag_input = { tag: '', color: TAG_COLORS[0] };
 		task = <ITask>{};
 	}
 
@@ -67,15 +66,15 @@
 	}
 
 	function handleClickOutsideColors(event: MouseEvent) {
-		if (dropdownElement && !dropdownElement.contains(event.target as Node)) {
-			isColorDropdownVisible = false;
+		if (dropdown_element && !dropdown_element.contains(event.target as Node)) {
+			color_dropdown_visible = false;
 		}
 	}
 
 	window.addEventListener('click', handleClickOutsideColors);
 
-	$: if ($DIALOG_MANAGER.taskDialog && dialogRef) {
-		dialogRef.showModal();
+	$: if ($DIALOG_MANAGER.task_dialog && dialog_ref) {
+		dialog_ref.showModal();
 	}
 
 	onDestroy(() => {
@@ -83,13 +82,12 @@
 	});
 </script>
 
-{#if $DIALOG_MANAGER.taskDialog}
+{#if $DIALOG_MANAGER.task_dialog}
 	<dialog
 		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/2 h-max"
 		on:dblclick|self={closeDialog}
-		bind:this={dialogRef}
-		on:close={closeDialog}
-	>
+		bind:this={dialog_ref}
+		on:close={closeDialog}>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
 				<div class="flex flex-row gap-4 bg-accent text-white w-full items-center">
@@ -102,8 +100,7 @@
 								name="deleteTask"
 								tabindex="0"
 								title="Click to remove the task"
-								class="cursor-pointer active:scale-105 stroke-formBackground"
-							>
+								class="cursor-pointer active:scale-105 stroke-formBackground">
 								<IconTrash />
 							</button>
 						</form>
@@ -111,21 +108,18 @@
 				</div>
 				<button
 					class="bg-accent text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"
-					on:click={closeDialog}>Cancel</button
-				>
+					on:click={closeDialog}>Cancel</button>
 			</div>
 			<form
 				class="border-black border bg-white"
 				method="POST"
 				action="?/{$SELECTED_TASK ? 'editTask' : 'createTask'}"
-				use:enhance={onSubmitDialog}
-			>
+				use:enhance={onSubmitDialog}>
 				<div class="flex flex-col sm:flex-row px-3 py-3 justify-between">
 					<div class="flex flex-col gap-2">
 						<h3 class="text-lg font-semibold">Tags</h3>
 						<div
-							class="flex flex-row gap-2 text-white font-semibold overflow-hidden w-max overflow-x-auto"
-						>
+							class="flex flex-row gap-2 text-white font-semibold overflow-hidden w-max overflow-x-auto">
 							{#if task.tags}
 								{#each task.tags as tag, index}
 									<button
@@ -133,8 +127,7 @@
 										on:click={() => removeTag(index)}
 										class="w-max h-max px-1 bg-{tag &&
 											tag.color} opacity-80 flex flex-row gap-2 items-center hover: shadow-md"
-										title="click to remove"
-									>
+										title="click to remove">
 										{tag.tag}
 									</button>
 								{/each}
@@ -145,26 +138,23 @@
 								<button
 									type="button"
 									on:click|stopPropagation={() => {
-										isColorDropdownVisible = !isColorDropdownVisible;
-									}}
-								>
+										color_dropdown_visible = !color_dropdown_visible;
+									}}>
 									<div class="h-6 w-6 cursor-pointer active:scale-100 hover:scale-105">
-										<IconColors styles="fill-{TagInput.color} h-6 w-6" />
+										<IconColors styles="fill-{tag_input.color} h-6 w-6" />
 									</div>
 								</button>
-								{#if isColorDropdownVisible}
-									<div class="absolute mt-8" bind:this={dropdownElement}>
+								{#if color_dropdown_visible}
+									<div class="absolute mt-8" bind:this={dropdown_element}>
 										<div
-											class="grid grid-cols-4 grid-rows-2 bg-white p-2 border border-black gap-2"
-										>
+											class="grid grid-cols-4 grid-rows-2 bg-white p-2 border border-black gap-2">
 											{#each TAG_COLORS as color, i}
 												<button
 													type="button"
 													class={`rounded-full w-6 h-6 bg-${color} hover:scale-95 cursor-pointer`}
 													on:click={() => {
-														TagInput.color = TAG_COLORS[i];
-													}}
-												/>
+														tag_input.color = TAG_COLORS[i];
+													}} />
 											{/each}
 										</div>
 									</div>
@@ -173,13 +163,11 @@
 							<input
 								type="text"
 								placeholder="tag name"
-								bind:value={TagInput.tag}
-								class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none"
-							/>
-							<PlusButton bonusStyles="border" on:click={addTag} />
+								bind:value={tag_input.tag}
+								class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none" />
+							<PlusButton styles="border" on:click={addTag} />
 						</div>
 					</div>
-					<!-- <div class="text-lg font-semibold">Assigned members</div> -->
 				</div>
 				<div class="px-3">
 					<div>
@@ -188,22 +176,19 @@
 							type="text"
 							bind:value={task.title}
 							placeholder="Task title"
-							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full resize-y row-auto"
-						/>
+							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full resize-y row-auto" />
 					</div>
 					<div>
 						<div class="text-lg font-semibold">Details</div>
 						<textarea
 							placeholder="Task details"
 							bind:value={task.details}
-							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full min-h-[2rem]"
-						/>
+							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full min-h-[2rem]" />
 					</div>
 				</div>
 
 				<div
-					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12"
-				>
+					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12">
 					<button>Save changes</button>
 				</div>
 			</form>

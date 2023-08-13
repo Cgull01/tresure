@@ -47,10 +47,10 @@ TODO:
 - delete column V
 - add more columns V
 - add column and task position in database V
-- context menu on task to remove task <-----
+- context menu on task to remove task V
+- renaming variable like taskID to task_id <---
 - error pages, no network pages, 404 pages
 - stylize background a bit
-- renaming variable like taskID to task_id
 -----------^ ok with abandoning here ^-------------
 
 - fix dueDate

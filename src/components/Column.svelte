@@ -9,19 +9,19 @@
 
 	export let column: IColumn;
 
-	let dragEntered = false;
-	let isDraggingTask: boolean = false;
+	let drag_entered = false;
+	let is_dragging_task: boolean = false;
 
 	const dispatch = createEventDispatcher();
 
 	function handleClick() {
 		$SELECTED_COLUMN = column;
-		$DIALOG_MANAGER.taskDialog = true;
+		$DIALOG_MANAGER.task_dialog = true;
 	}
 
 	async function handleDrop(event: DragEvent) {
 		event.preventDefault();
-		isDraggingTask = false;
+		is_dragging_task = false;
 		const task_ID = event.dataTransfer?.getData('text/plain') || '';
 
 		const destinationColumn_ID = column.id;
@@ -41,19 +41,19 @@
 
 		dispatch('taskMoved');
 
-		dragEntered = false;
+		drag_entered = false;
 	}
 
 	function dragDropTask(event: DragEvent, task_ID: string) {
 		event.dataTransfer?.setData('text/plain', task_ID);
-		isDraggingTask = true;
+		is_dragging_task = true;
 		// event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
 	}
 
 	function handleEdit(event: CustomEvent) {
 		$SELECTED_TASK = event.detail.task;
 		$SELECTED_COLUMN = column;
-		$DIALOG_MANAGER.taskDialog = true;
+		$DIALOG_MANAGER.task_dialog = true;
 	}
 </script>
 
@@ -62,27 +62,24 @@
 	on:drop|preventDefault={(event) => {
 		handleDrop(event);
 	}}
-	on:dragover|preventDefault={() => (dragEntered = true)}
+	on:dragover|preventDefault={() => (drag_entered = true)}
 	on:dragenter
-	on:dragleave={() => (dragEntered = false)}
+	on:dragleave={() => (drag_entered = false)}
 	role="listbox"
-	tabindex="0"
->
+	tabindex="0">
 	<button
-		class="text-white bg-accent flex flex-row justify-between px-3 {dragEntered && 'opacity-80'}"
-	>
+		class="text-white bg-accent flex flex-row justify-between px-3 {drag_entered && 'opacity-80'}">
 		<h1 class="font-sans py-3 text-3xl">{column.title}</h1>
 		<button
 			class="self-center active:scale-110"
 			on:click={() => {
-				$DIALOG_MANAGER.columnDialog = true;
+				$DIALOG_MANAGER.column_dialog = true;
 				$SELECTED_COLUMN = column;
-			}}
-		>
+			}}>
 			<IconMoreHorizontal />
 		</button>
 	</button>
-	<div class="border border-black {dragEntered && 'border-gray-700'}">
+	<div class="border border-black {drag_entered && 'border-gray-700'}">
 		<section class="flex flex-col pb-6">
 			{#each column.tasks || [] as task (task.id)}
 				<Task
@@ -90,12 +87,11 @@
 					on:dragstart={(event) => {
 						dragDropTask(event, task.id);
 					}}
-					on:edit={handleEdit}
-				/>
+					on:edit={handleEdit} />
 			{/each}
 		</section>
 		<div class="flex flex-row">
-			<PlusButton size={28} bonusStyles="border-r border-t" on:click={handleClick} />
+			<PlusButton styles="border-r border-t" on:click={handleClick} />
 		</div>
 	</div>
 </div>

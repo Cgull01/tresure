@@ -39,7 +39,7 @@ export async function GET({ params }: any) {
             columns: response.columns.map(col => ({
                 id: col.id,
                 title: col.title,
-                projectId: col.projectId,
+                project_id: col.projectId,
                 position: col.position,
                 tasks: col.tasks.map(task => ({
                     id: task.id,

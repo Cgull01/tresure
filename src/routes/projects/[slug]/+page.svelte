@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { onMount, setContext } from 'svelte';
 	import Column from '../../../components/Column.svelte';
 	import TaskDialog from '../../../components/TaskDialog.svelte';
-	import type { IColumn, IProject, ITask } from '$lib/types';
+	import type { IProject } from '$lib/types';
 	import ProjectDialog from '../../../components/ProjectDialog.svelte';
 	import ColumnDialog from '../../../components/ColumnDialog.svelte';
 	import type { PageData } from './$types';
-	import type { Prisma } from '@prisma/client';
 	import { DIALOG_MANAGER, SELECTED_PROJECT } from './stores';
-	import { json } from '@sveltejs/kit';
 	import ProjectContextMenu from '../../../components/ProjectContextMenu.svelte';
 	import IconDirectionLeft from '../../../Icons/Icon_direction_left.svelte';
 	import IconMoreHorizontal from '../../../Icons/Icon_more_horizontal.svelte';
@@ -25,7 +22,7 @@
 	}
 
 	function showProjectDialog() {
-		$DIALOG_MANAGER.projectDialog = true;
+		$DIALOG_MANAGER.project_dialog = true;
 	}
 
 	$: {
