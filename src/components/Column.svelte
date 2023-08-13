@@ -1,16 +1,10 @@
 <script lang="ts">
-	import type { IColumn, ITag, ITask } from '$lib/types';
+	import type { IColumn } from '$lib/types';
 	import PlusButton from './PlusButton.svelte';
 	import Icon from './Icon.svelte';
 	import Task from './Task.svelte';
-	import { createEventDispatcher, getContext, onMount } from 'svelte';
-	import { writable, type Writable } from 'svelte/store';
-	import {
-		DIALOG_MANAGER,
-		SELECTED_COLUMN,
-		SELECTED_PROJECT,
-		SELECTED_TASK
-	} from '../routes/projects/[slug]/stores';
+	import { createEventDispatcher } from 'svelte';
+	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
 	import { page } from '$app/stores';
 
 	export let column: IColumn;
@@ -33,7 +27,7 @@
 		const destinationColumn_ID = column.id;
 		const task_position = column.tasks?.length;
 
-		const response = await fetch(`/projects/${$page.params}`, {
+		await fetch(`/projects/${$page.params}`, {
 			method: 'PATCH',
 			body: JSON.stringify({
 				task_ID,
@@ -45,8 +39,6 @@
 			}
 		});
 
-		const result = await response.json();
-
 		dispatch('taskMoved');
 
 		dragEntered = false;
@@ -55,7 +47,7 @@
 	function dragDropTask(event: DragEvent, task_ID: string) {
 		event.dataTransfer?.setData('text/plain', task_ID);
 		isDraggingTask = true;
-		event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
+		// event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
 	}
 
 	function handleEdit(event: CustomEvent) {
@@ -92,7 +84,6 @@
 	</button>
 	<div class="border border-black {dragEntered && 'border-gray-700'}">
 		<section class="flex flex-col pb-6">
-			<!--{ children } -->
 			{#each column.tasks || [] as task (task.id)}
 				<Task
 					{task}

@@ -25,14 +25,18 @@
 </script>
 
 <svelte:document
-	on:contextmenu|preventDefault={handleContextmenu}
+	on:contextmenu||preventDefault={handleContextmenu}
 	on:click={handleClickOutside}
 	on:scroll={() => (showContextMenu = false)}
 />
 
 {#if showContextMenu}
-	<div bind:this={contextMenu} class="fixed" style="top: {position.y}px; left: {position.x}px;">
-		<ul class="border border-black w-full bg-background">
+	<div
+		bind:this={contextMenu}
+		class="fixed z-50"
+		style="top: {position.y}px; left: {position.x}px;"
+	>
+		<ul class="shadow-md border border-black w-full bg-background">
 			<li
 				class="py-1 hover:bg-accent hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
 			>

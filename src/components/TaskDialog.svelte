@@ -101,7 +101,7 @@
 								name="deleteTask"
 								tabindex="0"
 								title="Click to remove the task"
-								class=" cursor-pointer active:scale-105 stroke-formBackground"
+								class="cursor-pointer active:scale-105 stroke-formBackground"
 							>
 								<Icon name="trash" stroke_width="2" />
 							</button>

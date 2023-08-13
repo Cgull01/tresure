@@ -4,25 +4,62 @@
 	import Icon from './Icon.svelte';
 	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
 	import { createEventDispatcher } from 'svelte';
+	import { enhance } from '$app/forms';
 
 	export let task: ITask;
 
+	let showContextMenu = false;
+	let contextMenu: HTMLElement;
+	let position = { x: 220, y: 420 };
+
+	function handleClickOutside(event: MouseEvent) {
+		if (contextMenu && !contextMenu.contains(event.target as Node)) {
+			showContextMenu = false;
+		}
+	}
 	const dispatch = createEventDispatcher();
+	function handleContextmenu(event: MouseEvent) {
+		position = { x: event.clientX, y: event.clientY };
+		showContextMenu = !showContextMenu;
+	}
 
 	function handleClick() {
 		dispatch('edit', {
 			task: task
 		});
 	}
+
+	function onDeleteTask({ formData }: any) {
+		formData.set('task_id', task.id);
+
+		showContextMenu = false;
+	}
 </script>
 
 <div
 	draggable="true"
 	on:dragstart
-	on:contextmenu|preventDefault={() => console.log('asdf')}
+	on:contextmenu|preventDefault|stopPropagation={handleContextmenu}
+	on:mouseleave={() => {
+		showContextMenu = false;
+	}}
 	role="listitem"
 	class="select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
 >
+	{#if showContextMenu}
+		<form
+			method="POST"
+			action="?/deleteTask"
+			use:enhance={onDeleteTask}
+			class="fixed z-50 border-black border bg-background px-2 py-1"
+			style="top: {position.y}px; left: {position.x}px;"
+		>
+			<button class="flex flex-row gap-2 hover:scale-105m">
+				<Icon name="trash" stroke_width="2" />
+				Delete
+			</button>
+		</form>
+	{/if}
 	<div class="flex flex-row justify-between">
 		<div class="flex flex-row text-white gap-2 font-semibold overflow-x-auto">
 			{#each task.tags || [] as tag}
