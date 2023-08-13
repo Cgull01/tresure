@@ -1,7 +1,6 @@
 <script lang="ts">
-	import Icon from './Icon.svelte';
 	import { enhance } from '$app/forms';
-	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
+	import { DIALOG_MANAGER } from '../routes/projects/[slug]/stores';
 
 	let dialogRef: HTMLDialogElement;
 	let projectTitleInput: string;
@@ -57,16 +56,9 @@
 					</div>
 				</div>
 				<div
-					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
+					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12"
 				>
 					<button>Create New Project</button>
-
-					<Icon
-						height={48}
-						width={48}
-						name="directions-right"
-						styles="fill-black group-active:translate-x-11 group-active:transition-none group-hover:translate-x-6 transition-transform group-hover:fill-white"
-					/>
 				</div>
 			</form>
 		</div>

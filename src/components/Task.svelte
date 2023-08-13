@@ -1,22 +1,15 @@
 <script lang="ts">
-	import type { Column, Task } from '@prisma/client';
-	import type { IColumn, ITask } from '$lib/types';
-	import Icon from './Icon.svelte';
-	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
+	import type { ITask } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import { enhance } from '$app/forms';
+	import IconTrash from '../Icons/Icon_trash.svelte';
+	import IconEdit from '../Icons/Icon_edit.svelte';
 
 	export let task: ITask;
 
 	let showContextMenu = false;
-	let contextMenu: HTMLElement;
 	let position = { x: 220, y: 420 };
 
-	function handleClickOutside(event: MouseEvent) {
-		if (contextMenu && !contextMenu.contains(event.target as Node)) {
-			showContextMenu = false;
-		}
-	}
 	const dispatch = createEventDispatcher();
 	function handleContextmenu(event: MouseEvent) {
 		position = { x: event.clientX, y: event.clientY };
@@ -55,7 +48,7 @@
 			style="top: {position.y}px; left: {position.x}px;"
 		>
 			<button class="flex flex-row gap-2 hover:scale-105m">
-				<Icon name="trash" stroke_width="2" />
+				<IconTrash />
 				Delete
 			</button>
 		</form>
@@ -69,7 +62,7 @@
 			{/each}
 		</div>
 		<button class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100" on:click={handleClick}>
-			<Icon name="edit" stroke_width="2" />
+			<IconEdit />
 		</button>
 	</div>
 	<div class="flex flex-row justify-between pb-2">

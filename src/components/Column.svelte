@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { IColumn } from '$lib/types';
 	import PlusButton from './PlusButton.svelte';
-	import Icon from './Icon.svelte';
 	import Task from './Task.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
 	import { page } from '$app/stores';
+	import IconMoreHorizontal from '../Icons/Icon_more_horizontal.svelte';
 
 	export let column: IColumn;
 
@@ -79,7 +79,7 @@
 				$SELECTED_COLUMN = column;
 			}}
 		>
-			<Icon name={'more-horizontal'} stroke_width="2" />
+			<IconMoreHorizontal />
 		</button>
 	</button>
 	<div class="border border-black {dragEntered && 'border-gray-700'}">

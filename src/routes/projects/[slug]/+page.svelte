@@ -3,7 +3,6 @@
 	import Column from '../../../components/Column.svelte';
 	import TaskDialog from '../../../components/TaskDialog.svelte';
 	import type { IColumn, IProject, ITask } from '$lib/types';
-	import Icon from '../../../components/Icon.svelte';
 	import ProjectDialog from '../../../components/ProjectDialog.svelte';
 	import ColumnDialog from '../../../components/ColumnDialog.svelte';
 	import type { PageData } from './$types';
@@ -11,6 +10,8 @@
 	import { DIALOG_MANAGER, SELECTED_PROJECT } from './stores';
 	import { json } from '@sveltejs/kit';
 	import ProjectContextMenu from '../../../components/ProjectContextMenu.svelte';
+	import IconDirectionLeft from '../../../Icons/Icon_direction_left.svelte';
+	import IconMoreHorizontal from '../../../Icons/Icon_more_horizontal.svelte';
 
 	export let data: PageData;
 
@@ -47,11 +48,12 @@
 <div class="p-4">
 	<div class="flex flex-row items-center gap-4">
 		<a href="/" class="hover:scale-105">
-			<Icon name="direction-left" stroke_width="1.5" styles="w-12 h-12 p-2" />
+			<IconDirectionLeft styles="w-12 h-12 p-2" />
 		</a>
 		<div class="text-2xl font-semibold">{$SELECTED_PROJECT && $SELECTED_PROJECT.title}</div>
 		<button on:click={showProjectDialog} class="active:scale-105">
-			<Icon name={'more-horizontal'} stroke_width="2" styles="w-12 h-12 p-2" />
+			<IconMoreHorizontal styles="w-12 h-12 p-2" />
+			<test />
 		</button>
 	</div>
 	<hr class="w-1/3 border-t-1 border-black self-center" />

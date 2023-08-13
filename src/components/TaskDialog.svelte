@@ -2,9 +2,10 @@
 	import { onDestroy } from 'svelte';
 	import PlusButton from './PlusButton.svelte';
 	import type { ITag, ITask } from '$lib/types';
-	import Icon from './Icon.svelte';
 	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
 	import { enhance } from '$app/forms';
+	import IconTrash from '../Icons/Icon_trash.svelte';
+	import IconColors from '../Icons/Icon_colors.svelte';
 
 	const TAG_COLORS = [
 		'red-700',
@@ -103,7 +104,7 @@
 								title="Click to remove the task"
 								class="cursor-pointer active:scale-105 stroke-formBackground"
 							>
-								<Icon name="trash" stroke_width="2" />
+								<IconTrash />
 							</button>
 						</form>
 					{/if}
@@ -148,13 +149,7 @@
 									}}
 								>
 									<div class="h-6 w-6 cursor-pointer active:scale-100 hover:scale-105">
-										<Icon
-											name="colors"
-											stroke_width="0"
-											styles="fill-{TagInput.color}"
-											width={24}
-											height={24}
-										/>
+										<IconColors styles="fill-{TagInput.color} h-6 w-6" />
 									</div>
 								</button>
 								{#if isColorDropdownVisible}
@@ -181,7 +176,7 @@
 								bind:value={TagInput.tag}
 								class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none"
 							/>
-							<PlusButton size={22} bonusStyles="border" on:click={addTag} />
+							<PlusButton bonusStyles="border" on:click={addTag} />
 						</div>
 					</div>
 					<!-- <div class="text-lg font-semibold">Assigned members</div> -->
@@ -201,22 +196,15 @@
 						<textarea
 							placeholder="Task details"
 							bind:value={task.details}
-							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full"
+							class="p-1 border-l-2 border-black bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3 w-full min-h-[2rem]"
 						/>
 					</div>
 				</div>
 
 				<div
-					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
+					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12"
 				>
 					<button>Save changes</button>
-
-					<Icon
-						height={48}
-						width={48}
-						name="directions-right"
-						styles="fill-black group-active:translate-x-11 group-active:transition-none group-hover:translate-x-6 transition-transform group-hover:fill-white"
-					/>
 				</div>
 			</form>
 		</div>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import IconTrash from '../Icons/Icon_trash.svelte';
 	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
-	import Icon from './Icon.svelte';
 
 	let dialogRef: HTMLDialogElement;
 	let projectTitleInput: string = $SELECTED_PROJECT ? $SELECTED_PROJECT.title : '';
@@ -40,7 +40,7 @@
 							title="Click to remove the task"
 							class=" cursor-pointer active:scale-105 stroke-formBackground"
 						>
-							<Icon name="trash" stroke_width="2" />
+							<IconTrash />
 						</button>
 					</form>
 				</div>
@@ -72,17 +72,9 @@
 				</div>
 				{#if projectTitleInput.length > 0}
 					<div
-						class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none"
+						class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12"
 					>
 						<button>Save changes</button>
-
-						<Icon
-							height={48}
-							width={48}
-							name="directions-right"
-							styles="fill-black group-active:translate-x-11 group-active:transition-none group-hover:translate-x-6 transition-transform group-hover:fill-white
-                        "
-						/>
 					</div>
 				{/if}
 			</form>

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import IconPlus from '../Icons/Icon_plus.svelte';
+	import IconSettings from '../Icons/Icon_settings.svelte';
 	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
-	import Icon from './Icon.svelte';
 
 	let showContextMenu = false;
 	let contextMenu: HTMLElement;
@@ -45,14 +46,17 @@
 					on:click={() => {
 						$DIALOG_MANAGER.projectDialog = true;
 						showContextMenu = false;
-					}}><Icon name="settings" stroke_width="2" /> Project settings</button
+					}}
+				>
+					<IconSettings />
+					Project settings</button
 				>
 			</li>
 			<li
 				class="py-1 hover:bg-accent hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
 			>
 				<form action="?/addColumn" method="POST" use:enhance={handleSubmit}>
-					<button class="flex gap-2"> <Icon name="add" stroke_width="2" />Add column</button>
+					<button class="flex gap-2"> <IconPlus /> Add column</button>
 				</form>
 			</li>
 		</ul>
