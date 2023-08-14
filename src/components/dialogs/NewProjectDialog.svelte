@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { DIALOG_MANAGER } from '../routes/projects/[slug]/stores';
+	import { DIALOG_MANAGER } from '../../routes/projects/[slug]/stores';
 
 	let dialog_ref: HTMLDialogElement;
 	let project_title_input: string;

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import IconTrash from '../Icons/Icon_trash.svelte';
-	import { DIALOG_MANAGER, SELECTED_COLUMN } from '../routes/projects/[slug]/stores';
+	import IconTrash from '../../Icons/Icon_trash.svelte';
+	import { DIALOG_MANAGER, SELECTED_COLUMN } from '../../routes/projects/[slug]/stores';
 
 	let dialog_ref: HTMLDialogElement;
 	let column_title = '';

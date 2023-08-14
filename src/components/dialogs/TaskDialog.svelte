@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import PlusButton from './PlusButton.svelte';
 	import type { ITag, ITask } from '$lib/types';
-	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
+	import {
+		DIALOG_MANAGER,
+		SELECTED_COLUMN,
+		SELECTED_TASK
+	} from '../../routes/projects/[slug]/stores';
 	import { enhance } from '$app/forms';
-	import IconTrash from '../Icons/Icon_trash.svelte';
-	import IconColors from '../Icons/Icon_colors.svelte';
+	import IconTrash from '../../Icons/Icon_trash.svelte';
+	import IconColors from '../../Icons/Icon_colors.svelte';
+	import PlusButton from '../PlusButton.svelte';
 
 	const TAG_COLORS = [
 		'red-700',

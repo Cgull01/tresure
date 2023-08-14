@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import IconTrash from '../Icons/Icon_trash.svelte';
-	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
+	import IconTrash from '../../Icons/Icon_trash.svelte';
+	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../../routes/projects/[slug]/stores';
 
 	let dialog_ref: HTMLDialogElement;
 	let project_title_input: string = $SELECTED_PROJECT ? $SELECTED_PROJECT.title : '';

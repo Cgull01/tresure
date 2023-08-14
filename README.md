@@ -48,7 +48,7 @@ TODO:
 - add more columns V
 - add column and task position in database V
 - context menu on task to remove task V
-- renaming variable like taskID to task_id <---
+- renaming variable like taskID to task_id V
 - error pages, no network pages, 404 pages
 - stylize background a bit
 -----------^ ok with abandoning here ^-------------

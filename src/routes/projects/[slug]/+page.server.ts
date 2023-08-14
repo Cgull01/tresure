@@ -1,17 +1,51 @@
 import prisma from '$lib/server/prisma';
 import type { IColumn, IProject, ITask } from '$lib/types.js';
-import { error, redirect } from '@sveltejs/kit';
-import { GET } from './+server';
+import { redirect } from '@sveltejs/kit';
 
 export async function load({ params }: any) {
 
-    const response = await GET({ params });
+    try {
+        const response = await prisma.project.findFirst({
+            where: {
+                id: params.slug
+            },
+            include: {
+                columns: {
+                    include: {
+                        tasks: true,
+                    }
+                }
+            }
+        });
 
-    if (response.status === 200) {
-        const result = await response.json();
-        return { "project": result, "slug": params.slug };
-    } else {
-        throw new Error('no project found');
+        if (!response) {
+            return { status: 404, body: { error: 'Project not found' } };
+        }
+
+        const project: IProject = {
+            id: response.id,
+            title: response.title,
+            columns: response.columns.map(col => ({
+                id: col.id,
+                title: col.title,
+                project_id: col.projectId,
+                position: col.position,
+                tasks: col.tasks.map(task => ({
+                    id: task.id,
+                    title: task.title || '',
+                    details: task.details || '',
+                    dueDate: task.dueDate,
+                    position: task.position,
+                    tags: task.tags as { color: string; tag: string }[]
+                })).sort((a, b) => a.position - b.position)
+            })) as IColumn[]
+        };
+
+        project.columns.sort((a, b) => a.position - b.position)
+
+        return { project: project };
+    } catch (err) {
+        return { status: 500, body: { error: 'Error fetching project data' } };
     }
 }
 
