@@ -4,12 +4,12 @@
 
 <form class="flex flex-col text-accent" method="post" action="?/login">
 	<div class="p-3 flex flex-col">
-		<label for="email" class="font-semibold">Email:</label>
+		<label for="username" class="font-semibold">Username:</label>
 		<input
-			type="email"
-			autoComplete="email"
-			id="email"
-			name="email"
+			type="text"
+			autoComplete="username"
+			id="username"
+			name="username"
 			class="p-1 border border-l-2 border-accent bg-formBackground focus:bg-formBackgroundFocused outline-none" />
 
 		<label for="password" class="font-semibold">Password:</label>

@@ -1,7 +1,7 @@
 import prisma from '$lib/server/prisma';
 import { json } from '@sveltejs/kit';
 
-const user_id = '1a7816c1-99c4-4971-a74c-abaebf4cd49d'
+const user_id = '6aff0bb1-f162-40bc-b2d2-13179725cdd3'
 
 export async function load() {
     const response = await prisma.project.findMany();
