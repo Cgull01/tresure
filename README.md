@@ -49,8 +49,8 @@ TODO:
 - add column and task position in database V
 - context menu on task to remove task V
 - renaming variable like taskID to task_id V
-- error pages, no network pages, 404 pages
-- stylize background a bit
+- error pages, no network pages, 404 pages V
+- stylize background a bit V
 -----------^ ok with abandoning here ^-------------
 
 - fix dueDate

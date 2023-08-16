@@ -10,6 +10,8 @@
 	import { invalidateAll } from '$app/navigation';
 	import ProjectDialog from '../../../components/dialogs/ProjectDialog.svelte';
 	import TaskDialog from '../../../components/dialogs/TaskDialog.svelte';
+	import IconAdd from '../../../Icons/Icon_add.svelte';
+	import IconSettings from '../../../Icons/Icon_settings.svelte';
 
 	export let data: PageData;
 
@@ -70,3 +72,32 @@
 		{/each}
 	</div>
 {/if}
+
+<div
+	class="w-full border border-accent
+ h-max fixed bottom-0 -z-10 flex flex-row gap-3 p-3">
+	<div class="flex flex-col gap-2 border-r border-accent p-2 items-center">
+		<IconSettings />
+		<span>John Doe</span>
+	</div>
+	<div class="flex flex-col gap-2 border-r border-accent p-2">
+		<div class="flex flex-row gap-2">
+			<IconAdd styles="border border-accent p-1" />
+			add collumn
+		</div>
+		<div class="flex flex-row gap-2">
+			<IconAdd styles="border border-accent p-1" />
+			see members
+		</div>
+	</div>
+	<div class="flex flex-col gap-2 p-2">
+		<div class="flex flex-row gap-2">
+			<IconAdd styles="border border-accent p-1" />
+			add collumn
+		</div>
+		<div class="flex flex-row gap-2">
+			<IconAdd styles="border border-accent p-1" />
+			see members
+		</div>
+	</div>
+</div>

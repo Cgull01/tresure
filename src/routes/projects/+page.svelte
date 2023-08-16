@@ -1,6 +1,6 @@
 <script lang="ts">
-	import NewProjectDialog from '../../components/NewProjectDialog.svelte';
 	import PlusButton from '../../components/PlusButton.svelte';
+	import NewProjectDialog from '../../components/dialogs/NewProjectDialog.svelte';
 	import type { PageData } from './$types';
 	import { DIALOG_MANAGER } from './[slug]/stores';
 
