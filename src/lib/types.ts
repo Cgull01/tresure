@@ -13,13 +13,13 @@ export interface ITag {
 export interface IColumn {
     id: string;
     title: string;
-    tasks?: ITask[];
+    cards?: ICard[];
     project_id: string;
     position: number;
 }
 
 
-export interface ITask {
+export interface ICard {
     id: string;
     title: string;
     details: string;
@@ -27,6 +27,7 @@ export interface ITask {
         color: string;
         tag: string;
     }[];
+    creationDate?: Date | null;
     dueDate?: Date | null;
     position: number;
 }

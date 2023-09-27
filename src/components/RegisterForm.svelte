@@ -42,15 +42,8 @@
 		</div> -->
 	</div>
 	<div
-		class="flex flex-row cursor-pointer border-t border-accent w-full text-3xl mt-6 hover:bg-accent hover:text-white transition-colors group px-4 align-middle font-semibold">
-		<button>Continue</button>
-		<svg
-			class="group-active:translate-x-11 group-active:transition-none group-hover:translate-x-6 transition-transform group-hover:fill-white"
-			xmlns="http://www.w3.org/2000/svg"
-			height="48"
-			viewBox="0 -960 960 960"
-			width="48"
-			><path
-				d="m242-200 210-280-210-280h74l210 280-210 280h-74Zm252 0 210-280-210-280h74l210 280-210 280h-74Z" /></svg>
+	class="flex flex-row cursor-pointer border-t border-accent w-full text-3xl mt-6 hover:bg-accent hover:text-white transition-colors group px-4 align-middle font-semibold h-12">
+	<button>Continue</button>
+		
 	</div>
 </form>

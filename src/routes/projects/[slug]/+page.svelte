@@ -9,11 +9,13 @@
 	import IconMoreHorizontal from '../../../Icons/Icon_more_horizontal.svelte';
 	import { invalidateAll } from '$app/navigation';
 	import ProjectDialog from '../../../components/dialogs/ProjectDialog.svelte';
-	import TaskDialog from '../../../components/dialogs/TaskDialog.svelte';
+	import CardDialog from '../../../components/dialogs/CardDialog.svelte';
 	import IconAdd from '../../../Icons/Icon_add.svelte';
 	import IconSettings from '../../../Icons/Icon_settings.svelte';
 
-	export let data: PageData;
+	export let data: any;
+
+	console.log(data);
 
 	function isIProject(obj: any): obj is IProject {
 		return (
@@ -28,14 +30,6 @@
 		$DIALOG_MANAGER.project_dialog = true;
 	}
 
-	$: {
-		if (data.project && isIProject(data.project)) {
-			$SELECTED_PROJECT = data.project;
-		} else {
-			$SELECTED_PROJECT = null;
-		}
-	}
-
 	async function refreshColumns() {
 		invalidateAll();
 	}
@@ -45,13 +39,12 @@
 	<title>TRESURE</title>
 </svelte:head>
 
-{#if $SELECTED_PROJECT}
 	<div class="p-4">
 		<div class="flex flex-row items-center gap-4">
 			<a href="/projects" class="hover:scale-105">
 				<IconDirectionLeft styles="w-12 h-12 p-2" />
 			</a>
-			<div class="text-2xl font-semibold">{$SELECTED_PROJECT.title}</div>
+			<div class="text-2xl font-semibold">{data.project.title}</div>
 			<button on:click={showProjectDialog} class="active:scale-105">
 				<IconMoreHorizontal styles="w-12 h-12 p-2" />
 				<test />
@@ -64,14 +57,13 @@
 
 	<ColumnDialog />
 	<ProjectDialog />
-	<TaskDialog />
+	<CardDialog />
 
 	<div class="flex flex-row justify-center">
-		{#each $SELECTED_PROJECT.columns as column}
+		{#each data.project.columns as column}
 			<Column {column} on:taskMoved={refreshColumns} />
 		{/each}
 	</div>
-{/if}
 
 <div
 	class="w-full border border-accent

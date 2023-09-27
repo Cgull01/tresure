@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onDestroy } from 'svelte';
-	import type { ITag, ITask } from '$lib/types';
+	import type { ITag, ICard } from '$lib/types';
 	import {
 		DIALOG_MANAGER,
 		SELECTED_COLUMN,
@@ -28,7 +28,7 @@
 	let color_dropdown_visible = false;
 	let dropdown_element: HTMLElement;
 
-	$: task = $SELECTED_TASK ?? <ITask>{};
+	$: task = $SELECTED_TASK ?? <ICard>{};
 
 	function addTag() {
 		if (tag_input.tag.length === 0) return;
@@ -50,7 +50,7 @@
 		$SELECTED_TASK = null;
 
 		tag_input = { tag: '', color: TAG_COLORS[0] };
-		task = <ITask>{};
+		task = <ICard>{};
 	}
 
 	function onDeleteTask({ formData }: any) {
@@ -64,7 +64,7 @@
 		}
 
 		formData.set('column_id', $SELECTED_COLUMN?.id);
-		if (!task.id) task.position = $SELECTED_COLUMN?.tasks?.length || 0;
+		if (!task.id) task.position = $SELECTED_COLUMN?.cards?.length || 0;
 		formData.set('task', JSON.stringify(task));
 		closeDialog();
 	}

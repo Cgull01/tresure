@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { IColumn } from '$lib/types';
 	import PlusButton from './PlusButton.svelte';
-	import Task from './Task.svelte';
+	import Card from './Card.svelte';
 	import { createEventDispatcher } from 'svelte';
 	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
 	import { page } from '$app/stores';
 	import IconMoreHorizontal from '../Icons/Icon_more_horizontal.svelte';
+
 
 	export let column: IColumn;
 
@@ -25,7 +26,7 @@
 		const task_ID = event.dataTransfer?.getData('text/plain') || '';
 
 		const destinationColumn_ID = column.id;
-		const task_position = column.tasks?.length;
+		const task_position = column.cards?.length;
 
 		await fetch(`/projects/${$page.params}`, {
 			method: 'PATCH',
@@ -55,6 +56,7 @@
 		$SELECTED_COLUMN = column;
 		$DIALOG_MANAGER.task_dialog = true;
 	}
+	
 </script>
 
 <div
@@ -68,8 +70,8 @@
 	role="listbox"
 	tabindex="0">
 	<button
-		class="text-white bg-accent flex flex-row justify-between px-3 {drag_entered && 'opacity-80'}">
-		<h1 class="font-sans py-3 text-3xl">{column.title}</h1>
+		class="text-white bg-accent flex flex-row justify-between px-3 {drag_entered && 'opacity-80'} w-full">
+		<h1 class="font-sans py-3 text-3xl text-ellipsis overflow-hidden">{column.title}</h1>
 		<button
 			class="self-center active:scale-110"
 			on:click={() => {
@@ -81,11 +83,11 @@
 	</button>
 	<div class="border border-black {drag_entered && 'border-gray-700'}">
 		<section class="flex flex-col pb-6">
-			{#each column.tasks || [] as task (task.id)}
-				<Task
-					{task}
+			{#each column.cards || [] as card (card.id)}
+				<Card
+					card={card}
 					on:dragstart={(event) => {
-						dragDropTask(event, task.id);
+						dragDropTask(event, card.id);
 					}}
 					on:edit={handleEdit} />
 			{/each}
