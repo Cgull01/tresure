@@ -10,6 +10,5 @@ import { json } from '@sveltejs/kit';
 //         data: { columnId: destinationColumn_ID, position: task_position }
 //     });
 
-
 //     return json(updatedTask);
 // }

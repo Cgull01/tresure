@@ -1,24 +1,24 @@
 <script>
+	import IconLogo from '../../Icons/Icon_Logo.svelte';
 	import IconDirectionRight from '../../Icons/Icon_direction_right.svelte';
 	import Container from '../../components/Container.svelte';
+	import NavBar from '../../components/NavBar.svelte';
 
 	import RegisterForm from '../../components/RegisterForm.svelte';
 
 	export let form;
 </script>
 
-<div class="w-screen h-screen flex flex-col items-center gap-6 justify-center">
-	<div class="text-2xl font-semibold">TRESURE</div>
-	<Container title="Create An Account">
-		<RegisterForm />
+<NavBar />
+
+<div class="w-full background-pattern h-full py-52 flex flex-col items-center gap-6 justify-center">
+	<Container title="Create New Account">
+		<RegisterForm {form} />
 	</Container>
 	<a
 		href="/login"
-		class="select-none flex flex-row cursor-pointer mt-6 border border-black px-3 hover:bg-black hover:text-white transition-colors group">
-		Login <IconDirectionRight />
+		class="select-none flex bg-background flex-row cursor-pointer mt-6 border border-primary px-3 hover:bg-primary hover:text-secondary transition-colors group"
+	>
+		Already have an account? <IconDirectionRight />
 	</a>
-
-	{#if form?.message}
-		<p class="error">{form.message}</p>
-	{/if}
 </div>

@@ -1,37 +1,39 @@
-<script>
+<script lang="ts">
+	import { enhance } from '$app/forms';
 	import IconDirectionRight from '../Icons/Icon_direction_right.svelte';
+
+	export let form: any;
 </script>
 
-<form class="flex flex-col text-accent" method="post" action="?/login">
+<form use:enhance class="flex flex-col text-primary bg-background" method="POST" action="?/login">
+	{#if form?.message}
+		<p class="bg-accent text-secondary text-2xl py-1">{form.message}</p>
+	{/if}
 	<div class="p-3 flex flex-col">
-		<label for="username" class="font-semibold">Username:</label>
+		<label for="email" class="font-semibold">Email:</label>
 		<input
+			required
 			type="text"
-			autoComplete="username"
-			id="username"
-			name="username"
-			class="p-1 border border-l-2 border-accent bg-formBackground focus:bg-formBackgroundFocused outline-none" />
+			autoComplete="email"
+			id="email"
+			name="email"
+			class="p-1 border border-l-2 border-primary bg-secondary outline-none mb-3"
+			value={form?.email || ''}
+		/>
 
 		<label for="password" class="font-semibold">Password:</label>
 		<input
+			required
 			type="password"
 			autoComplete="current-password"
 			id="password"
 			name="password"
-			class="p-1 border border-l-2 border-accent bg-formBackground focus:bg-formBackgroundFocused outline-none mb-3" />
-
-		<div class="text-xl self-end hover:bg-formBackground px-2 cursor-pointer">
-			<input
-				type="checkbox"
-				autoComplete="off"
-				id="remember"
-				name="remember"
-				class="cursor-pointer accent-accent h-4 w-4 border-l-2 rounded-full mr-1" />
-			<label for="remember" class="cursor-pointer select-none">Remember me</label>
-		</div>
+			class="p-1 border border-l-2 border-primary bg-secondary outline-none mb-3"
+		/>
 	</div>
 	<div
-		class="flex flex-row cursor-pointer border-t border-accent w-full text-3xl mt-6 hover:bg-accent hover:text-white transition-colors group px-4 align-middle font-semibold h-12">
+		class="flex flex-row cursor-pointer border-t border-primary w-full text-3xl mt-6 hover:bg-primary hover:text-white transition-colors group px-4 align-middle font-semibold h-12"
+	>
 		<button>Continue</button>
 	</div>
 </form>

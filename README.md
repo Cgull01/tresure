@@ -13,8 +13,8 @@ TODO:
 - delete task in task edit V
 
 - clean code, types and check for question marks V
--finish moving svgs, check if all properties are needed, check types V
--dueDate not showing, also dialog cant submit on duedate modify V
+  -finish moving svgs, check if all properties are needed, check types V
+  -dueDate not showing, also dialog cant submit on duedate modify V
 
 - rename project V
 
@@ -27,7 +27,6 @@ TODO:
 
 - show dragImage created in figma X
 
-
 - start prisma, postresql, connect
 
 -create project
@@ -39,9 +38,8 @@ TODO:
 - remove task V
 - move task V
 
+---
 
-
----------------------------------------------------
 - delete project V
 - rename column V
 - delete column V
@@ -51,16 +49,22 @@ TODO:
 - renaming variable like taskID to task_id V
 - error pages, no network pages, 404 pages V
 - stylize background a bit V
------------^ ok with abandoning here ^-------------
+  -----------^ ok with abandoning here ^-------------
 
 - fix dueDate
 - move columns?
 
 - register/login - auth
 - dragImage
----------------------------------------------------
+
+---
 
 EXTRAS:
 attachments
 members?
 
+dotnet commands:
+
+dotnet ef migrations add YourMigrationName
+dotnet ef database update
+dotnet watch --no-hot-reload

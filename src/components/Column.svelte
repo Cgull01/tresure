@@ -7,7 +7,6 @@
 	import { page } from '$app/stores';
 	import IconMoreHorizontal from '../Icons/Icon_more_horizontal.svelte';
 
-
 	export let column: IColumn;
 
 	let drag_entered = false;
@@ -56,7 +55,6 @@
 		$SELECTED_COLUMN = column;
 		$DIALOG_MANAGER.task_dialog = true;
 	}
-	
 </script>
 
 <div
@@ -68,32 +66,37 @@
 	on:dragenter
 	on:dragleave={() => (drag_entered = false)}
 	role="listbox"
-	tabindex="0">
+	tabindex="0"
+>
 	<button
-		class="text-white bg-accent flex flex-row justify-between px-3 {drag_entered && 'opacity-80'} w-full">
+		class="text-white bg-primary flex flex-row justify-between px-3 {drag_entered &&
+			'opacity-80'} w-full"
+	>
 		<h1 class="font-sans py-3 text-3xl text-ellipsis overflow-hidden">{column.title}</h1>
 		<button
 			class="self-center active:scale-110"
 			on:click={() => {
 				$DIALOG_MANAGER.column_dialog = true;
 				$SELECTED_COLUMN = column;
-			}}>
+			}}
+		>
 			<IconMoreHorizontal />
 		</button>
 	</button>
-	<div class="border border-black {drag_entered && 'border-gray-700'}">
+	<div class="border border-black bg-zinc-300 {drag_entered && 'border-gray-700'}">
 		<section class="flex flex-col pb-6">
 			{#each column.cards || [] as card (card.id)}
 				<Card
-					card={card}
+					{card}
 					on:dragstart={(event) => {
 						dragDropTask(event, card.id);
 					}}
-					on:edit={handleEdit} />
+					on:edit={handleEdit}
+				/>
 			{/each}
 		</section>
 		<div class="flex flex-row">
-			<PlusButton styles="border-r border-t" on:click={handleClick} />
+			<PlusButton styles="border-r border-t bg-zinc-300" on:click={handleClick} />
 		</div>
 	</div>
 </div>

@@ -29,27 +29,33 @@
 <svelte:document
 	on:contextmenu||preventDefault={handleContextmenu}
 	on:click={handleClickOutside}
-	on:scroll={() => (show_context_menu = false)} />
+	on:scroll={() => (show_context_menu = false)}
+/>
 
 {#if show_context_menu}
 	<div
 		bind:this={context_menu}
 		class="fixed z-50"
-		style="top: {context_menu_position.y}px; left: {context_menu_position.x}px;">
+		style="top: {context_menu_position.y}px; left: {context_menu_position.x}px;"
+	>
 		<ul class="shadow-md border border-black w-full bg-background">
 			<li
-				class="py-1 hover:bg-accent hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black">
+				class="py-1 hover:bg-primary hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
+			>
 				<button
 					class="flex gap-2"
 					on:click={() => {
 						$DIALOG_MANAGER.project_dialog = true;
 						show_context_menu = false;
-					}}>
+					}}
+				>
 					<IconSettings />
-					Project settings</button>
+					Project settings</button
+				>
 			</li>
 			<li
-				class="py-1 hover:bg-accent hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black">
+				class="py-1 hover:bg-primary hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
+			>
 				<form action="?/addColumn" method="POST" use:enhance={handleSubmit}>
 					<button class="flex gap-2"> <IconPlus /> Add column</button>
 				</form>

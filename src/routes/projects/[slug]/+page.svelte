@@ -12,19 +12,11 @@
 	import CardDialog from '../../../components/dialogs/CardDialog.svelte';
 	import IconAdd from '../../../Icons/Icon_add.svelte';
 	import IconSettings from '../../../Icons/Icon_settings.svelte';
+	import IconProfile from '../../../Icons/Icon_profile.svelte';
 
 	export let data: any;
 
 	console.log(data);
-
-	function isIProject(obj: any): obj is IProject {
-		return (
-			obj &&
-			typeof obj.id === 'string' &&
-			typeof obj.title === 'string' &&
-			Array.isArray(obj.columns)
-		);
-	}
 
 	function showProjectDialog() {
 		$DIALOG_MANAGER.project_dialog = true;
@@ -39,18 +31,21 @@
 	<title>TRESURE</title>
 </svelte:head>
 
-	<div class="p-4">
-		<div class="flex flex-row items-center gap-4">
+<div class="h-screen w-screen flex flex-col">
+	<div class="px-4 py-2 bg-secondary w-full border-b border-primary">
+		<div class="flex flex-row w-full items-center gap-4">
 			<a href="/projects" class="hover:scale-105">
 				<IconDirectionLeft styles="w-12 h-12 p-2" />
 			</a>
-			<div class="text-2xl font-semibold">{data.project.title}</div>
+			<div class="text-2xl font-semibold">
+				{data.project.title}
+			</div>
 			<button on:click={showProjectDialog} class="active:scale-105">
 				<IconMoreHorizontal styles="w-12 h-12 p-2" />
 				<test />
 			</button>
 		</div>
-		<hr class="w-1/3 border-t-1 border-black self-center" />
+		<!-- <hr class="w-full border-t-1 border-black self-center" /> -->
 	</div>
 
 	<ProjectContextMenu />
@@ -59,37 +54,41 @@
 	<ProjectDialog />
 	<CardDialog />
 
-	<div class="flex flex-row justify-center">
+	<div
+		class="sm:flex-row sm:items-start items-center flex-col flex h-full pt-16 background-pattern sm:justify-center"
+	>
 		{#each data.project.columns as column}
 			<Column {column} on:taskMoved={refreshColumns} />
 		{/each}
 	</div>
 
-<div
-	class="w-full border border-accent
- h-max fixed bottom-0 -z-10 flex flex-row gap-3 p-3">
-	<div class="flex flex-col gap-2 border-r border-accent p-2 items-center">
-		<IconSettings />
-		<span>John Doe</span>
-	</div>
-	<div class="flex flex-col gap-2 border-r border-accent p-2">
-		<div class="flex flex-row gap-2">
-			<IconAdd styles="border border-accent p-1" />
-			add collumn
+	<div
+		class="w-full border border-primary bg-zinc-300
+		 h-max fixed bottom-0 flex flex-row gap-3 p-3"
+	>
+		<div class="flex flex-col gap-2 border-r border-primary p-2 items-center">
+			<IconProfile />
+			<span>John Doe</span>
 		</div>
-		<div class="flex flex-row gap-2">
-			<IconAdd styles="border border-accent p-1" />
-			see members
+		<div class="flex flex-col gap-2 border-r border-primary p-2">
+			<div class="flex flex-row gap-2">
+				<IconAdd styles="border border-primary p-1" />
+				add collumn
+			</div>
+			<div class="flex flex-row gap-2">
+				<IconAdd styles="border border-primary p-1" />
+				see members
+			</div>
 		</div>
-	</div>
-	<div class="flex flex-col gap-2 p-2">
-		<div class="flex flex-row gap-2">
-			<IconAdd styles="border border-accent p-1" />
-			add collumn
-		</div>
-		<div class="flex flex-row gap-2">
-			<IconAdd styles="border border-accent p-1" />
-			see members
+		<div class="flex flex-col gap-2 p-2">
+			<div class="flex flex-row gap-2">
+				<IconAdd styles="border border-primary p-1" />
+				add collumn
+			</div>
+			<div class="flex flex-row gap-2">
+				<IconAdd styles="border border-primary p-1" />
+				see members
+			</div>
 		</div>
 	</div>
 </div>

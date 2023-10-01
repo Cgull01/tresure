@@ -11,7 +11,6 @@
 	let context_position = { x: 220, y: 420 };
 	console.log(card.tags);
 
-
 	try {
 		card.tags = JSON.parse(card.tags);
 	} catch (error) {
@@ -46,14 +45,16 @@
 		show_context_menu = false;
 	}}
 	role="listitem"
-	class="select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3">
+	class="select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
+>
 	{#if show_context_menu}
 		<form
 			method="POST"
 			action="?/deleteTask"
 			use:enhance={onDeleteTask}
 			class="fixed z-50 border-black border bg-background px-2 py-1"
-			style="top: {context_position.y}px; left: {context_position.x}px;">
+			style="top: {context_position.y}px; left: {context_position.x}px;"
+		>
 			<button class="flex flex-row gap-2 hover:scale-105m">
 				<IconTrash />
 				Delete
