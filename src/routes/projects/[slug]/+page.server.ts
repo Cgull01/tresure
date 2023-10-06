@@ -2,12 +2,30 @@ import { API_URL } from '$env/static/private';
 import type { IColumn, IProject, ICard } from '$lib/types.js';
 import { redirect } from '@sveltejs/kit';
 
-export async function load({ params }: any) {
+export const ssr = false;
+
+
+export async function load({ params, cookies }: any) {
 	// const response = await fetch(`https://localhost:7203/api/Projects/${params.slug}`);
-	const response = await fetch(`${API_URL}/Projects/${params.slug}`);
-	const data = await response.json();
-	console.log(data);
-	return { project: data };
+	const jwt = cookies.get('jwt');
+
+	console.log(jwt);
+
+	if(jwt)
+	{
+		const response = await fetch(`${API_URL}/Projects/${params.slug}`, {
+			headers: {
+				Authorization: `Bearer ${jwt}`
+			}
+		});
+
+		const data = await response.json();
+		console.log(data);
+		return { project: data };
+	}
+
+	throw redirect(308, '/login');
+
 
 	// try {
 	//     const response = await prisma.project.findFirst({

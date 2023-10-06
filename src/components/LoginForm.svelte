@@ -18,7 +18,7 @@
 			id="email"
 			name="email"
 			class="p-1 border border-l-2 border-primary bg-secondary outline-none mb-3"
-			value={form?.email || ''}
+			value={form?.email || 'test@test.com'}
 		/>
 
 		<label for="password" class="font-semibold">Password:</label>
@@ -29,6 +29,7 @@
 			id="password"
 			name="password"
 			class="p-1 border border-l-2 border-primary bg-secondary outline-none mb-3"
+			value="t3St"
 		/>
 	</div>
 	<div

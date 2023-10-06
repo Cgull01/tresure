@@ -3,6 +3,20 @@ import type { IColumn, IProject, ICard } from '$lib/types';
 
 export const SELECTED_COLUMN: Writable<IColumn | null> = writable(null);
 
+export interface AccountState{
+	user: User | null;
+}
+
+export interface User{
+	username: string;
+	email: string;
+	token: string;
+}
+
+export async function signInUser(User:User) {
+
+}
+
 export interface DialogStates {
 	task_dialog: boolean;
 	project_dialog: boolean;

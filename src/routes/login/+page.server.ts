@@ -1,12 +1,13 @@
+import { browser } from '$app/environment';
 import { API_URL } from '$env/static/private';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail, json, redirect } from '@sveltejs/kit';
 
 export const actions = {
-	login: async ({ request }: any) => {
-		const data = await request.formData();
+	login: async ({ request, cookies }: any) => {
+		const form_data = await request.formData();
 
-		const email = data.get('email');
-		const password = data.get('password');
+		const email = form_data.get('email');
+		const password = form_data.get('password');
 
 		if (!email || !password) {
 			return fail(400, { email, message: 'Missing email or password' });
@@ -24,11 +25,32 @@ export const actions = {
 		});
 
 		if (!response.ok) {
-			return fail(400, { email, message: 'Missing email or password' });
+			return fail(400, { email, message: 'Wrong credentials' });
 
-			return fail(response.status, { email, message: response.statusText });
 		}
 
-		throw redirect(303, '/projects');
+		console.log(response);
+		let data = await response.json();
+
+
+		console.log("------------------")
+		console.log(browser);
+		if(data.token)
+		{
+			cookies.set('jwt', data.token, {
+				httpOnly: true,
+				secure: true,
+				sameSite: 'lax',
+				path: '/'
+			});
+
+			throw redirect(303, '/projects');
+		}
+		else
+		{
+			return fail(400, { email, message: 'token missing' });
+
+		}
+
 	}
 };
