@@ -16,11 +16,10 @@
 
 	export let data: any;
 
-	console.log(data);
-
 	function showProjectDialog() {
 		$DIALOG_MANAGER.project_dialog = true;
 	}
+
 
 	async function refreshColumns() {
 		invalidateAll();
@@ -55,7 +54,7 @@
 	<CardDialog />
 
 	<div
-		class="sm:flex-row sm:items-start items-center flex-col flex h-full pt-16 background-pattern sm:justify-center"
+		class="sm:flex-row sm:items-start items-center flex-col flex h-full pt-16 background-pattern sm:justify-center overflow-y-auto"
 	>
 		{#each data.project.columns as column}
 			<Column {column} on:taskMoved={refreshColumns} />
@@ -64,12 +63,12 @@
 
 	<div
 		class="w-full border border-primary bg-zinc-300
-		 h-max fixed bottom-0 flex flex-row gap-3 p-3"
+		 h-max flex flex-row gap-3 p-3"
 	>
-		<div class="flex flex-col gap-2 border-r border-primary p-2 items-center">
+		<button class="flex flex-col gap-2 border-r border-primary p-2 items-center">
 			<IconProfile />
 			<span>John Doe</span>
-		</div>
+		</button>
 		<div class="flex flex-col gap-2 border-r border-primary p-2">
 			<div class="flex flex-row gap-2">
 				<IconAdd styles="border border-primary p-1" />

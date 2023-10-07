@@ -10,6 +10,7 @@
 	import IconTrash from '../../Icons/Icon_trash.svelte';
 	import IconColors from '../../Icons/Icon_colors.svelte';
 	import PlusButton from '../PlusButton.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	const TAG_COLORS = [
 		'red-700',
@@ -67,6 +68,8 @@
 		if (!task.id) task.position = $SELECTED_COLUMN?.cards?.length || 0;
 		formData.set('task', JSON.stringify(task));
 		closeDialog();
+		invalidateAll();
+
 	}
 
 	function handleClickOutsideColors(event: MouseEvent) {

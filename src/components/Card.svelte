@@ -9,15 +9,6 @@
 
 	let show_context_menu = false;
 	let context_position = { x: 220, y: 420 };
-	console.log(card.tags);
-
-	try {
-		card.tags = JSON.parse(card.tags);
-	} catch (error) {
-		card.tags = undefined;
-	}
-
-	console.log(card.tags);
 
 	const dispatch = createEventDispatcher();
 	function handleContextmenu(event: MouseEvent) {
@@ -45,7 +36,7 @@
 		show_context_menu = false;
 	}}
 	role="listitem"
-	class="select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
+	class="group select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
 >
 	{#if show_context_menu}
 		<form
@@ -70,7 +61,7 @@
 			{/each}
 		</div>
 		<button class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100" on:click={handleClick}>
-			<IconEdit />
+			<IconEdit styles="group-hover:block hidden"/>
 		</button>
 	</div>
 	<div class="flex flex-row justify-between pb-2">

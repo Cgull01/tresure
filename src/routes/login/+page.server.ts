@@ -29,12 +29,8 @@ export const actions = {
 
 		}
 
-		console.log(response);
 		let data = await response.json();
 
-
-		console.log("------------------")
-		console.log(browser);
 		if(data.token)
 		{
 			cookies.set('jwt', data.token, {

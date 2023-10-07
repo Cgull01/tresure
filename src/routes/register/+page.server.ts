@@ -19,8 +19,6 @@ export const actions = {
 			password: password
 		};
 
-		console.log(register_data);
-
 		const response = await fetch(`${API_URL}/Account/register`, {
 			method: 'POST',
 			headers: {

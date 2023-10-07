@@ -1,15 +1,15 @@
+import { invalidateAll } from '$app/navigation';
 import { API_URL } from '$env/static/private';
 import type { IColumn, IProject, ICard } from '$lib/types.js';
-import { redirect } from '@sveltejs/kit';
+import { json, redirect } from '@sveltejs/kit';
 
 export const ssr = false;
+export const prerender = false;
 
 
 export async function load({ params, cookies }: any) {
 	// const response = await fetch(`https://localhost:7203/api/Projects/${params.slug}`);
 	const jwt = cookies.get('jwt');
-
-	console.log(jwt);
 
 	if(jwt)
 	{
@@ -20,116 +20,99 @@ export async function load({ params, cookies }: any) {
 		});
 
 		const data = await response.json();
-		console.log(data);
+		for(let col of data.columns)
+		{
+			for(let card of col.cards)
+			{
+				try
+				{
+					card.tags = JSON.parse(card.tags)
+				}
+				catch
+				{
+					card.tags = [];
+				}
+			}
+		}
 		return { project: data };
 	}
 
 	throw redirect(308, '/login');
 
 
-	// try {
-	//     const response = await prisma.project.findFirst({
-	//         where: {
-	//             id: params.slug
-	//         },
-	//         include: {
-	//             columns: {
-	//                 include: {
-	//                     tasks: true,
-	//                 }
-	//             }
-	//         }
-	//     });
-
-	//     if (!response) {
-	//         return { status: 404, body: { error: 'Project not found' } };
-	//     }
-
-	//     const project: IProject = {
-	//         id: response.id,
-	//         title: response.title,
-	//         columns: response.columns.map(col => ({
-	//             id: col.id,
-	//             title: col.title,
-	//             project_id: col.projectId,
-	//             position: col.position,
-	//             tasks: col.tasks.map(task => ({
-	//                 id: task.id,
-	//                 title: task.title || '',
-	//                 details: task.details || '',
-	//                 dueDate: task.dueDate,
-	//                 position: task.position,
-	//                 tags: task.tags as { color: string; tag: string }[]
-	//             })).sort((a, b) => a.position - b.position)
-	//         })) as IColumn[]
-	//     };
-
-	//     project.columns.sort((a, b) => a.position - b.position)
-
-	//     return { project: project };
-	// } catch (err) {
-	//     return { status: 500, body: { error: 'Error fetching project data' } };
-	// }
 }
 
 export const actions = {
-	// createTask: async ({ request }: any) => {
-	//     const data = await request.formData();
+	createTask: async ({ request, cookies }: any) => {
+	    const data = await request.formData();
 
-	//     const task_json = data.get('task') as string;
-	//     const column_id = data.get('column_id');
-	//     const task: ITask = JSON.parse(task_json);
+	    const task_json = JSON.parse(data.get('task'));
+	    const column_id = data.get('column_id');
 
-	//     await prisma.task.create({
-	//         data: {
-	//             title: task.title,
-	//             details: task.details,
-	//             dueDate: task.dueDate,
-	//             tags: task.tags,
-	//             position: task.position,
+		const jwt = cookies.get('jwt')
 
-	//             column: {
-	//                 connect: {
-	//                     id: column_id,
-	//                 }
-	//             }
-	//         },
-	//     })
+		const parseData = {
+			"title": task_json.title ?? null,
+			"details": task_json.details ?? null,
+			"tags": JSON.stringify(task_json.tags) ?? null,
+			"dueDate": task_json.dueDate ?? null,
+			"creationDate": new Date(),
+			"assignedMembers": task_json.assignedMembers ?? null,
+			"columnId": column_id
+		}
 
-	//     return { success: true }
-	// },
-	editTask: async ({ request }: any) => {
+		const response = await fetch(`${API_URL}/Cards`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+			body: JSON.stringify(parseData)
+		});
+
+		const res = await response.json();
+
+		return {sucess: true}
+
+	},
+
+	editTask: async ({ request, cookies }: any) => {
 		const data = await request.formData();
 
 		const task_json = data.get('task') as string;
 
 		console.log(task_json);
-		// const task: ITask = JSON.parse(task_json);
-
-		// await prisma.task.update({
-		//     where: { id: task.id },
-		//     data: {
-		//         title: task.title,
-		//         details: task.details,
-		//         dueDate: task.dueDate,
-		//         position: task.position,
-		//         tags: task.tags ?? JSON.parse(task.tags || ''),
-		//     }
-		// })
 
 		return { success: true };
-	}
-	// deleteTask: async ({ request }: any) => {
-	//     const data = await request.formData();
-	//     let payload: any = {};
-	//     payload.id = data.get('task_id');
+	},
 
-	//     await prisma.task.delete({
-	//         where: payload,
-	//     })
+	deleteTask: async ({ request, cookies }: any) => {
+	    const data = await request.formData();
+	    let task_id = data.get('task_id');
+		const jwt = cookies.get('jwt')
 
-	//     return { success: true }
-	// },
+		console.log(task_id);
+
+		try
+		{
+
+			await fetch(`${API_URL}/Cards/${task_id}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${jwt}`
+				},
+			});
+		}
+		catch(error)
+		{
+			console.error(`Failed to delete a card: ${error}`)
+		}
+
+	    return { success: true }
+	},
 	// editProject: async ({ request }: any) => {
 	//     const data = await request.formData();
 
