@@ -68,3 +68,6 @@ dotnet commands:
 dotnet ef migrations add YourMigrationName
 dotnet ef database update
 dotnet watch --no-hot-reload
+
+TODO:
+protected column api route, add collumn action, put column action, remove column action

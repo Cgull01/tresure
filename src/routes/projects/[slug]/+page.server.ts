@@ -57,7 +57,6 @@ export const actions = {
 		const parseData = {
 			"title": task_json.title ?? null,
 			"details": task_json.details ?? null,
-			"position":task_json.position ?? 0,
 			"tags": JSON.stringify(task_json.tags) ?? null,
 			"dueDate": task_json.dueDate ?? null,
 			"creationDate": new Date(),
@@ -79,16 +78,6 @@ export const actions = {
 
 		return {sucess: true}
 
-	},
-
-	editTask: async ({ request, cookies }: any) => {
-		const data = await request.formData();
-
-		const task_json = data.get('task') as string;
-
-		console.log(task_json);
-
-		return { success: true };
 	},
 
 	deleteTask: async ({ request, cookies }: any) => {

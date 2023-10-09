@@ -34,8 +34,6 @@
 
 		const parsedTask = JSON.parse(task);
 
-
-
 		if(parsedTask.columnId == column.id)
 		{
 			drag_entered = false;
@@ -44,7 +42,7 @@
 
 		parsedTask.columnId = column.id;
 
-		const response = await fetch(`/api`, {
+		await fetch(`/api`, {
 			method: 'PUT',
 			body: JSON.stringify(
 				parsedTask)
@@ -59,7 +57,6 @@
 		const jsonTask = JSON.stringify(task);
 		event.dataTransfer?.setData('application/json', jsonTask);
 		is_dragging_task = true;
-		// event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
 	}
 
 	function handleEdit(event: CustomEvent) {

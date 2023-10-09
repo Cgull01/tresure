@@ -53,7 +53,7 @@
 		</form>
 	{/if}
 	<div class="flex flex-row justify-between">
-		<div class="flex flex-row text-white gap-2 font-semibold overflow-x-auto">
+		<div class="flex flex-row text-white flex-wrap gap-2 font-semibold overflow-x-auto">
 			{#each card.tags || [] as tag}
 				<div class={`w-max h-max px-1 bg-${tag.color} opacity-80`}>
 					{tag.tag}
@@ -69,7 +69,7 @@
 			<div class="text-2xl font-semibold text-ellipsis overflow-hidden w-full">
 				{card.title ?? ''}
 			</div>
-			<div class={card.title ? 'text-base' : 'text-xl'}>{card.details || ''}</div>
+			<div class="{card.title ? 'text-base' : 'text-xl'} w-full overflow-hidden text-ellipsis">{card.details || ''}</div>
 		</div>
 	</div>
 
