@@ -42,6 +42,8 @@ export async function load({ params, cookies }: any) {
 
 }
 
+
+
 export const actions = {
 	createTask: async ({ request, cookies }: any) => {
 	    const data = await request.formData();
@@ -51,9 +53,11 @@ export const actions = {
 
 		const jwt = cookies.get('jwt')
 
+
 		const parseData = {
 			"title": task_json.title ?? null,
 			"details": task_json.details ?? null,
+			"position":task_json.position ?? 0,
 			"tags": JSON.stringify(task_json.tags) ?? null,
 			"dueDate": task_json.dueDate ?? null,
 			"creationDate": new Date(),
@@ -92,8 +96,6 @@ export const actions = {
 	    let task_id = data.get('task_id');
 		const jwt = cookies.get('jwt')
 
-		console.log(task_id);
-
 		try
 		{
 
@@ -113,6 +115,7 @@ export const actions = {
 
 	    return { success: true }
 	},
+
 	// editProject: async ({ request }: any) => {
 	//     const data = await request.formData();
 

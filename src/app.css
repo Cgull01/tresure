@@ -2,11 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-.background-pattern {
+/* .background-pattern {
 	background-color: #cccccc;
 	opacity: 1;
 	background-image: radial-gradient(#e4e5e7 1.75px, transparent 1.75px),
 		radial-gradient(#e4e5e7 1.75px, #cccccc 1.75px);
 	background-size: 70px 70px;
 	background-position: 0 0, 35px 35px;
-}
+} */
+
+
+.background-pattern {
+	background-color: #cccccc;
+	opacity: 1;
+	background-image: radial-gradient(#e4e5e7 1.75px, transparent 1.75px),
+					  radial-gradient(#e4e5e7 1.75px, #cccccc 1.75px);
+	background-size: 70px 70px;
+	background-position: 0 0, 35px 35px;
+	animation: moveBackground 4s linear infinite; /* Create a looping animation */
+  }
+
+  @keyframes moveBackground {
+	0% {
+	  background-position: 0 0, 35px 35px;
+	}
+	100% {
+	  background-position: 70px 70px, 105px 105px; /* Adjust the endpoint */
+	}
+  }

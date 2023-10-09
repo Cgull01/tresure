@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { IColumn } from '$lib/types';
+	import type { ICard, IColumn } from '$lib/types';
 	import PlusButton from './PlusButton.svelte';
 	import Card from './Card.svelte';
 	import { createEventDispatcher } from 'svelte';
@@ -12,6 +12,13 @@
 	let drag_entered = false;
 	let is_dragging_task: boolean = false;
 
+	for(let c of column.cards || [])
+	{
+		console.log(c.creationDate);
+	}
+
+	column.cards?.sort((cardA, cardB) => cardA.position - cardB.position);
+
 	const dispatch = createEventDispatcher();
 
 	function handleClick() {
@@ -19,24 +26,28 @@
 		$DIALOG_MANAGER.task_dialog = true;
 	}
 
+
 	async function handleDrop(event: DragEvent) {
 		event.preventDefault();
 		is_dragging_task = false;
-		const task_ID = event.dataTransfer?.getData('text/plain') || '';
+		const task = event.dataTransfer?.getData('application/json') || '';
 
-		const destinationColumn_ID = column.id;
-		const task_position = column.cards?.length;
+		const parsedTask = JSON.parse(task);
 
-		await fetch(`/projects/${$page.params}`, {
-			method: 'PATCH',
-			body: JSON.stringify({
-				task_ID,
-				destinationColumn_ID,
-				task_position
-			}),
-			headers: {
-				'content-type': 'application/json'
-			}
+
+
+		if(parsedTask.columnId == column.id)
+		{
+			drag_entered = false;
+			return;
+		}
+
+		parsedTask.columnId = column.id;
+
+		const response = await fetch(`/api`, {
+			method: 'PUT',
+			body: JSON.stringify(
+				parsedTask)
 		});
 
 		dispatch('taskMoved');
@@ -44,8 +55,9 @@
 		drag_entered = false;
 	}
 
-	function dragDropTask(event: DragEvent, task_ID: string) {
-		event.dataTransfer?.setData('text/plain', task_ID);
+	function dragDropTask(event: DragEvent, task: any) {
+		const jsonTask = JSON.stringify(task);
+		event.dataTransfer?.setData('application/json', jsonTask);
 		is_dragging_task = true;
 		// event.dataTransfer?.setDragImage(<Element>event.target, 0, 0);
 	}
@@ -66,20 +78,20 @@
 	on:dragenter
 	on:dragleave={() => (drag_entered = false)}
 	role="listbox"
-	tabindex="0"
->
+	tabindex="0">
 	<button
+		on:click={()=>{
+
+		}}
 		class="text-white bg-primary flex flex-row justify-between px-3 {drag_entered &&
-			'opacity-80'} w-full"
-	>
+			'opacity-80'} w-full">
 		<h1 class="font-sans py-3 text-3xl text-ellipsis overflow-hidden">{column.title}</h1>
 		<button
 			class="self-center active:scale-110"
 			on:click={() => {
 				$DIALOG_MANAGER.column_dialog = true;
 				$SELECTED_COLUMN = column;
-			}}
-		>
+			}}>
 			<IconMoreHorizontal />
 		</button>
 	</button>
@@ -89,10 +101,9 @@
 				<Card
 					{card}
 					on:dragstart={(event) => {
-						dragDropTask(event, card.id);
+						dragDropTask(event, card);
 					}}
-					on:edit={handleEdit}
-				/>
+					on:edit={handleEdit} />
 			{/each}
 		</section>
 		<div class="flex flex-row">
