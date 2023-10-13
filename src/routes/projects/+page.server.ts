@@ -38,7 +38,6 @@ export const actions = {
 			body: JSON.stringify({"Title":projectTitle})
 		});
 
-		const res = await response.json();
 
 	    return { success: true }
 	}

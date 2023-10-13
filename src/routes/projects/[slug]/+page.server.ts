@@ -1,7 +1,7 @@
 import { invalidateAll } from '$app/navigation';
 import { API_URL } from '$env/static/private';
 import type { IColumn, IProject, ICard } from '$lib/types.js';
-import { json, redirect } from '@sveltejs/kit';
+import { fail, json, redirect } from '@sveltejs/kit';
 
 export const ssr = false;
 export const prerender = false;
@@ -34,7 +34,16 @@ export async function load({ params, cookies }: any) {
 				}
 			}
 		}
-		return { project: data };
+
+		const userJson = await fetch(`${API_URL}/Account/currentUser`, {
+			headers: {
+				Authorization: `Bearer ${jwt}`
+			}
+		});
+
+		const user = await userJson.json();
+
+		return { project: data, user:user };
 	}
 
 	throw redirect(308, '/login');
@@ -105,34 +114,49 @@ export const actions = {
 	    return { success: true }
 	},
 
-	// editProject: async ({ request }: any) => {
-	//     const data = await request.formData();
+	editProject: async ({ request, cookies }: any) => {
+	    const data = await request.formData();
 
-	//     const project_id = data.get('project_id');
-	//     const project_title = data.get('project_title');
+	    const project_id = data.get('project_id');
+	    const project_title = data.get('project_title');
 
-	//     if (project_title.length <= 0)
-	//         return;
+		const jwt = cookies.get('jwt')
 
-	//     await prisma.project.update({
-	//         where: { id: project_id },
-	//         data: { title: project_title }
-	//     })
+	    if (project_title.length <= 0)
+			return fail(400, { project_title, message: 'Missing Project Title' });
 
-	//     return { success: true }
-	// },
-	// deleteProject: async ({ request }: any) => {
-	//     const data = await request.formData();
+			await fetch(`${API_URL}/Projects/${project_id}?projectTitle=${project_title}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${jwt}`
+				},
+			});
 
-	//     const project_id = data.get('project_id');
 
-	//     await prisma.project.delete({
-	//         where: { id: project_id }
-	//     });
+	    return { success: true }
+	},
+	deleteProject: async ({ request, cookies }: any) => {
+	    const data = await request.formData();
 
-	//     throw redirect(303, '/')
+	    const project_id = data.get('project_id');
 
-	// },
+		const jwt = cookies.get('jwt')
+
+		const response = await fetch(`${API_URL}/Projects/${project_id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+		});
+
+
+	    throw redirect(303, '/projects');
+
+	},
 	// renameColumn: async ({ request }: any) => {
 	//     const data = await request.formData();
 

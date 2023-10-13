@@ -2,23 +2,27 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import IconTrash from '../../Icons/Icon_trash.svelte';
-	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../../routes/projects/[slug]/stores';
+	import { DIALOG_MANAGER, PROJECT_ID, SELECTED_PROJECT } from '../../routes/projects/[slug]/stores';
 
 	let dialog_ref: HTMLDialogElement;
-	let project_title_input: string = $SELECTED_PROJECT ? $SELECTED_PROJECT.title : '';
 
-	// console.log($page.data.project.title);
+	export let project_title:string;
+
+	$: title_input = project_title;
+
 	function closeDialog() {
 		$DIALOG_MANAGER.project_dialog = false;
-
-		project_title_input = $SELECTED_PROJECT!.title;
+		title_input = project_title
+		//project_title_input = $SELECTED_PROJECT!.title;
 	}
 
 	function submitDialog({ formData }: any) {
-		formData.set('project_id', $SELECTED_PROJECT?.id);
+		formData.set('project_id', $PROJECT_ID);
 
 		closeDialog();
 	}
+
+
 
 	$: if ($DIALOG_MANAGER.project_dialog && dialog_ref) {
 		dialog_ref.showModal();
@@ -40,7 +44,7 @@
 						<button
 							tabindex="0"
 							title="Click to remove the task"
-							class=" cursor-pointer active:scale-105 stroke-secondary"
+							class="flex items-center cursor-pointer active:scale-105 stroke-secondary"
 						>
 							<IconTrash />
 						</button>
@@ -59,20 +63,20 @@
 			>
 				<div class="px-3">
 					<div>
-						<div class="text-lg font-semibold {project_title_input.length <= 0 && 'text-red-600'}">
+						<div class="text-lg font-semibold {title_input.length <= 0 && 'text-red-600'}">
 							Project title
 						</div>
 						<input
 							type="text"
 							name="project_title"
-							bind:value={project_title_input}
+							bind:value={title_input}
 							placeholder="Project title"
-							class="p-1 border-l-2 border-black bg-secondary focus:bg-secondaryFocused outline-none mb-3 w-full resize-y row-auto {project_title_input.length <=
+							class="p-1 border-l-2 border-black bg-secondary focus:bg-secondaryFocused outline-none mb-3 w-full resize-y row-auto {title_input.length <=
 								0 && 'border-red-600'}"
 						/>
 					</div>
 				</div>
-				{#if project_title_input.length > 0}
+				{#if title_input.length > 0}
 					<div
 						class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12"
 					>

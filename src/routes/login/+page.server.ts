@@ -34,7 +34,7 @@ export const actions = {
 		if(data.token)
 		{
 			cookies.set('jwt', data.token, {
-				httpOnly: true,
+				httpOnly: false,
 				secure: true,
 				sameSite: 'lax',
 				path: '/'

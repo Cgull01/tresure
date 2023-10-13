@@ -70,4 +70,15 @@ dotnet ef database update
 dotnet watch --no-hot-reload
 
 TODO:
+
+PRIOTIY: fix front page, show members tab
 protected column api route, add collumn action, put column action, remove column action
+
+TODO:
+show dialog on plus members press
+fix member dialog style
+member search/addition
+mark tasks as completed boolean, admin, member
+
+repository pattern?
+

@@ -12,11 +12,6 @@
 	let drag_entered = false;
 	let is_dragging_task: boolean = false;
 
-	for(let c of column.cards || [])
-	{
-		console.log(c.creationDate);
-	}
-
 	column.cards?.sort((cardA, cardB) => cardA.position - cardB.position);
 
 	const dispatch = createEventDispatcher();

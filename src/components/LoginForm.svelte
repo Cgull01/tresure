@@ -33,7 +33,7 @@
 		/>
 	</div>
 	<div
-		class="flex flex-row cursor-pointer border-t border-primary w-full text-3xl mt-6 hover:bg-primary hover:text-white transition-colors group px-4 align-middle font-semibold h-12"
+		class="flex flex-row cursor-pointer border-t font-bold border-primary w-full text-3xl mt-6 hover:underline underline-offset-2 active:bg-primary active:text-white transition-colors group px-4 align-middle h-12"
 	>
 		<button>Continue</button>
 	</div>

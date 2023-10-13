@@ -21,14 +21,14 @@
 
 {#if $DIALOG_MANAGER.new_project_dialog}
 	<dialog
-		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/2 h-max"
+		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/3 h-max"
 		bind:this={dialog_ref}
 		on:dblclick|self={closeDialog}
 		on:close={closeDialog}
 	>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
-				<div class="flex flex-row gap-4 bg-primary text-white w-full items-center">
+				<div class="flex flex-row gap-4 bg-primary text-secondary w-full items-center">
 					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">New Project</h1>
 				</div>
 				<button
@@ -37,7 +37,7 @@
 				>
 			</div>
 			<form
-				class="border-black border bg-white"
+				class="border-black border bg-background"
 				method="POST"
 				action="?/createProject"
 				use:enhance
@@ -51,12 +51,12 @@
 							name="project_title"
 							bind:value={project_title_input}
 							placeholder="Project title"
-							class="p-1 border-l-2 border-black bg-secondary focus:bg-secondaryFocused outline-none mb-3 w-full resize-y row-auto"
+							class="p-1 border border-l-2 border-primary bg-secondary outline-none mb-3 w-full"
 						/>
 					</div>
 				</div>
 				<div
-					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12"
+					class="flex flex-row cursor-pointer border-t font-semibold border-primary w-full text-3xl mt-6 hover:underline underline-offset-2 active:bg-primary active:text-white transition-colors group px-4 align-middle h-12"
 				>
 					<button>Create New Project</button>
 				</div>
