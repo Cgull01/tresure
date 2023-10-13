@@ -37,7 +37,7 @@
 				>
 			</div>
 			<form
-				class="border-black border bg-background"
+				class="form"
 				method="POST"
 				action="?/createProject"
 				use:enhance
@@ -51,15 +51,11 @@
 							name="project_title"
 							bind:value={project_title_input}
 							placeholder="Project title"
-							class="p-1 border border-l-2 border-primary bg-secondary outline-none mb-3 w-full"
+							class="form_input"
 						/>
 					</div>
 				</div>
-				<div
-					class="flex flex-row cursor-pointer border-t font-semibold border-primary w-full text-3xl mt-6 hover:underline underline-offset-2 active:bg-primary active:text-white transition-colors group px-4 align-middle h-12"
-				>
-					<button>Create New Project</button>
-				</div>
+				<button class="form_button">Create New Project</button>
 			</form>
 		</div>
 	</dialog>

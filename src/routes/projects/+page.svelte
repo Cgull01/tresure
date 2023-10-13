@@ -26,7 +26,8 @@
 				class="px-8"
 				on:click={() => {
 					$DIALOG_MANAGER.new_project_dialog = true;
-				}}>
+				}}
+			>
 				<IconPlus styles="w-8 h-8 hover:scale-105 active:scale-95" />
 			</button>
 		</div>
@@ -36,7 +37,8 @@
 					<a
 						href="/projects/{project.id}"
 						class="hover:bg-primary hover:text-secondary transition-colors text-2xl px-2 py-2 w-full cursor-pointer active:scale-95 select-none text-start"
-						>{project.title}</a>
+						>{project.title}</a
+					>
 					<hr class="w-full border-t-1 border-primary self-center" />
 				{/each}
 			</div>

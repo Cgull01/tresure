@@ -21,7 +21,6 @@
 		$DIALOG_MANAGER.task_dialog = true;
 	}
 
-
 	async function handleDrop(event: DragEvent) {
 		event.preventDefault();
 		is_dragging_task = false;
@@ -29,8 +28,7 @@
 
 		const parsedTask = JSON.parse(task);
 
-		if(parsedTask.columnId == column.id)
-		{
+		if (parsedTask.columnId == column.id) {
 			drag_entered = false;
 			return;
 		}
@@ -39,8 +37,7 @@
 
 		await fetch(`/api`, {
 			method: 'PUT',
-			body: JSON.stringify(
-				parsedTask)
+			body: JSON.stringify(parsedTask)
 		});
 
 		dispatch('taskMoved');
@@ -70,20 +67,21 @@
 	on:dragenter
 	on:dragleave={() => (drag_entered = false)}
 	role="listbox"
-	tabindex="0">
+	tabindex="0"
+>
 	<button
-		on:click={()=>{
-
-		}}
+		on:click={() => {}}
 		class="text-white bg-primary flex flex-row justify-between px-3 {drag_entered &&
-			'opacity-80'} w-full">
+			'opacity-80'} w-full"
+	>
 		<h1 class="font-sans py-3 text-3xl text-ellipsis overflow-hidden">{column.title}</h1>
 		<button
 			class="self-center active:scale-110"
 			on:click={() => {
 				$DIALOG_MANAGER.column_dialog = true;
 				$SELECTED_COLUMN = column;
-			}}>
+			}}
+		>
 			<IconMoreHorizontal />
 		</button>
 	</button>
@@ -95,7 +93,8 @@
 					on:dragstart={(event) => {
 						dragDropTask(event, card);
 					}}
-					on:edit={handleEdit} />
+					on:edit={handleEdit}
+				/>
 			{/each}
 		</section>
 		<div class="flex flex-row">

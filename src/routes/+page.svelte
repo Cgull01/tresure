@@ -12,7 +12,7 @@
 	<NavBar>
 		{#if data.user !== null}
 			<a
-				class="text-primary bg-secondary border-primary border px-2 text-3xl flex items-center py-1 active:bg-primary active:text-secondary"
+				class="bg-secondary text-primary w-max px-4 py-1 text-3xl border-spacing-5 border-primary border hover:bg-primary hover:text-secondary transition-colors"
 				href="/projects"
 				>My Projects
 			</a>
@@ -20,35 +20,42 @@
 		{:else}
 			<a
 				class="hover:underline underline-offset-2 text-primary font-bold bg-secondary border-primary border px-2 text-3xl flex items-center py-1 active:bg-primary active:text-secondary"
-				href="/login">
+				href="/login"
+			>
 				Login
 			</a>
 			<a
 				class="hover:underline underline-offset-2 text-primary bg-secondary border-primary border px-2 text-3xl flex items-center py-1 active:bg-primary active:text-secondary"
-				href="/register">
+				href="/register"
+			>
 				Register
 			</a>
 		{/if}
 	</NavBar>
 	<div class="background-pattern w-full h-full flex flex-col px-16 items-center justify-center">
-			<h1 class="text-5xl font-extrabold px-16 text-primary ">
-				Project management made <span class="bg-primary text-secondary px-2">simple</span>
-			</h1>
-			<h2 class="text-3xl font-extrabold px-16 py-12 text-primary ">
-				A minimal <span class="bg-primary text-secondary px-2">kanban board</span> made for individual
-				or team projects
-			</h2>
-			{#if data.user !== null}
-
-			<a href="/projects" class="bg-secondary text-primary font-semibold w-max px-16 py-3 text-3xl border-spacing-5 border-primary border hover:bg-primary hover:text-secondary transition-colors">
+		<h1 class="text-5xl font-extrabold px-16 text-primary">
+			Project management made <span class="bg-primary text-secondary px-2">simple</span>
+		</h1>
+		<h2 class="text-3xl font-extrabold px-16 py-12 text-primary">
+			A minimal <span class="bg-primary text-secondary px-2">kanban board</span> made for individual
+			or team projects
+		</h2>
+		{#if data.user !== null}
+			<a
+				href="/projects"
+				class="bg-secondary text-primary font-semibold w-max px-16 py-3 text-3xl border-spacing-5 border-primary border hover:bg-primary hover:text-secondary transition-colors"
+			>
 				View Your Projects
 			</a>
 		{:else}
-			<a href="/register" class="bg-secondary text-primary font-semibold w-max px-16 py-3 text-3xl border-spacing-5 border-primary border hover:bg-primary hover:text-secondary transition-colors">
-			Start Now
+			<a
+				href="/register"
+				class="bg-secondary text-primary font-semibold w-max px-16 py-3 text-3xl border-spacing-5 border-primary border hover:bg-primary hover:text-secondary transition-colors"
+			>
+				Start Now
 			</a>
 		{/if}
 
-			<img src="/images/HomePageProject.png" alt="Example of a Tresure Project" class="py-16"/>
+		<img src="/images/HomePageProject.png" alt="Example of a Tresure Project" class="py-16" />
 	</div>
 </div>

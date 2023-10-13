@@ -42,7 +42,8 @@
 
 <div class="h-screen w-screen flex flex-col">
 	<div
-		class="flex flex-row py-3 items-center justify-between w-full bg-secondary border-b border-primary pr-16">
+		class="flex flex-row py-3 items-center justify-between w-full bg-secondary border-b border-primary pr-16"
+	>
 		<div class="flex gap-2 items-center pl-6">
 			<a href="/" class="cursor-pointer pr-12">
 				<IconTresureLogo styles="fill-primary" />
@@ -65,11 +66,12 @@
 	<ColumnDialog />
 	<ProjectDialog project_title={data.project.title} />
 	<CardDialog />
-	<MemberDialog members = {data.project.members}/>
+	<MemberDialog members={data.project.members} />
 
 	<div class="flex flex-row gap-4 background-pattern h-full">
 		<div
-			class="sm:flex-row flex-1 sm:items-start items-center flex-col flex h-full pt-16 sm:justify-center overflow-y-auto">
+			class="sm:flex-row flex-1 sm:items-start items-center flex-col flex h-full pt-16 sm:justify-center overflow-y-auto"
+		>
 			{#each data.project.columns as column}
 				<Column {column} on:taskMoved={refreshColumns} />
 			{/each}
@@ -79,13 +81,18 @@
 			{#if showMembers}
 				<div
 					class="w-max h-full border-l flex-2 border-primary bg-zinc-300
-			flex flex-col gap-3 p-3 px-6">
+			flex flex-col gap-3 p-3 px-6"
+				>
 					<flex class="flex flex-col gap-2 p-2 items-center border-b border-primary">
-						<div class="flex flex-row gap-4">
-							<IconGroup />
-							<button ><IconPlus styles="hover:scale-105 active:scale-95" /></button>
-						</div>
-						<h1>Project members</h1>
+						<button
+							on:click={() => {
+								$DIALOG_MANAGER.member_dialog = true;
+							}}
+							class="flex flex-row gap-4 hover:underline underline-offset-2"
+						>
+							<IconSettings />
+							<h1>Manage members</h1>
+						</button>
 					</flex>
 					<div class="flex flex-col gap-4">
 						{#each data.project.members as member}
@@ -98,7 +105,8 @@
 			{/if}
 			<div
 				class="w-max h-full border-l flex-2 border-primary bg-zinc-300
-			flex flex-col gap-3 p-3 px-6">
+			flex flex-col gap-3 p-3 px-6"
+			>
 				<button class="flex flex-col gap-2 border-b border-primary p-2 items-center">
 					<IconProfile />
 					<span class="font-semibold">{data.user.username}</span>
@@ -112,7 +120,8 @@
 						on:click={() => {
 							showMembers = !showMembers;
 						}}
-						class="flex flex-row gap-2 group">
+						class="flex flex-row gap-2 group"
+					>
 						<IconGroup />
 						<span class="group-hover:underline group-hover:underline-offset-2">see members</span>
 					</button>

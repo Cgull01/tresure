@@ -25,15 +25,15 @@
 
 {#if $DIALOG_MANAGER.column_dialog}
 	<dialog
-		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/2 h-max"
+		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/3 h-max"
 		bind:this={dialog_ref}
 		on:dblclick|self={closeDialog}
 		on:close={closeDialog}
 	>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
-				<div class="flex flex-row gap-4 bg-primary text-white w-full items-center">
-					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">Edit Column</h1>
+				<div class="flex flex-row gap-4 bg-primary text-secondary w-full items-center">
+					<h1 class="text-secondary font-sans text-3xl px-4 pb-2 py-2">Edit Column</h1>
 					<form action="?/deleteColumn" method="POST" use:enhance={submitDialog}>
 						<button
 							tabindex="0"
@@ -45,16 +45,11 @@
 					</form>
 				</div>
 				<button
-					class="bg-primary text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"
+					class="bg-primary text-secondary border-l select-none font-semibold border-secondary px-2 hover:bg-secondary hover:text-primary transition-colors"
 					on:click={closeDialog}>Cancel</button
 				>
 			</div>
-			<form
-				action="?/renameColumn"
-				method="post"
-				class="border-black border bg-white"
-				use:enhance={submitDialog}
-			>
+			<form action="?/renameColumn" method="post" class="form" use:enhance={submitDialog}>
 				<div class="px-3">
 					<div>
 						<div class="text-lg font-semibold">Column title</div>
@@ -63,15 +58,12 @@
 							value={column_title}
 							name="column_title"
 							placeholder="Column title"
-							class="p-1 border-l-2 border-black bg-secondary focus:bg-secondaryFocused outline-none mb-3 w-full resize-y row-auto"
+							class="form_input"
 						/>
 					</div>
 				</div>
-				<div
-					class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12"
-				>
-					<button>Save changes</button>
-				</div>
+
+				<button class="form_button">Save changes</button>
 			</form>
 		</div>
 	</dialog>

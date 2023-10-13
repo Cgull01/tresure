@@ -1,7 +1,6 @@
-import { API_URL } from "$env/static/private";
+import { API_URL } from '$env/static/private';
 
 export async function load({ cookies }: any) {
-
 	const jwt = cookies.get('jwt');
 
 	if (jwt) {
@@ -14,10 +13,7 @@ export async function load({ cookies }: any) {
 		const data = await response.json();
 
 		return { user: data };
+	} else {
+		return { user: null };
 	}
-    else
-    {
-        return {user: null};
-    }
-
 }

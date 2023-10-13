@@ -23,7 +23,7 @@ export default {
 		'primary',
 		'secondary',
 		'accent',
-		'background',
+		'background'
 	],
 	plugins: [
 		plugin(function ({ addVariant, e }) {

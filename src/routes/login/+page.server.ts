@@ -26,13 +26,11 @@ export const actions = {
 
 		if (!response.ok) {
 			return fail(400, { email, message: 'Wrong credentials' });
-
 		}
 
 		let data = await response.json();
 
-		if(data.token)
-		{
+		if (data.token) {
 			cookies.set('jwt', data.token, {
 				httpOnly: false,
 				secure: true,
@@ -41,12 +39,8 @@ export const actions = {
 			});
 
 			throw redirect(303, '/projects');
-		}
-		else
-		{
+		} else {
 			return fail(400, { email, message: 'token missing' });
-
 		}
-
 	}
 };

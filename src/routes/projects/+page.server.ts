@@ -23,8 +23,8 @@ export async function load({ cookies }: any) {
 
 export const actions = {
 	createProject: async ({ request, cookies }: any) => {
-	    const data = await request.formData();
-	    const projectTitle = data.get('project_title');
+		const data = await request.formData();
+		const projectTitle = data.get('project_title');
 
 		const jwt = cookies.get('jwt');
 
@@ -35,10 +35,9 @@ export const actions = {
 				Accept: 'application/json',
 				Authorization: `Bearer ${jwt}`
 			},
-			body: JSON.stringify({"Title":projectTitle})
+			body: JSON.stringify({ Title: projectTitle })
 		});
 
-
-	    return { success: true }
+		return { success: true };
 	}
 };

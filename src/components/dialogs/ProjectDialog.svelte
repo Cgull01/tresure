@@ -2,17 +2,21 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import IconTrash from '../../Icons/Icon_trash.svelte';
-	import { DIALOG_MANAGER, PROJECT_ID, SELECTED_PROJECT } from '../../routes/projects/[slug]/stores';
+	import {
+		DIALOG_MANAGER,
+		PROJECT_ID,
+		SELECTED_PROJECT
+	} from '../../routes/projects/[slug]/stores';
 
 	let dialog_ref: HTMLDialogElement;
 
-	export let project_title:string;
+	export let project_title: string;
 
 	$: title_input = project_title;
 
 	function closeDialog() {
 		$DIALOG_MANAGER.project_dialog = false;
-		title_input = project_title
+		title_input = project_title;
 		//project_title_input = $SELECTED_PROJECT!.title;
 	}
 
@@ -22,8 +26,6 @@
 		closeDialog();
 	}
 
-
-
 	$: if ($DIALOG_MANAGER.project_dialog && dialog_ref) {
 		dialog_ref.showModal();
 	}
@@ -31,7 +33,7 @@
 
 {#if $DIALOG_MANAGER.project_dialog}
 	<dialog
-		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/2 h-max"
+		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/3 h-max"
 		bind:this={dialog_ref}
 		on:dblclick|self={closeDialog}
 		on:close={closeDialog}
@@ -55,12 +57,7 @@
 					on:click={closeDialog}>Cancel</button
 				>
 			</div>
-			<form
-				class="border-black border bg-white"
-				method="POST"
-				action="?/editProject"
-				use:enhance={submitDialog}
-			>
+			<form class="form" method="POST" action="?/editProject" use:enhance={submitDialog}>
 				<div class="px-3">
 					<div>
 						<div class="text-lg font-semibold {title_input.length <= 0 && 'text-red-600'}">
@@ -71,18 +68,11 @@
 							name="project_title"
 							bind:value={title_input}
 							placeholder="Project title"
-							class="p-1 border-l-2 border-black bg-secondary focus:bg-secondaryFocused outline-none mb-3 w-full resize-y row-auto {title_input.length <=
-								0 && 'border-red-600'}"
+							class="form_input {title_input.length <= 0 && 'border-red-600'}"
 						/>
 					</div>
 				</div>
-				{#if title_input.length > 0}
-					<div
-						class="flex flex-row cursor-pointer border-t border-black w-full text-3xl mt-6 hover:bg-black hover:text-white transition-colors group px-4 align-middle font-semibold select-none h-12"
-					>
-						<button>Save changes</button>
-					</div>
-				{/if}
+				<button disabled={title_input.length <= 0} class="form_button">Save changes</button>
 			</form>
 		</div>
 	</dialog>

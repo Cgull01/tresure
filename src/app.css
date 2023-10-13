@@ -11,27 +11,39 @@
 	background-position: 0 0, 35px 35px;
 } */
 
-
 .background-pattern {
 	background-color: #cccccc;
 	opacity: 1;
 	background-image: radial-gradient(#e4e5e7 1.75px, transparent 1.75px),
-					  radial-gradient(#e4e5e7 1.75px, #cccccc 1.75px);
+		radial-gradient(#e4e5e7 1.75px, #cccccc 1.75px);
 	background-size: 70px 70px;
 	background-position: 0 0, 35px 35px;
 	animation: moveBackground 4s linear infinite; /* Create a looping animation */
-  }
+}
 
-  @keyframes moveBackground {
+@keyframes moveBackground {
 	0% {
-	  background-position: 0 0, 35px 35px;
+		background-position: 0 0, 35px 35px;
 	}
 	100% {
-	  background-position: 70px 70px, 105px 105px; /* Adjust the endpoint */
+		background-position: 70px 70px, 105px 105px; /* Adjust the endpoint */
 	}
-  }
+}
 
-  /* *{
+.form {
+	@apply border-primary border bg-white;
+}
+
+.form_button {
+	@apply flex flex-row cursor-pointer border-t border-primary w-full text-3xl mt-6 hover:bg-primary
+	hover:text-secondary transition-colors py-2 px-4 align-middle font-semibold select-none text-center disabled:text-gray-500 disabled:bg-gray-400;
+}
+
+.form_input {
+	@apply p-1 border-l-2 border-primary bg-secondary hover:border-l-[3px] focus:border-l-4 outline-none w-full;
+}
+
+/* *{
 	border: 1px inset orange;
 
   } */

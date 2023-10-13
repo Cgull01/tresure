@@ -61,7 +61,7 @@
 			{/each}
 		</div>
 		<button class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100" on:click={handleClick}>
-			<IconEdit styles="group-hover:block hidden"/>
+			<IconEdit styles="group-hover:block hidden" />
 		</button>
 	</div>
 	<div class="flex flex-row justify-between pb-2">
@@ -69,7 +69,9 @@
 			<div class="text-2xl font-semibold text-ellipsis overflow-hidden w-full">
 				{card.title ?? ''}
 			</div>
-			<div class="{card.title ? 'text-base' : 'text-xl'} w-full overflow-hidden text-ellipsis">{card.details || ''}</div>
+			<div class="{card.title ? 'text-base' : 'text-xl'} w-full overflow-hidden text-ellipsis">
+				{card.details || ''}
+			</div>
 		</div>
 	</div>
 
