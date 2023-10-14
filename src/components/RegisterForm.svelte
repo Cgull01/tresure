@@ -5,11 +5,10 @@
 </script>
 
 <form
-	class="flex flex-col text-primary bg-background"
+	class="flex flex-col text-primary bg-white"
 	method="POST"
 	action="?/register"
-	use:enhance
->
+	use:enhance>
 	{#if form?.message}
 		<p class="bg-accent text-secondary text-2xl py-1">{form.message}</p>
 	{/if}
@@ -22,18 +21,10 @@
 			autoComplete="username"
 			id="username"
 			name="username"
-			class="p-1 border-l-2 border-primary bg-secondary outline-none mb-3 border"
-		/>
+			class="form_input" />
 		<label for="email" class="font-semibold">Email:</label>
 
-		<input
-			required
-			type="email"
-			autoComplete="email"
-			id="email"
-			name="email"
-			class="p-1 border-l-2 border-primary bg-secondary outline-none mb-3 border"
-		/>
+		<input required type="email" autoComplete="email" id="email" name="email" class="form_input" />
 
 		<label for="password" class="font-semibold">Password:</label>
 		<input
@@ -42,12 +33,7 @@
 			autoComplete="new-password"
 			id="password"
 			name="password"
-			class="p-1 border-l-2 border-primary bg-secondary outline-none mb-3 border"
-		/>
+			class="form_input" />
 	</div>
-	<div
-		class="flex flex-row cursor-pointer border-t border-primary w-full text-3xl mt-6 hover:bg-primary hover:text-white transition-colors group px-4 align-middle font-semibold h-12"
-	>
-		<button>Continue</button>
-	</div>
+	<button class="form_button">Continue</button>
 </form>

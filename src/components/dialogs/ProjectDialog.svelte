@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import IconTrash from '../../Icons/Icon_trash.svelte';
 	import {
 		DIALOG_MANAGER,
 		PROJECT_ID,
-		SELECTED_PROJECT
 	} from '../../routes/projects/[slug]/stores';
 
 	let dialog_ref: HTMLDialogElement;
@@ -53,17 +53,19 @@
 					</form>
 				</div>
 				<button
-					class="bg-primary text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"
-					on:click={closeDialog}>Cancel</button
-				>
+					class="bg-primary w-16 h-auto text-white border-l select-none font-semibold border-white hover:bg-white hover:text-primary transition-colors"
+					on:click={closeDialog}>
+					<IconPlus styles="rotate-45 m-auto" />
+				</button>
 			</div>
 			<form class="form" method="POST" action="?/editProject" use:enhance={submitDialog}>
 				<div class="px-3">
 					<div>
-						<div class="text-lg font-semibold {title_input.length <= 0 && 'text-red-600'}">
+						<label for="project_title" class="text-lg font-semibold {title_input.length <= 0 && 'text-red-600'}">
 							Project title
-						</div>
+						</label>
 						<input
+							id="project_title"
 							type="text"
 							name="project_title"
 							bind:value={title_input}

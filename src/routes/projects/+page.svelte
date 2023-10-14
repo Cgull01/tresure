@@ -32,7 +32,7 @@
 			</button>
 		</div>
 		<div class="sm:border sm:border-primary flex flex-col">
-			<div class="flex flex-col p-3 pb-48">
+			<div class="flex flex-col p-3 pb-48 bg-zinc-200">
 				{#each data.projects as project}
 					<a
 						href="/projects/{project.id}"

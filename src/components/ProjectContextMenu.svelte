@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { enhance } from '$app/forms';
 	import IconPlus from '../Icons/Icon_plus.svelte';
 	import IconSettings from '../Icons/Icon_settings.svelte';
@@ -62,4 +62,4 @@
 			</li>
 		</ul>
 	</div>
-{/if}
+{/if} -->

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import { DIALOG_MANAGER } from '../../routes/projects/[slug]/stores';
 
 	let dialog_ref: HTMLDialogElement;
@@ -32,9 +33,10 @@
 					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">New Project</h1>
 				</div>
 				<button
-					class="bg-primary text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-black transition-colors"
-					on:click={closeDialog}>Cancel</button
-				>
+					class="bg-primary w-16 h-auto text-white border-l select-none font-semibold border-white hover:bg-white hover:text-primary transition-colors"
+					on:click={closeDialog}>
+					<IconPlus styles="rotate-45 m-auto" />
+				</button>
 			</div>
 			<form
 				class="form"
@@ -45,9 +47,10 @@
 			>
 				<div class="px-3">
 					<div>
-						<div class="text-lg font-semibold">Project title</div>
+						<label for="project_title" class="text-lg font-semibold">Project title</label>
 						<input
 							type="text"
+							id="project_title"
 							name="project_title"
 							bind:value={project_title_input}
 							placeholder="Project title"

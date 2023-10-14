@@ -3,7 +3,7 @@
 	import type { IProject } from '$lib/types';
 	import ColumnDialog from '../../../components/dialogs/ColumnDialog.svelte';
 	import type { PageData } from './$types';
-	import { DIALOG_MANAGER, PROJECT_ID, SELECTED_PROJECT } from './stores';
+	import { DIALOG_MANAGER, PROJECT_ID } from './stores';
 	import ProjectContextMenu from '../../../components/ProjectContextMenu.svelte';
 	import IconDirectionLeft from '../../../Icons/Icon_direction_left.svelte';
 	import IconMoreHorizontal from '../../../Icons/Icon_more_horizontal.svelte';

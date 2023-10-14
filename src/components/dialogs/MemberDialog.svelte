@@ -5,6 +5,7 @@
 	import IconColors from '../../Icons/Icon_colors.svelte';
 	import PlusButton from '../PlusButton.svelte';
 	import IconSearch from '../../Icons/Icon_search.svelte';
+	import IconPlus from '../../Icons/Icon_plus.svelte';
 
 	let dialog_ref: HTMLDialogElement;
 	export let members: any;
@@ -31,9 +32,10 @@
 					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">Project members</h1>
 				</div>
 				<button
-					class="bg-primary text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-primary transition-colors"
-					on:click={closeDialog}>Cancel</button
-				>
+					class="bg-primary w-16 h-auto text-white border-l select-none font-semibold border-white hover:bg-white hover:text-primary transition-colors"
+					on:click={closeDialog}>
+					<IconPlus styles="rotate-45 m-auto" />
+				</button>
 			</div>
 			<div class="border-primary border bg-white">
 				<div class="flex flex-col">
@@ -46,10 +48,10 @@
 								name="searchmember"
 								class="form_input"
 							/>
-							<button
-								class="flex items-center justify-center text-primary p-1 border-[1px] border-primary group"
+							<button type="button"
+								class="p-1 group border bg-background w-max h-max cursor-pointer group border-background hover:border-gray-400 focus:border-primary"
 							>
-								<IconSearch styles="h-6 w-6 group-hover:scale-105" />
+								<IconSearch styles="h-6 w-6 group group-active:scale-110" />
 							</button>
 						</div>
 					</form>

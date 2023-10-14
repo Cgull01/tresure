@@ -17,7 +17,7 @@
 	</Container>
 	<a
 		href="/login"
-		class="select-none flex bg-background flex-row cursor-pointer mt-6 border border-primary px-3 hover:bg-primary hover:text-secondary transition-colors group"
+		class="select-none flex bg-white flex-row cursor-pointer mt-6 border border-primary px-3 hover:bg-primary hover:text-secondary transition-colors group"
 	>
 		Already have an account? <IconDirectionRight />
 	</a>

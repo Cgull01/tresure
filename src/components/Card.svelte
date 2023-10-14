@@ -36,17 +36,17 @@
 		show_context_menu = false;
 	}}
 	role="listitem"
-	class="group select-none hover:shadow-2xl hover:bg-white hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
+	class="group select-none hover:shadow-2xl hover:bg-white bg-zinc-200 hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
 >
 	{#if show_context_menu}
 		<form
 			method="POST"
 			action="?/deleteTask"
 			use:enhance={onDeleteTask}
-			class="fixed z-50 border-black border bg-background px-2 py-1"
+			class="fixed z-50 border-black border bg-background"
 			style="top: {context_position.y}px; left: {context_position.x}px;"
 		>
-			<button class="flex flex-row gap-2 hover:scale-105m">
+			<button class="flex flex-row gap-2 hover:bg-primary hover:text-secondary w-full px-2 py-1">
 				<IconTrash />
 				Delete
 			</button>

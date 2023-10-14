@@ -15,7 +15,7 @@
 	</Container>
 	<a
 		href="/register"
-		class="select-none flex flex-row cursor-pointer mt-6 bg-background border border-primary px-3 hover:bg-primary hover:text-secondary transition-colors group"
+		class="select-none flex flex-row cursor-pointer mt-6 bg-white border border-primary px-3 hover:bg-primary hover:text-secondary transition-colors group"
 	>
 		Create an account <IconDirectionRight />
 	</a>

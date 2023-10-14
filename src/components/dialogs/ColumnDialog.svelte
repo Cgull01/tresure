@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import IconTrash from '../../Icons/Icon_trash.svelte';
 	import { DIALOG_MANAGER, SELECTED_COLUMN } from '../../routes/projects/[slug]/stores';
 
@@ -45,15 +46,17 @@
 					</form>
 				</div>
 				<button
-					class="bg-primary text-secondary border-l select-none font-semibold border-secondary px-2 hover:bg-secondary hover:text-primary transition-colors"
-					on:click={closeDialog}>Cancel</button
-				>
+					class="bg-primary w-16 h-auto text-white border-l select-none font-semibold border-white hover:bg-white hover:text-primary transition-colors"
+					on:click={closeDialog}>
+					<IconPlus styles="rotate-45 m-auto" />
+				</button>
 			</div>
 			<form action="?/renameColumn" method="post" class="form" use:enhance={submitDialog}>
 				<div class="px-3">
 					<div>
-						<div class="text-lg font-semibold">Column title</div>
+						<label for="column_title" class="text-lg font-semibold">Column title</label>
 						<input
+							id="column_title"
 							type="text"
 							value={column_title}
 							name="column_title"

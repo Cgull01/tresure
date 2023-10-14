@@ -23,6 +23,7 @@
 
 	async function handleDrop(event: DragEvent) {
 		event.preventDefault();
+
 		is_dragging_task = false;
 		const task = event.dataTransfer?.getData('application/json') || '';
 

@@ -11,6 +11,7 @@
 	import IconColors from '../../Icons/Icon_colors.svelte';
 	import PlusButton from '../PlusButton.svelte';
 	import { invalidateAll } from '$app/navigation';
+	import IconPlus from '../../Icons/Icon_plus.svelte';
 
 	const TAG_COLORS = [
 		'red-700',
@@ -38,7 +39,7 @@
 
 		task.tags = task ? [...(task.tags || []), newTag] : [newTag];
 
-		tag_input = { tag: '', color: TAG_COLORS[0] };
+		// tag_input = { tag: '', color: TAG_COLORS[0] };
 	}
 
 	function removeTag(index: number) {
@@ -101,8 +102,7 @@
 		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/3 h-max shadow-md"
 		on:dblclick|self={closeDialog}
 		bind:this={dialog_ref}
-		on:close={closeDialog}
-	>
+		on:close={closeDialog}>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
 				<div class="flex flex-row gap-4 bg-primary text-white w-full items-center">
@@ -115,25 +115,24 @@
 								name="deleteTask"
 								tabindex="0"
 								title="Click to remove the task"
-								class="cursor-pointer active:scale-105 stroke-secondary"
-							>
+								class="cursor-pointer active:scale-105 stroke-secondary flex items-center">
 								<IconTrash />
 							</button>
 						</form>
 					{/if}
 				</div>
 				<button
-					class="bg-primary text-white border-l select-none font-semibold border-white px-2 hover:bg-white hover:text-primary transition-colors"
-					on:click={closeDialog}>Cancel</button
-				>
+					class="bg-primary w-16 h-auto text-white border-l select-none font-semibold border-white hover:bg-white hover:text-primary transition-colors"
+					on:click={closeDialog}>
+					<IconPlus styles="rotate-45 m-auto" />
+				</button>
 			</div>
 			<form class="form" method="POST" action="?/createTask" use:enhance={onSubmitDialog}>
 				<div class="flex flex-col sm:flex-row px-3 py-3 justify-between">
 					<div class="flex flex-col gap-2">
-						<h3 class="text-lg font-semibold">Tags</h3>
+						<label for="tag" class="text-lg font-semibold select-none">Tags</label>
 						<div
-							class="flex flex-row gap-2 text-white font-semibold overflow-hidden w-max overflow-x-auto"
-						>
+							class="flex flex-row gap-2 text-white font-semibold overflow-hidden w-max overflow-x-auto">
 							{#if task.tags}
 								{#each task.tags as tag, index}
 									<button
@@ -141,8 +140,7 @@
 										on:click={() => removeTag(index)}
 										class="w-max h-max px-1 bg-{tag &&
 											tag.color} opacity-80 flex flex-row gap-2 items-center hover: shadow-md"
-										title="click to remove"
-									>
+										title="click to remove">
 										{tag.tag}
 									</button>
 								{/each}
@@ -152,59 +150,60 @@
 							<div class="flex flex-row">
 								<button
 									type="button"
+									class="p-1 group border bg-background w-max h-max cursor-pointer group border-background hover:border-gray-400 focus:border-primary"
 									on:click|stopPropagation={() => {
 										color_dropdown_visible = !color_dropdown_visible;
-									}}
-								>
-									<div class="h-6 w-6 cursor-pointer active:scale-100 hover:scale-105">
-										<IconColors styles="fill-{tag_input.color} h-6 w-6" />
-									</div>
+									}}>
+									<IconColors styles="fill-{tag_input.color} w-6 h-6 group group-active:scale-110" />
 								</button>
 								{#if color_dropdown_visible}
 									<div class="absolute mt-8" bind:this={dropdown_element}>
 										<div
-											class="grid grid-cols-4 grid-rows-2 bg-white p-2 border border-primary gap-2"
-										>
+											class="grid grid-cols-4 grid-rows-2 bg-white p-2 border border-primary gap-2">
 											{#each TAG_COLORS as color, i}
 												<button
 													type="button"
 													class={`rounded-full w-6 h-6 bg-${color} hover:scale-95 cursor-pointer`}
 													on:click={() => {
 														tag_input.color = TAG_COLORS[i];
-													}}
-												/>
+													}} />
 											{/each}
 										</div>
 									</div>
 								{/if}
 							</div>
 							<input
+								id="tag"
 								type="text"
 								placeholder="tag name"
 								bind:value={tag_input.tag}
-								class="form_input"
-							/>
-							<PlusButton styles="border" on:click={addTag} />
+								class="form_input" />
+							<button
+								type="button"
+								on:click={addTag}
+								class="p-1 group border bg-background w-max h-max cursor-pointer group border-background hover:border-gray-400 focus:border-primary">
+								<IconPlus styles="group group-active:scale-110" />
+							</button>
 						</div>
 					</div>
 				</div>
 				<div class="px-3">
 					<div>
-						<div class="text-lg font-semibold">Title</div>
+						<label for="title" class="text-lg font-semibold">Title</label>
 						<input
 							type="text"
+							id="title"
 							bind:value={task.title}
 							placeholder="Task title"
-							class="form_input"
-						/>
+							class="form_input" />
 					</div>
 					<div>
-						<div class="text-lg font-semibold">Details</div>
+						<label for="details" class="text-lg font-semibold">Details</label>
 						<textarea
+							id="details"
 							placeholder="Task details"
 							bind:value={task.details}
-							class="form_input min-h-[2rem]"
-						/>
+							class="form_input min-h-[2rem]" />
 					</div>
 				</div>
 				<button class="form_button"> Save changes</button>

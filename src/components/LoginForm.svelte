@@ -5,7 +5,7 @@
 	export let form: any;
 </script>
 
-<form use:enhance class="flex flex-col text-primary bg-background" method="POST" action="?/login">
+<form use:enhance class="flex flex-col text-primary bg-white" method="POST" action="?/login">
 	{#if form?.message}
 		<p class="bg-accent text-secondary text-2xl py-1">{form.message}</p>
 	{/if}
@@ -17,7 +17,7 @@
 			autoComplete="email"
 			id="email"
 			name="email"
-			class="p-1 border border-l-2 border-primary bg-secondary outline-none mb-3"
+			class="form_input"
 			value={form?.email || 'test2@test.com'}
 		/>
 
@@ -28,13 +28,10 @@
 			autoComplete="current-password"
 			id="password"
 			name="password"
-			class="p-1 border border-l-2 border-primary bg-secondary outline-none mb-3"
+			class="form_input"
 			value="T3st"
 		/>
 	</div>
-	<div
-		class="flex flex-row cursor-pointer border-t font-bold border-primary w-full text-3xl mt-6 hover:underline underline-offset-2 active:bg-primary active:text-white transition-colors group px-4 align-middle h-12"
-	>
-		<button>Continue</button>
-	</div>
+
+		<button class="form_button">Continue</button>
 </form>

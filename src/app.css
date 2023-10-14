@@ -40,8 +40,11 @@
 }
 
 .form_input {
-	@apply p-1 border-l-2 border-primary bg-secondary hover:border-l-[3px] focus:border-l-4 outline-none w-full;
+	@apply p-1 border bg-secondary border-background  hover:border-gray-400  focus:border-primary  outline-none w-full;
 }
+/* .form_input {
+	@apply p-1 border-l-2 border-primary bg-secondary hover:border-l-[3px]  outline-none w-full;
+} */
 
 /* *{
 	border: 1px inset orange;
