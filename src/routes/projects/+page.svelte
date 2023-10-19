@@ -19,7 +19,7 @@
 	<NavBar>
 		<LogOutButton />
 	</NavBar>
-	<div class="sm:w-96 w-full mt-0 sm:mt-32 bg-background sm:self-center self-start">
+	<div class="sm:w-1/3 w-full mt-0 sm:mt-32 bg-background sm:self-center self-start">
 		<div class="flex flex-row items-center justify-between text-secondary bg-primary">
 			<h1 class="font-sans py-3 text-3xl mb-1 px-3">Your Projects</h1>
 			<button

@@ -4,7 +4,7 @@ export async function load({ cookies }: any) {
 	const jwt = cookies.get('jwt');
 
 	if (jwt) {
-		const response = await fetch(`${API_URL}/Account/currentUser`, {
+		const response = await fetch(`${API_URL}/currentUser`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`
 			}

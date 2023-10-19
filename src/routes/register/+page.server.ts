@@ -19,7 +19,7 @@ export const actions = {
 			password: password
 		};
 
-		const response = await fetch(`${API_URL}/Account/register`, {
+		const response = await fetch(`${API_URL}/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

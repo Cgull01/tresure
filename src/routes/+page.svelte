@@ -33,10 +33,10 @@
 		{/if}
 	</NavBar>
 	<div class="background-pattern w-full h-full flex flex-col px-16 items-center justify-center">
-		<h1 class="text-5xl font-extrabold px-16 text-primary">
+		<h1 class="text-3xl font-extrabold sm:px-16 text-primary sm:text-5xl">
 			Project management made <span class="bg-primary text-secondary px-2">simple</span>
 		</h1>
-		<h2 class="text-3xl font-extrabold px-16 py-12 text-primary">
+		<h2 class="text-2xl sm:text-3xl font-extrabold sm:px-16 py-12 text-primary">
 			A minimal <span class="bg-primary text-secondary px-2">kanban board</span> made for individual
 			or team projects
 		</h2>
@@ -56,6 +56,6 @@
 			</a>
 		{/if}
 
-		<img src="/images/HomePageProject.png" alt="Example of a Tresure Project" class="py-16" />
+		<img src="/images/HomePageProject.png" alt="Example of a Tresure Project" class="py-16 sm:block hidden" />
 	</div>
 </div>

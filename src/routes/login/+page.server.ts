@@ -15,7 +15,7 @@ export const actions = {
 
 		const login_data = { Email: email, Password: password };
 
-		const response = await fetch(`${API_URL}/Account/login`, {
+		const response = await fetch(`${API_URL}/login`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

@@ -14,7 +14,7 @@ export interface DialogStates {
 }
 
 export const DIALOG_MANAGER: Writable<DialogStates> = writable({
-	task_dialog: true,
+	task_dialog: false,
 	project_dialog: false,
 	column_dialog: false,
 	new_project_dialog: false,
