@@ -6,7 +6,7 @@
 	<title>{$page.status} Error</title>
 </svelte:head>
 
-<div class="flex flex-col w-screen h-screen items-center justify-center background-pattern">
+<div class="flex flex-col w-screen h-screen items-center justify-center background-pattern ">
 	<div class="border border-primary w-max flex flex-col justify-center items-center bg-secondary">
 		<div class="flex flex-col justify-center items-center p-6">
 			<h1 class="text-primary font-bold text-8xl">{$page.status}</h1>

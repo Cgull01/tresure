@@ -9,16 +9,18 @@
 	export let form;
 </script>
 
-<NavBar />
+<div class="h-full w-full bg-background dark:bg-background_dark">
+	<NavBar />
 
-<div class="w-full background-pattern h-full py-52 flex flex-col items-center gap-6 justify-center">
-	<Container title="Create New Account">
-		<RegisterForm {form} />
-	</Container>
-	<a
-		href="/login"
-		class="select-none flex bg-white flex-row cursor-pointer mt-6 border border-primary px-3 hover:bg-primary hover:text-secondary transition-colors group"
-	>
-		Already have an account? <IconDirectionRight />
-	</a>
+	<div
+		class="w-full dark:bg-background_dark h-max py-52 flex flex-col items-center gap-6 justify-center">
+		<Container title="Create New Account">
+			<RegisterForm {form} />
+		</Container>
+		<a
+			href="/login"
+			class="select-none text-text_primary dark:text-text_primary_dark flex bg-background dark:bg-background_dark flex-row cursor-pointer mt-6 border border-primary dark:border-primary_dark px-3 hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors group">
+			Already have an account? <IconDirectionRight />
+		</a>
+	</div>
 </div>

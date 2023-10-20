@@ -60,7 +60,7 @@
 </script>
 
 <div
-	class="w-96 h-max m-2 flex flex-col bg-background"
+	class="w-96 h-max m-2 flex flex-col bg-background dark:bg-background_dark"
 	on:drop|preventDefault={(event) => {
 		handleDrop(event);
 	}}
@@ -72,7 +72,7 @@
 >
 	<button
 		on:click={() => {}}
-		class="text-white bg-primary flex flex-row justify-between px-3 {drag_entered &&
+		class="text-text_secondary dark:text-text_secondary_dark bg-primary dark:bg-primary_dark flex flex-row justify-between px-3 {drag_entered &&
 			'opacity-80'} w-full"
 	>
 		<h1 class="font-sans py-3 text-3xl text-ellipsis overflow-hidden">{column.title}</h1>
@@ -86,7 +86,7 @@
 			<IconMoreHorizontal />
 		</button>
 	</button>
-	<div class="border border-black bg-zinc-300 {drag_entered && 'border-gray-700'}">
+	<div class="border border-primary dark:border-primary_dark bg-background dark:bg-background_dark {drag_entered && 'brightness-105'}">
 		<section class="flex flex-col pb-6">
 			{#each column.cards || [] as card (card.id)}
 				<Card
@@ -99,7 +99,7 @@
 			{/each}
 		</section>
 		<div class="flex flex-row">
-			<PlusButton styles="border-r border-t bg-zinc-300" on:click={handleClick} />
+			<PlusButton styles="text-text_primary dark:text-text_primary_dark border-primary dark:border-primary_dark border-r border-t bg-background dark:bg-background_dark" on:click={handleClick} />
 		</div>
 	</div>
 </div>

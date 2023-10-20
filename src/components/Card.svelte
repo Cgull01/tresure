@@ -36,37 +36,37 @@
 		show_context_menu = false;
 	}}
 	role="listitem"
-	class="group select-none hover:shadow-2xl hover:bg-white bg-zinc-200 hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
+	class="group select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-150 bg-secondary dark:bg-secondary_dark hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
 >
 	{#if show_context_menu}
 		<form
 			method="POST"
 			action="?/deleteTask"
 			use:enhance={onDeleteTask}
-			class="fixed z-50 border-black border bg-background"
+			class="fixed z-50 border-primary dark:border-primary_dark border bg-background dark:bg-background_dark"
 			style="top: {context_position.y}px; left: {context_position.x}px;"
 		>
-			<button class="flex flex-row gap-2 hover:bg-primary hover:text-secondary w-full px-2 py-1">
+			<button class="flex flex-row gap-2 hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark w-full px-2 py-1">
 				<IconTrash />
 				Delete
 			</button>
 		</form>
 	{/if}
 	<div class="flex flex-row justify-between">
-		<div class="flex flex-row text-white flex-wrap gap-2 font-semibold overflow-x-auto">
+		<div class="flex flex-row text-secondary dark:text-secondary_dark flex-wrap gap-2 font-semibold overflow-x-auto">
 			{#each card.tags || [] as tag}
-				<div class={`w-max h-max px-1 bg-${tag.color} opacity-80`}>
+				<div class={`w-max h-max px-1 bg-${tag.color}`}>
 					{tag.tag}
 				</div>
 			{/each}
 		</div>
-		<button class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100" on:click={handleClick}>
+		<button class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100 text-text_primary dark:text-text_primary_dark" on:click={handleClick}>
 			<IconEdit styles="group-hover:block hidden" />
 		</button>
 	</div>
 	<div class="flex flex-row justify-between pb-2">
-		<div class="flex flex-col items-start w-full">
-			<div class="text-2xl font-semibold text-ellipsis overflow-hidden w-full">
+		<div class="flex flex-col items-start w-full text-text_primary dark:text-text_primary_dark">
+			<div class="text-2xl font-semibold text-ellipsis overflow-hidden w-full text-text_primary dark:text-text_primary_dark">
 				{card.title ?? ''}
 			</div>
 			<div class="{card.title ? 'text-base' : 'text-xl'} w-full overflow-hidden text-ellipsis">
@@ -75,5 +75,5 @@
 		</div>
 	</div>
 
-	<hr class="w-full border-t-1 border-black self-center" />
+	<hr class="w-full border-t-1 border-primary self-center" />
 </div>

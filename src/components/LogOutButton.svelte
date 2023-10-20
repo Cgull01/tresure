@@ -7,7 +7,7 @@
 </script>
 
 <button
-	class="hover:underline underline-offset-2 text-primary bg-none px-2 text-2xl flex items-center py-1 active:bg-primary active:text-secondary"
+	class="hover:underline underline-offset-2 text-text_primary dark:text-text_primary_dark bg-none px-2 text-2xl flex items-center py-1 active:bg-primary dark:active:bg-primary_dark active:text-text_secondary dark:active:text-text_secondary_dark"
 	on:click={() => delete_cookie('jwt')}
 >
 	Log Out

@@ -6,35 +6,26 @@ export default {
 	darkMode: 'class',
 	theme: {
 		extend: {
-			// colors: {
-			// 	primary: '#071627',
-			// 	secondary: '#E4E5E7',
-			// 	accent: '#548896',
-			// 	background: '#CCCCCC',
-			// 	textLight: '#FFFFFF',
-			//  	textDark: '#071627',
-			// }
-			// colors: {
-			// 	primary: '#488377',
-			// 	secondary: '#DBCFAD',
-			// 	accent: '#6D6670',
-			// 	background: '#ECEBEA',
-			// 	textLight: '#FFFFFF',
-			// 	textDark: '#071627',
-			// }
-
+			backgroundImage: {
+				'radial-gradient': 'radial-gradient(circle,  #6fb0aa, var(--accent-color))',
+				'radial-gradient_dark': 'radial-gradient(circle, #09233b, #131126)',
+			},
 			colors: {
-				text: 'var(--text-color)',
+				text_primary: 'var(--text-primary-color)',
+				text_secondary: 'var(--text-secondary-color)',
 				background: 'var(--background-color)',
 				primary: 'var(--primary-color)',
 				secondary: 'var(--secondary-color)',
 				accent: 'var(--accent-color)',
 
-				text_dark: 'var(--text-color-dark)',
+				text_primary_dark: 'var(--text-primary-color-dark)',
+				text_secondary_dark: 'var(--text-secondary-color-dark)',
 				background_dark: 'var(--background-color-dark)',
 				primary_dark: 'var(--primary-color-dark)',
 				secondary_dark: 'var(--secondary-color-dark)',
 				accent_dark: 'var(--accent-color-dark)',
+
+
 		},
 	},
 	},

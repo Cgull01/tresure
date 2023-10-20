@@ -5,12 +5,12 @@
 </script>
 
 <form
-	class="flex flex-col text-primary bg-white"
+	class="flex flex-col text-text_primary dark:text-text_primary_dark bg-background dark:bg-background_dark form"
 	method="POST"
 	action="?/register"
 	use:enhance>
 	{#if form?.message}
-		<p class="bg-accent text-secondary text-2xl py-1">{form.message}</p>
+	<p class="bg-accent dark:bg-accent_dark text-center text-text_secondary dark:text-text_secondary_dark text-2xl py-1">• {form.message} •</p>
 	{/if}
 
 	<div class="p-3 flex flex-col">

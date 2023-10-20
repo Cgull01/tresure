@@ -5,29 +5,43 @@
 
 @layer base{
 	:root {
-		--text-color: #071627;
+/* old light theme for testing toggle between dark and light */
+		/* --text-primary-color: #041255;
+		--text-secondary-color: #ced496;
+		--background-color: #ffcdb3;
+		--primary-color: #b4838d;
+		--secondary-color: #e6989b;
+		--accent-color: #6c6774; */
+		/* original */
+		--text-primary-color: #071627;
+		--text-secondary-color: #CCCCCC;
 		--background-color: #CCCCCC;
 		--primary-color: #071627;
 		--secondary-color: #E4E5E7;
 		--accent-color: #548896;
 
-		--text-color-dark: #fef9ec;
-		--background-color-dark: #333333;
-		--primary-color-dark: #d8e7f8;
-		--secondary-color-dark: #18191b;
-		--accent-color-dark: #699cab;
+
+
+		--text-primary-color-dark: #d6d9e3;
+		--text-secondary-color-dark: #070c1d;
+		--background-color-dark: #090f25;
+		--primary-color-dark: #d8bb5a;
+		--secondary-color-dark: #111e4b;
+		--accent-color-dark: #d6b751;
 	}
 }
 
-.background-pattern {
-	background-color: #cccccc;
+/* .background-pattern {
+	background-color: var(--background-color);
 	opacity: 1;
-	background-image: radial-gradient(#e4e5e7 1.75px, transparent 1.75px),
-		radial-gradient(#e4e5e7 1.75px, #cccccc 1.75px);
+	background-image: radial-gradient(var(--secondary-color) 1.75px, transparent 1.75px),
+		radial-gradient(var(--secondary-color) 1.75px, var(--background-color) 1.75px);
 	background-size: 70px 70px;
 	background-position: 0 0, 35px 35px;
-	animation: moveBackground 4s linear infinite; /* Create a looping animation */
-}
+	animation: moveBackground 4s linear infinite;
+} */
+
+
 
 @keyframes moveBackground {
 	0% {
@@ -38,21 +52,20 @@
 	}
 }
 
+
 .form {
-	@apply border-primary dark:border-primary_dark border bg-white;
+	@apply border-primary dark:border-primary_dark border bg-background dark:bg-background_dark text-text_primary dark:text-text_primary_dark;
 }
 
 .form_button {
-	@apply flex flex-row cursor-pointer border-t border-primary dark:border-primary_dark w-full text-3xl mt-6 hover:bg-primary dark:bg-primary_dark
-	hover:text-secondary dark:text-secondary_dark transition-colors py-2 px-4 align-middle font-semibold select-none text-center disabled:text-gray-500 disabled:bg-gray-400;
+	@apply flex flex-row cursor-pointer border-t border-primary dark:border-primary_dark w-full text-3xl mt-6 dark:hover:bg-primary_dark hover:bg-primary
+	hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors py-2 px-4 align-middle font-semibold select-none text-center disabled:text-gray-500 disabled:bg-gray-400;
 }
 
 .form_input {
-	@apply p-1 border bg-secondary dark:bg-secondary_dark border-background  hover:border-gray-400  focus:border-primary dark:border-primary_dark  outline-none w-full;
+	@apply p-1 border bg-secondary dark:bg-secondary_dark border-background dark:border-background_dark hover:border-accent dark:hover:border-accent_dark focus:border-primary dark:focus:border-primary_dark  outline-none w-full;
 }
-/* .form_input {
-	@apply p-1 border-l-2 border-primary dark:border-primary_dark bg-secondary dark:bg-secondary_dark hover:border-l-[3px]  outline-none w-full;
-} */
+
 
 /* *{
 	border: 1px inset orange;

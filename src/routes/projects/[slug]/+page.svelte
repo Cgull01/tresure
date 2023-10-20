@@ -44,7 +44,7 @@
 <CardDialog />
 <MemberDialog members={data.project.members} />
 
-<div class="flex flex-row gap-4 background-pattern w-full h-full">
+<div class="flex flex-row gap-4 dark:bg-background_dark w-full h-full bg-radial-gradient dark:bg-radial-gradient_dark">
 	<div
 		class="sm:flex-row flex-1 sm:items-start items-center flex-col flex h-full pt-16 sm:justify-center overflow-y-auto">
 		{#each data.project.columns as column}

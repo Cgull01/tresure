@@ -40,20 +40,20 @@
 	>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
-				<div class="flex flex-row gap-4 bg-primary text-white w-full items-center">
-					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">Edit Project</h1>
+				<div class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center">
+					<h1 class="font-sans text-3xl px-4 pb-2 py-2">Edit Project</h1>
 					<form method="POST" action="?/deleteProject" use:enhance={submitDialog}>
 						<button
 							tabindex="0"
-							title="Click to remove the task"
-							class="flex items-center cursor-pointer active:scale-105 stroke-secondary"
+							title="Click To Delete The Project"
+							class="flex cursor-pointer active:scale-105 stroke-secondary dark:stroke-secondary_dark"
 						>
-							<IconTrash />
+							<IconTrash/>
 						</button>
 					</form>
 				</div>
 				<button
-					class="bg-primary w-16 h-auto text-white border-l select-none font-semibold border-white hover:bg-white hover:text-primary transition-colors"
+					class="bg-primary group dark:bg-primary_dark w-16 h-auto text-text_secondary dark:text-text_secondary_dark border-l select-none font-semibold border-secondary dark:border-secondary_dark transition-colors"
 					on:click={closeDialog}>
 					<IconPlus styles="rotate-45 m-auto" />
 				</button>

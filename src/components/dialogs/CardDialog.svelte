@@ -105,8 +105,8 @@
 		on:close={closeDialog}>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
-				<div class="flex flex-row gap-4 bg-primary text-white w-full items-center">
-					<h1 class="text-white font-sans text-3xl px-4 pb-2 py-2">
+				<div class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center">
+					<h1 class="font-sans text-3xl px-4 pb-2 py-2">
 						{task.id ? 'Edit Task' : 'New Task'}
 					</h1>
 					{#if task.id}
@@ -115,14 +115,14 @@
 								name="deleteTask"
 								tabindex="0"
 								title="Click to remove the task"
-								class="cursor-pointer active:scale-105 stroke-secondary flex items-center">
+								class="flex cursor-pointer active:scale-105 stroke-text_secondary dark:stroke-text_secondary_dark">
 								<IconTrash />
 							</button>
 						</form>
 					{/if}
 				</div>
 				<button
-					class="bg-primary w-16 h-auto text-white border-l select-none font-semibold border-white hover:bg-white hover:text-primary transition-colors"
+					class="bg-primary group dark:bg-primary_dark w-16 h-auto text-text_secondary dark:text-text_secondary_dark border-l select-none font-semibold border-secondary dark:border-secondary_dark transition-colors"
 					on:click={closeDialog}>
 					<IconPlus styles="rotate-45 m-auto" />
 				</button>
@@ -130,16 +130,16 @@
 			<form class="form" method="POST" action="?/createTask" use:enhance={onSubmitDialog}>
 				<div class="flex flex-col sm:flex-row px-3 py-3 justify-between">
 					<div class="flex flex-col gap-2">
-						<label for="tag" class="text-lg font-semibold select-none">Tags</label>
+						<label for="tag" class="text-lg font-semibold select-none text-text_primary dark:text-text_primary_dark">Tags</label>
 						<div
-							class="flex flex-row gap-2 text-white font-semibold overflow-hidden w-max overflow-x-auto">
+							class="flex flex-row gap-2 text-secondary dark:text-secondary_dark font-semibold overflow-hidden w-max overflow-x-auto">
 							{#if task.tags}
 								{#each task.tags as tag, index}
 									<button
 										type="button"
 										on:click={() => removeTag(index)}
 										class="w-max h-max px-1 bg-{tag &&
-											tag.color} opacity-80 flex flex-row gap-2 items-center hover: shadow-md"
+											tag.color} flex flex-row gap-2 items-center hover:shadow-md "
 										title="click to remove">
 										{tag.tag}
 									</button>
@@ -150,7 +150,7 @@
 							<div class="flex flex-row">
 								<button
 									type="button"
-									class="p-1 group border bg-background w-max h-max cursor-pointer group border-background hover:border-gray-400 focus:border-primary"
+									class="p-1 group border rounded-md bg-background dark:bg-background_dark w-max h-max cursor-pointer group border-primary dark:border-primary_dark hover:border-gray-400 focus:border-primary"
 									on:click|stopPropagation={() => {
 										color_dropdown_visible = !color_dropdown_visible;
 									}}>
@@ -159,7 +159,7 @@
 								{#if color_dropdown_visible}
 									<div class="absolute mt-8" bind:this={dropdown_element}>
 										<div
-											class="grid grid-cols-4 grid-rows-2 bg-white p-2 border border-primary gap-2">
+											class="grid grid-cols-4 grid-rows-2 bg-background dark:bg-background_dark p-2 border border-primary dark:border-primary_dark gap-2">
 											{#each TAG_COLORS as color, i}
 												<button
 													type="button"
@@ -181,15 +181,15 @@
 							<button
 								type="button"
 								on:click={addTag}
-								class="p-1 group border bg-background w-max h-max cursor-pointer group border-background hover:border-gray-400 focus:border-primary">
-								<IconPlus styles="group group-active:scale-110" />
+								class="p-1 group border bg-background dark:bg-background_dark w-max h-max cursor-pointer group border-primary dark:border-primary_dark focus:border-primary dark:focus:border-primary_dark">
+								<IconPlus styles="group group-active:scale-110 text-primary dark:text-primary_dark" />
 							</button>
 						</div>
 					</div>
 				</div>
 				<div class="px-3">
 					<div>
-						<label for="title" class="text-lg font-semibold">Title</label>
+						<label for="title" class="text-lg font-semibold text-text_primary dark:text-text_primary_dark">Title</label>
 						<input
 							type="text"
 							id="title"
@@ -198,7 +198,7 @@
 							class="form_input" />
 					</div>
 					<div>
-						<label for="details" class="text-lg font-semibold">Details</label>
+						<label for="details" class="text-lg font-semibold text-text_primary dark:text-text_primary_dark">Details</label>
 						<textarea
 							id="details"
 							placeholder="Task details"
