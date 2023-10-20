@@ -15,9 +15,13 @@ TODO:
 protected column api route, add collumn action, put column action, remove column action
 
 TODO:
-member search/addition
-mark tasks as completed boolean, admin, member
+> member search/addition
+> move tailwind config colors as css variables
+> double click on project to change title
+> remove sidebar and move functionality to tabs
+> add right click context menu
 
+API:
 added enum as a role in role.cs
 if not working change to string
 

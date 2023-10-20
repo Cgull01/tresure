@@ -52,12 +52,12 @@
 		{/each}
 	</div>
 
-	<div class="flex flex-row">
+<!--	<div class="flex flex-row">
 		{#if showMembers}
 			<div
-				class="w-max h-full border-l flex-2 border-primary bg-zinc-300
+				class="w-max h-full border-l flex-2 border-primary dark:border-primary_dark bg-secondary dark:bg-secondary_dark
 			flex flex-col gap-3 p-3 px-6">
-				<flex class="flex flex-col gap-2 p-2 items-center border-b border-primary">
+				<flex class="flex flex-col gap-2 p-2 items-center border-b border-primary dark:border-primary_dark">
 					<button
 						on:click={() => {
 							$DIALOG_MANAGER.member_dialog = true;
@@ -69,7 +69,7 @@
 				</flex>
 				<div class="flex flex-col gap-4">
 					{#each data.project.members as member}
-						<div class="flex flex-col py-1 border-b border-primary">
+						<div class="flex flex-col py-1 border-b border-primary dark:border-primary_dark">
 							<span class="font-semibold">{member.username}</span>
 						</div>
 					{/each}
@@ -77,9 +77,9 @@
 			</div>
 		{/if}
 		<div
-			class="w-max h-full border-l flex-2 border-primary bg-zinc-300
+			class="w-max h-full border-l flex-2 border-primary dark:border-primary_dark bg-secondary dark:bg-secondary_dark
 			flex flex-col gap-3 p-3 px-6">
-			<button class="flex flex-col gap-2 border-b border-primary p-2 items-center">
+			<button class="flex flex-col gap-2 border-b border-primary dark:border-primary_dark p-2 items-center">
 				<IconProfile />
 				<span class="font-semibold">{data.user.username}</span>
 			</button>
@@ -98,5 +98,5 @@
 				</button>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
