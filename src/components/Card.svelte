@@ -36,7 +36,7 @@
 		show_context_menu = false;
 	}}
 	role="listitem"
-	class="group select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-150 bg-secondary dark:bg-secondary_dark hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
+	class="group select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-150 bg-background dark:bg-background_dark hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
 >
 	{#if show_context_menu}
 		<form
@@ -53,7 +53,7 @@
 		</form>
 	{/if}
 	<div class="flex flex-row justify-between">
-		<div class="flex flex-row text-secondary dark:text-secondary_dark flex-wrap gap-2 font-semibold overflow-x-auto">
+		<div class="flex flex-row text-secondary flex-wrap gap-2 font-semibold overflow-x-auto">
 			{#each card.tags || [] as tag}
 				<div class={`w-max h-max px-1 bg-${tag.color}`}>
 					{tag.tag}
@@ -75,5 +75,5 @@
 		</div>
 	</div>
 
-	<hr class="w-full border-t-1 border-primary self-center" />
+	<hr class="w-full border-t-1 border-primary dark:border-primary_dark self-center" />
 </div>

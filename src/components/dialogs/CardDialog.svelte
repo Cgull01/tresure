@@ -30,7 +30,7 @@
 	let color_dropdown_visible = false;
 	let dropdown_element: HTMLElement;
 
-	$: task = $SELECTED_TASK ?? <ICard>{};
+	$: task = $SELECTED_TASK ? { ...$SELECTED_TASK } : <ICard>{};
 
 	function addTag() {
 		if (tag_input.tag.length === 0) return;
@@ -38,8 +38,6 @@
 		const newTag = { ...tag_input };
 
 		task.tags = task ? [...(task.tags || []), newTag] : [newTag];
-
-		// tag_input = { tag: '', color: TAG_COLORS[0] };
 	}
 
 	function removeTag(index: number) {
@@ -52,6 +50,7 @@
 		$SELECTED_TASK = null;
 
 		tag_input = { tag: '', color: TAG_COLORS[0] };
+		task.tags = [];
 		task = <ICard>{};
 	}
 
@@ -132,7 +131,7 @@
 					<div class="flex flex-col gap-2">
 						<label for="tag" class="text-lg font-semibold select-none text-text_primary dark:text-text_primary_dark">Tags</label>
 						<div
-							class="flex flex-row gap-2 text-secondary dark:text-secondary_dark font-semibold overflow-hidden w-max overflow-x-auto">
+							class="flex flex-row gap-2 text-secondary font-semibold overflow-hidden w-max overflow-x-auto">
 							{#if task.tags}
 								{#each task.tags as tag, index}
 									<button

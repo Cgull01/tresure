@@ -33,7 +33,7 @@
 		{/if}
 	</NavBar>
 	<div class="background-pattern bg-background dark:bg-background_dark w-full h-full flex flex-col px-16 items-center justify-center ">
-		<h1 class="text-3xl font-extrabold sm:px-16 text-text_primary dark:text-text_primary_dark sm:text-5xl">
+		<h1 class="text-3xl font-extrabold sm:px-16 text-text_primary dark:text-text_primary_dark sm:text-5xl break-words">
 			Project management made <span class="bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark px-2">simple</span>
 		</h1>
 		<h2 class="text-2xl sm:text-3xl font-extrabold sm:px-16 py-12 text-text_primary dark:text-text_primary_dark ">

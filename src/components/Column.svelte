@@ -60,7 +60,7 @@
 </script>
 
 <div
-	class="w-96 h-max m-2 flex flex-col bg-background dark:bg-background_dark"
+	class="w-full h-max flex flex-col bg-none dark:bg-background_dark"
 	on:drop|preventDefault={(event) => {
 		handleDrop(event);
 	}}
