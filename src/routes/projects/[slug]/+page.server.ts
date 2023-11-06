@@ -47,7 +47,6 @@ export const actions = {
 		const data = await request.formData();
 
 		const task_json = JSON.parse(data.get('task'));
-		const column_id = data.get('column_id');
 
 		const jwt = cookies.get('jwt');
 
@@ -58,7 +57,7 @@ export const actions = {
 			dueDate: task_json.dueDate ?? null,
 			creationDate: new Date(),
 			assignedMembers: task_json.assignedMembers ?? null,
-			columnId: column_id
+			columnId: task_json.columnId
 		};
 
 		const response = await fetch(`${API_URL}/Cards`, {
@@ -78,6 +77,7 @@ export const actions = {
 
 	deleteTask: async ({ request, cookies }: any) => {
 		const data = await request.formData();
+
 		let task_id = data.get('task_id');
 		const jwt = cookies.get('jwt');
 
@@ -97,10 +97,9 @@ export const actions = {
 		return { success: true };
 	},
 
-	editProject: async ({ request, cookies }: any) => {
+	editProject: async ({ request, cookies, params }: any) => {
 		const data = await request.formData();
 
-		const project_id = data.get('project_id');
 		const project_title = data.get('project_title');
 
 		const jwt = cookies.get('jwt');
@@ -108,7 +107,7 @@ export const actions = {
 		if (project_title.length <= 0)
 			return fail(400, { project_title, message: 'Missing Project Title' });
 
-		await fetch(`${API_URL}/Projects/${project_id}?projectTitle=${project_title}`, {
+		await fetch(`${API_URL}/Projects/${params.slug}?projectTitle=${project_title}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',

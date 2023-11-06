@@ -5,22 +5,12 @@
 
 @layer base{
 	:root {
-/* old light theme for testing toggle between dark and light */
-		/* --text-primary-color: #041255;
-		--text-secondary-color: #ced496;
-		--background-color: #ffcdb3;
-		--primary-color: #b4838d;
-		--secondary-color: #e6989b;
-		--accent-color: #6c6774; */
-		/* original */
 		--text-primary-color: #071627;
 		--text-secondary-color: #CCCCCC;
 		--background-color: #CCCCCC;
 		--primary-color: #071627;
 		--secondary-color: #E4E5E7;
 		--accent-color: #548896;
-
-
 
 		--text-primary-color-dark: #d6d9e3;
 		--text-secondary-color-dark: #070c1d;
@@ -30,18 +20,6 @@
 		--accent-color-dark: #d6b751;
 	}
 }
-
-/* .background-pattern {
-	background-color: var(--background-color);
-	opacity: 1;
-	background-image: radial-gradient(var(--secondary-color) 1.75px, transparent 1.75px),
-		radial-gradient(var(--secondary-color) 1.75px, var(--background-color) 1.75px);
-	background-size: 70px 70px;
-	background-position: 0 0, 35px 35px;
-	animation: moveBackground 4s linear infinite;
-} */
-
-
 
 @keyframes moveBackground {
 	0% {

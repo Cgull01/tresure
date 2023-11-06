@@ -1,8 +1,8 @@
-<!-- <script lang="ts">
+<script lang="ts">
 	import { enhance } from '$app/forms';
 	import IconPlus from '../Icons/Icon_plus.svelte';
 	import IconSettings from '../Icons/Icon_settings.svelte';
-	import { DIALOG_MANAGER, SELECTED_PROJECT } from '../routes/projects/[slug]/stores';
+	import { DIALOG_MANAGER } from '../routes/projects/[slug]/stores';
 
 	let show_context_menu = false;
 	let context_menu: HTMLElement;
@@ -20,8 +20,8 @@
 	}
 
 	function handleSubmit({ formData }: any) {
-		formData.set('project_id', $SELECTED_PROJECT!.id);
-		formData.set('column_position', $SELECTED_PROJECT?.columns.length);
+		// formData.set('project_id', $SELECTED_PROJECT!.id);
+		// formData.set('column_position', $SELECTED_PROJECT?.columns.length);
 		show_context_menu = false;
 	}
 </script>
@@ -38,28 +38,15 @@
 		class="fixed z-50"
 		style="top: {context_menu_position.y}px; left: {context_menu_position.x}px;"
 	>
-		<ul class="shadow-md border border-black w-full bg-background">
+		<ul class="shadow-md border border-accent dark:border-accent_dark w-full bg-background dark:bg-background_dark">
+
 			<li
-				class="py-1 hover:bg-primary hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
-			>
-				<button
-					class="flex gap-2"
-					on:click={() => {
-						$DIALOG_MANAGER.project_dialog = true;
-						show_context_menu = false;
-					}}
-				>
-					<IconSettings />
-					Project settings</button
-				>
-			</li>
-			<li
-				class="py-1 hover:bg-primary hover:text-white transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-black"
+				class="py-1 hover:bg-primary dark:hover:bg-primary_dark text-text_primary dark:text-text_primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-primary dark:border-primary_dark"
 			>
 				<form action="?/addColumn" method="POST" use:enhance={handleSubmit}>
-					<button class="flex gap-2"> <IconPlus /> Add column</button>
+					<button class="flex gap-2"> <IconPlus/> Add column</button>
 				</form>
 			</li>
 		</ul>
 	</div>
-{/if} -->
+{/if}

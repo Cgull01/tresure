@@ -15,11 +15,11 @@
 </svelte:head>
 
 <NewProjectDialog />
-<div class="flex flex-col h-screen m-auto background-pattern bg-background dark:bg-background_dark ">
+<div class="flex flex-col h-screen m-auto background-pattern bg-radial-gradient dark:bg-radial-gradient_dark  ">
 	<NavBar>
 		<LogOutButton />
 	</NavBar>
-	<div class="sm:w-1/3 w-full mt-0 sm:mt-32 bg-background dark:bg-background_dark sm:self-center self-start">
+	<div class="sm:w-1/3 w-full mt-0 sm:mt-32  sm:self-center self-start">
 		<div class="flex flex-row items-center justify-between text-text_secondary dark:text-text_secondary_dark bg-primary dark:bg-primary_dark">
 			<h1 class="font-sans py-3 text-3xl mb-1 px-3">Your Projects</h1>
 			<button

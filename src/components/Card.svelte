@@ -7,14 +7,9 @@
 
 	export let card: any;
 
-	let show_context_menu = false;
-	let context_position = { x: 220, y: 420 };
+	let show_deletion_menu = false;
 
 	const dispatch = createEventDispatcher();
-	function handleContextmenu(event: MouseEvent) {
-		context_position = { x: event.clientX, y: event.clientY };
-		show_context_menu = !show_context_menu;
-	}
 
 	function handleClick() {
 		dispatch('edit', {
@@ -22,36 +17,32 @@
 		});
 	}
 
-	function onDeleteTask({ formData }: any) {
-		formData.set('task_id', card.id);
-		show_context_menu = false;
-	}
 </script>
 
 <div
 	draggable="true"
 	on:dragstart
-	on:contextmenu|preventDefault|stopPropagation={handleContextmenu}
+	on:contextmenu|preventDefault|stopPropagation={() => (show_deletion_menu = !show_deletion_menu)}
 	on:mouseleave={() => {
-		show_context_menu = false;
+		show_deletion_menu = false;
 	}}
 	role="listitem"
-	class="group select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-150 bg-background dark:bg-background_dark hover:cursor-grab active:cursor-grabbing transition-shadow pb-2 p-3"
->
-	{#if show_context_menu}
+	class="group select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-150 bg-background dark:bg-background_dark hover:cursor-grab active:cursor-grabbing transition-shadow p-3">
+	{#if show_deletion_menu}
 		<form
 			method="POST"
 			action="?/deleteTask"
-			use:enhance={onDeleteTask}
-			class="fixed z-50 border-primary dark:border-primary_dark border bg-background dark:bg-background_dark"
-			style="top: {context_position.y}px; left: {context_position.x}px;"
-		>
-			<button class="flex flex-row gap-2 hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark w-full px-2 py-1">
-				<IconTrash />
+			use:enhance
+			class="absolute top-0 left-0 w-full h-full flex items-center justify-center backdrop-blur-md">
+			<input class="hidden" type="number" value={card.id} name="task_id"/>
+			<button
+				class="flex gap-2 bg-accent dark:bg-accent_dark p-2 text-primary_secondary dark:text-primary_secondary_dark border-primary dark:border-primary_dark hover:border group group-active:scale-95">
+				<IconTrash styles="group-active:scale-95" />
 				Delete
 			</button>
 		</form>
 	{/if}
+
 	<div class="flex flex-row justify-between">
 		<div class="flex flex-row text-secondary flex-wrap gap-2 font-semibold overflow-x-auto">
 			{#each card.tags || [] as tag}
@@ -60,13 +51,16 @@
 				</div>
 			{/each}
 		</div>
-		<button class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100 text-text_primary dark:text-text_primary_dark" on:click={handleClick}>
+		<button
+			class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100 text-text_primary dark:text-text_primary_dark"
+			on:click={handleClick}>
 			<IconEdit styles="group-hover:block hidden" />
 		</button>
 	</div>
 	<div class="flex flex-row justify-between pb-2">
 		<div class="flex flex-col items-start w-full text-text_primary dark:text-text_primary_dark">
-			<div class="text-2xl font-semibold text-ellipsis overflow-hidden w-full text-text_primary dark:text-text_primary_dark">
+			<div
+				class="text-2xl font-semibold text-ellipsis overflow-hidden w-full text-text_primary dark:text-text_primary_dark">
 				{card.title ?? ''}
 			</div>
 			<div class="{card.title ? 'text-base' : 'text-xl'} w-full overflow-hidden text-ellipsis">

@@ -4,6 +4,7 @@ import type { IColumn, IProject, ICard } from '$lib/types';
 export const SELECTED_COLUMN: Writable<IColumn | null> = writable(null);
 
 export const PROJECT_ID: Writable<Number | null> = writable(null);
+export const THEME_TOGGLE: Writable<Boolean> = writable(false);
 
 export interface DialogStates {
 	task_dialog: boolean;
@@ -23,4 +24,4 @@ export const DIALOG_MANAGER: Writable<DialogStates> = writable({
 
 // export const SELECTED_PROJECT: Writable<any | null> = writable(null);
 
-export const SELECTED_TASK: Writable<ICard | null> = writable(null);
+export const SELECTED_TASK: Writable<any | null> = writable(null);

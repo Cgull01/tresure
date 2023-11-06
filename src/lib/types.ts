@@ -25,7 +25,7 @@ export interface ICard {
 		color: string;
 		tag: string;
 	}[];
-	creationDate?: Date | null;
+	creationDate: Date;
 	dueDate?: Date | null;
 	position: number;
 }

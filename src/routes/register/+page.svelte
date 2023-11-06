@@ -9,11 +9,11 @@
 	export let form;
 </script>
 
-<div class="h-full w-full bg-background dark:bg-background_dark">
+<div class="h-full w-full bg-radial-gradient dark:bg-radial-gradient_dark ">
 	<NavBar />
 
 	<div
-		class="w-full dark:bg-background_dark h-max py-52 flex flex-col items-center gap-6 justify-center">
+		class="w-full h-max py-52 flex flex-col items-center gap-6 justify-center">
 		<Container title="Create New Account">
 			<RegisterForm {form} />
 		</Container>

@@ -14,12 +14,15 @@ feedback: project report: tasks finished within some period, assigned members
 TODO:
 protected column api route, add collumn action, put column action, remove column action
 
+
 TODO:
+> more info on the frontpage, contacts, usage and shit
+
 > member search/addition
-> move tailwind config colors as css variables
-> double click on project to change title
-> remove sidebar and move functionality to tabs
-> add right click context menu
+V double click on project to change title
+V move tailwind config colors as css variables
+V remove sidebar and move functionality to tabs
+V add right click context menu
 
 API:
 added enum as a role in role.cs

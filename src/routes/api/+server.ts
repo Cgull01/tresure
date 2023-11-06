@@ -5,6 +5,8 @@ import { json } from '@sveltejs/kit';
 export async function PUT({ request, cookies }: any) {
 	const task = await request.json();
 
+	console.log(task);
+
 	const jwt = cookies.get('jwt');
 	task.tags = JSON.stringify(task.tags) ?? null;
 

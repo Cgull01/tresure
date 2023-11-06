@@ -24,8 +24,6 @@ export default {
 				primary_dark: 'var(--primary-color-dark)',
 				secondary_dark: 'var(--secondary-color-dark)',
 				accent_dark: 'var(--accent-color-dark)',
-
-
 		},
 	},
 	},

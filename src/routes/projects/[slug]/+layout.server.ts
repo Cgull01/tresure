@@ -33,6 +33,18 @@ export async function load({ params, cookies }: any) {
 
 		const user = await userJson.json();
 
+		for(let i = 0; i < data.columns ;i++)
+		{
+			data.columns[i] = data.columns[i].cards?.sort((cardA:any, cardB:any) => {
+				const dateA = new Date(cardA.creationDate).getTime();
+				const dateB = new Date(cardB.creationDate).getTime();
+				return dateA - dateB;
+			});
+
+		}
+
+		console.log(JSON.stringify(data))
+
 		return { project: data, user: user, params:params };
 	}
 

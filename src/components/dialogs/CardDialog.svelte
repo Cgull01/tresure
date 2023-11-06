@@ -3,8 +3,8 @@
 	import type { ITag, ICard } from '$lib/types';
 	import {
 		DIALOG_MANAGER,
-		SELECTED_COLUMN,
-		SELECTED_TASK
+		SELECTED_TASK,
+		SELECTED_COLUMN
 	} from '../../routes/projects/[slug]/stores';
 	import { enhance } from '$app/forms';
 	import IconTrash from '../../Icons/Icon_trash.svelte';
@@ -30,47 +30,41 @@
 	let color_dropdown_visible = false;
 	let dropdown_element: HTMLElement;
 
-	$: task = $SELECTED_TASK ? { ...$SELECTED_TASK } : <ICard>{};
+	let task:any = {};
 
 	function addTag() {
 		if (tag_input.tag.length === 0) return;
 
 		const newTag = { ...tag_input };
 
-		task.tags = task ? [...(task.tags || []), newTag] : [newTag];
+		$SELECTED_TASK.tags = $SELECTED_TASK ? [...($SELECTED_TASK.tags || []), newTag] : [newTag];
 	}
 
 	function removeTag(index: number) {
-		task.tags = task.tags?.filter((t, i) => i != index);
+		$SELECTED_TASK.tags = $SELECTED_TASK.tags?.filter((t:any,i:number) => i != index);
 	}
 
 	function closeDialog() {
 		$DIALOG_MANAGER.task_dialog = false;
-		$SELECTED_COLUMN = null;
-		$SELECTED_TASK = null;
+		$SELECTED_TASK = {};
 
 		tag_input = { tag: '', color: TAG_COLORS[0] };
 		task.tags = [];
 		task = <ICard>{};
 	}
 
-	function onDeleteTask({ formData }: any) {
-		formData.set('task_id', task.id);
-
-		closeDialog();
-	}
 	async function onSubmitDialog({ formData, cancel }: any) {
-		if (!task.title && !task.details) {
+		if (!$SELECTED_TASK.title && !$SELECTED_TASK.details) {
 			throw new Error('no title or no details');
 		}
 
-		formData.set('column_id', $SELECTED_COLUMN?.id);
-		formData.set('task', JSON.stringify(task));
+		$SELECTED_TASK.columnId = $SELECTED_COLUMN!.id;
+		formData.set('task', JSON.stringify($SELECTED_TASK));
 
-		if ($SELECTED_TASK) {
+		if ($SELECTED_TASK.id) {
 			await fetch(`/api`, {
 				method: 'PUT',
-				body: JSON.stringify(task)
+				body: JSON.stringify($SELECTED_TASK)
 			});
 			cancel();
 		}
@@ -106,10 +100,11 @@
 			<div class="flex flex-row justify-between">
 				<div class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center">
 					<h1 class="font-sans text-3xl px-4 pb-2 py-2">
-						{task.id ? 'Edit Task' : 'New Task'}
+						{$SELECTED_TASK.id ? 'Edit Task' : 'New Task'}
 					</h1>
-					{#if task.id}
-						<form method="POST" action="?/deleteTask" use:enhance={onDeleteTask}>
+					{#if $SELECTED_TASK.id}
+						<form method="POST" action="?/deleteTask" use:enhance>
+							<input class="hidden" type="number" value={$SELECTED_TASK.id} id="task_id"/>
 							<button
 								name="deleteTask"
 								tabindex="0"
@@ -132,8 +127,8 @@
 						<label for="tag" class="text-lg font-semibold select-none text-text_primary dark:text-text_primary_dark">Tags</label>
 						<div
 							class="flex flex-row gap-2 text-secondary font-semibold overflow-hidden w-max overflow-x-auto">
-							{#if task.tags}
-								{#each task.tags as tag, index}
+							{#if $SELECTED_TASK.tags}
+								{#each $SELECTED_TASK.tags as tag, index}
 									<button
 										type="button"
 										on:click={() => removeTag(index)}
@@ -192,7 +187,7 @@
 						<input
 							type="text"
 							id="title"
-							bind:value={task.title}
+							bind:value={$SELECTED_TASK.title}
 							placeholder="Task title"
 							class="form_input" />
 					</div>
@@ -201,7 +196,7 @@
 						<textarea
 							id="details"
 							placeholder="Task details"
-							bind:value={task.details}
+							bind:value={$SELECTED_TASK.details}
 							class="form_input min-h-[2rem]" />
 					</div>
 				</div>
