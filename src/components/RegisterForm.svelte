@@ -34,6 +34,15 @@
 			id="password"
 			name="password"
 			class="form_input" />
+
+		<label for="RepeatPassword" class="font-semibold">Repeat Password:</label>
+		<input
+			required
+			type="password"
+			autoComplete="new-password"
+			id="RepeatPassword"
+			name="RepeatPassword"
+			class="form_input" />
 	</div>
 	<button class="form_button">Continue</button>
 </form>

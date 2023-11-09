@@ -10,7 +10,7 @@ export async function PUT({ request, cookies }: any) {
 	const jwt = cookies.get('jwt');
 	task.tags = JSON.stringify(task.tags) ?? null;
 
-	const response = await fetch(`${API_URL}/Cards/${task.id}`, {
+	const response = await fetch(`${API_URL}/Card/${task.id}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',

@@ -60,7 +60,8 @@ export const actions = {
 			columnId: task_json.columnId
 		};
 
-		const response = await fetch(`${API_URL}/Cards`, {
+
+		const response = await fetch(`${API_URL}/Card`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -69,8 +70,6 @@ export const actions = {
 			},
 			body: JSON.stringify(parseData)
 		});
-
-		const res = await response.json();
 
 		return { sucess: true };
 	},
@@ -81,8 +80,10 @@ export const actions = {
 		let task_id = data.get('task_id');
 		const jwt = cookies.get('jwt');
 
+		console.warn(task_id);
+
 		try {
-			await fetch(`${API_URL}/Cards/${task_id}`, {
+			await fetch(`${API_URL}/Card/${task_id}`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ export const actions = {
 		if (project_title.length <= 0)
 			return fail(400, { project_title, message: 'Missing Project Title' });
 
-		await fetch(`${API_URL}/Projects/${params.slug}?projectTitle=${project_title}`, {
+		await fetch(`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -125,7 +126,7 @@ export const actions = {
 
 		const jwt = cookies.get('jwt');
 
-		const response = await fetch(`${API_URL}/Projects/${project_id}`, {
+		const response = await fetch(`${API_URL}/Project/${project_id}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',

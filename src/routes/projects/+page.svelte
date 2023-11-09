@@ -8,6 +8,7 @@
 	import { DIALOG_MANAGER } from './[slug]/stores';
 
 	export let data: PageData;
+
 </script>
 
 <svelte:head>

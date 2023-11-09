@@ -8,7 +8,7 @@ export async function load({ params, cookies }: any) {
 	const jwt = cookies.get('jwt');
 
 	if (jwt) {
-		const response = await fetch(`${API_URL}/Projects/${params.slug}`, {
+		const response = await fetch(`${API_URL}/Project/${params.slug}`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`
 			}
@@ -43,7 +43,6 @@ export async function load({ params, cookies }: any) {
 
 		}
 
-		console.log(JSON.stringify(data))
 
 		return { project: data, user: user, params:params };
 	}

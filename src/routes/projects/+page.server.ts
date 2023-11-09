@@ -1,5 +1,5 @@
 import { API_URL } from '$env/static/private';
-import { json, redirect } from '@sveltejs/kit';
+import { fail, json, redirect } from '@sveltejs/kit';
 
 export async function load({ cookies }: any) {
 	// const response = await prisma.project.findMany();
@@ -7,15 +7,25 @@ export async function load({ cookies }: any) {
 	const jwt = cookies.get('jwt');
 
 	if (jwt) {
-		const response = await fetch(`${API_URL}/Projects`, {
+		const response = await fetch(`${API_URL}/Project`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`
 			}
 		});
 
-		const data = await response.json();
+		if(response.ok)
+		{
+			const data = await response.json();
 
-		return { projects: data };
+			return { projects: data };
+
+		}
+		else
+		{
+			console.warn(response.statusText);
+			return fail(400);
+		}
+
 	}
 
 	throw redirect(308, '/login');
@@ -28,7 +38,7 @@ export const actions = {
 
 		const jwt = cookies.get('jwt');
 
-		const response = await fetch(`${API_URL}/Projects`, {
+		const response = await fetch(`${API_URL}/Project`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

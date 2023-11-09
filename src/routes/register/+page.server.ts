@@ -8,6 +8,7 @@ export const actions = {
 		const username = data.get('username');
 		const email = data.get('email');
 		const password = data.get('password');
+		const repeat_password = data.get('RepeatPassword');
 
 		if (!email || !password) {
 			return fail(400, { email, message: 'All fields are required' });
@@ -16,7 +17,8 @@ export const actions = {
 		const register_data = {
 			username: username,
 			email: email,
-			password: password
+			password: password,
+			repeatPassword: repeat_password
 		};
 
 		const response = await fetch(`${API_URL}/register`, {

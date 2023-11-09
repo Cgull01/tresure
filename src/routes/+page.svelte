@@ -68,56 +68,75 @@
 		</a>
 	</div>
 </div>
-<div id="about" class="h-full bg-background dark:bg-background_dark flex flex-col gap-16 sm:gap-32 py-16 text-text_primary dark:text-text_primary_dark ">
+<div
+	id="about"
+	class="h-full flex flex-col gap-16 sm:gap-32 py-16 text-text_primary dark:text-text_primary_dark bg-secondary dark:bg-secondary_dark">
 	<div class="flex flex-row text-center justify-center gap-32 items-center">
 		<div class="w-3/4 sm:w-1/4">
-			<h2 class="text-3xl font-bold pb-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark px-2">Snappy fast UI!</h2>
-			<p class="break-words text-xl">
-				Lightning-fast and responsive user interface makes managing
-				your tasks a breeze.
-				Experience seamless navigation and quick load times, ensuring you can stay productive
-				without any lag. With our minimalistic design, you can focus on your work without
-				distractions, streamlining your workflow like never before.
+			<h2
+				class="text-3xl font-bold pb-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark px-2">
+				Snappy fast UI!
+			</h2>
+			<p class="break-words text-xl pt-6 bg-secondary dark:bg-secondary_dark">
+				Lightning-fast and responsive user interface makes managing your tasks a breeze. Experience
+				seamless navigation and quick load times, ensuring you can stay productive without any lag.
+				With our minimalistic design, you can focus on your work without distractions, streamlining
+				your workflow like never before.
 			</p>
 		</div>
-		<img src="/images/gears_light.png" alt="gears with sparks" class="w-1/5 h-1/5 bg-secondary p-6 rounded-full sm:block hidden" />
+		<img
+			src="/images/gears_light.png"
+			alt="gears with sparks"
+			class="w-1/5 h-1/5 bg-secondary p-6 rounded-full sm:block hidden" />
 	</div>
-	<hr class="border-primary dark:border-primary_dark w-1/3 self-center"/>
+	<hr class="border-primary dark:border-primary_dark w-1/3 self-center" />
 	<div class="flex flex-row text-center justify-center gap-32 items-center">
-		<IconTresureLogo styles="fill-accent h-1/5 w-1/5 sm:block hidden" />
+		<IconTresureLogo styles="fill-primary dark:fill-primary_dark h-1/5 w-1/5 sm:block hidden" />
 		<div class="w-3/4 sm:w-1/4">
-			<h2 class="text-3xl font-bold pb-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark px-2">Perfect For Everything</h2>
-			<p class="break-words text-xl">
-				Whether you're working on a big project or managing personal
-				chores and goals, Tresure is the ideal life management tool for you.
-				Organize tasks, projects, and responsibilities with ease. Track progress,
-				monitor deadlines, or simply manage your daily to-do lists and personal
-				projects.
+			<h2
+				class="text-3xl font-bold pb-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark px-2">
+				Perfect For Everything
+			</h2>
+			<p class="break-words text-xl pt-6 bg-secondary dark:bg-secondary_dark">
+				Whether you're working on a big project or managing personal chores and goals, Tresure is
+				the ideal life management tool for you. Organize tasks, projects, and responsibilities with
+				ease. Track progress, monitor deadlines, or simply manage your daily to-do lists and
+				personal projects.
 			</p>
 		</div>
 	</div>
-	<hr class="border-primary dark:border-primary_dark w-1/3 self-center"/>
+	<hr class="border-primary dark:border-primary_dark w-1/3 self-center" />
 	<div class="flex flex-row text-center justify-center gap-32 items-center">
 		<div class="w-3/4 sm:w-1/4">
-			<h2 class="text-3xl font-bold pb-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark px-2">Effortless Collaboration</h2>
-			<p class="break-words text-xl">
-				Invite members to your projects and streamline teamwork like never before. Tresure
-				allows you to effortlessly collaborate with colleagues, friends, or family members by
-				inviting them to your projects. Assign tasks, share ideas, and work together in real-time.
-				Connect with your team and achieve your goals together, all in one easy-to-use website.
+			<h2
+				class="text-3xl font-bold pb-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark px-2">
+				Effortless Collaboration
+			</h2>
+			<p class="break-words text-xl pt-6 bg-secondary dark:bg-secondary_dark">
+				Invite members to your projects and streamline teamwork like never before. Tresure allows
+				you to effortlessly collaborate with colleagues, friends, or family members by inviting them
+				to your projects. Assign tasks, share ideas, and work together in real-time. Connect with
+				your team and achieve your goals together, all in one easy-to-use website.
 			</p>
 		</div>
-		<img src="/images/collab_light.png" alt="collaboration" class="w-1/5 h-1/5 bg-secondary p-6 rounded-full sm:block hidden" />
+		<img
+			src="/images/collab_light.png"
+			alt="collaboration"
+			class="w-1/5 h-1/5 bg-secondary p-6 rounded-full sm:block hidden" />
 	</div>
 </div>
 
 <footer
-	class="w-full items-center bg-background dark:bg-background_dark text-text_primary dark:text-text_primary_dark flex border-t border-primary dark:border-primary_dark">
-	<IconTresureLogo styles="fill-text_primary dark:fill-text_primary_dark" />
-	<div class="flex flex-col gap-4 w-max">
-		<a href="https://tresure.com">Tresure</a>
-		<a href="/register">Register</a>
-		<a href="/login">Login</a>
+	class="w-full items-center justify-between bg-background dark:bg-background_dark text-text_primary dark:text-text_primary_dark flex border-t border-primary dark:border-primary_dark py-6 px-3 gap-16">
+	<IconTresure styles="fill-text_primary dark:fill-text_primary_dark" />
+	<div class="flex flex-row gap-4 items-center">
+		{#if data.user !== null}
+			<a class="hover:underline underline-offset-2 text-xl" href="/projects">Your Projects</a>
+			<LogOutButton />
+		{:else}
+			<a class="hover:underline underline-offset-2 text-xl" href="/register">Register</a>
+			<a class="hover:underline underline-offset-2 text-xl" href="/login">Login</a>
+		{/if}
+		<p class="pl-12 w-max">Contact Email: help@tresure.com</p>
 	</div>
-	<p class="w-max">Contact Email: help@tresure.com</p>
 </footer>

@@ -6,7 +6,7 @@
 @layer base{
 	:root {
 		--text-primary-color: #071627;
-		--text-secondary-color: #CCCCCC;
+		--text-secondary-color: #dcdada;
 		--background-color: #CCCCCC;
 		--primary-color: #071627;
 		--secondary-color: #E4E5E7;
@@ -19,7 +19,26 @@
 		--secondary-color-dark: #111e4b;
 		--accent-color-dark: #d6b751;
 	}
+
 }
+
+
+	.PolkaPattern{
+		background-color: var(--background-color);
+		opacity: 1;
+		background-image:  radial-gradient(var(--background-color) 2px, transparent 2px), radial-gradient(var(--background-color) 2px, var(--secondary-color) 2px);
+		background-size: 80px 80px;
+		background-position: 0 0,40px 40px;
+		background-repeat: repeat;
+	}
+	.PolkaPatternDark{
+		background-color: var(--background-color-dark);
+		opacity: 1;
+		background-image:  radial-gradient(var(--background-color-dark) 2px, transparent 2px), radial-gradient(var(--background-color-dark) 2px, var(--secondary-color-dark) 2px);
+		background-size: 80px 80px;
+		background-position: 0 0,40px 40px;
+		background-repeat: repeat;
+	}
 
 @keyframes moveBackground {
 	0% {

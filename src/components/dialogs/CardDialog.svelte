@@ -38,6 +38,8 @@
 		const newTag = { ...tag_input };
 
 		$SELECTED_TASK.tags = $SELECTED_TASK ? [...($SELECTED_TASK.tags || []), newTag] : [newTag];
+
+		tag_input.tag = '';
 	}
 
 	function removeTag(index: number) {
