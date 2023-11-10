@@ -11,14 +11,17 @@ dotnet watch --no-hot-reload
 
 TODO:
 protected column api route, add collumn action, put column action, remove column action
-- create types from api objects < here
-- show logged in user name
+- create types from api objects
 - add columns
-- remove columns
 - rename columns
+- remove columns
+- move columns
+- fix edit columns menu < here
+- show logged in user name
 - dates on tasks
 - loading animation after login/register other stuff
 - member search and addition
+- expired cookies mess things up, unauthorized gives 500
 - add members, assign roles to them
 - moving tasks up and down
 - marking tasks for review/done

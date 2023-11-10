@@ -1,7 +1,8 @@
 export interface IProject {
-	id: string;
+	id: number;
 	title: string;
 	columns: IColumn[];
+	members: IMember[];
 }
 
 export interface ITag {
@@ -10,22 +11,38 @@ export interface ITag {
 }
 
 export interface IColumn {
-	id: string;
+	id: number;
 	title: string;
 	cards?: ICard[];
-	project_id: string;
 	position: number;
 }
 
+enum Roles {
+	Admin,
+	Member,
+	TaskMaster
+}
+export interface IRole
+{
+	name: Roles;
+}
+
+export interface IMember{
+	id: number;
+	userid: string;
+	roles: IRole[];
+}
+
 export interface ICard {
-	id: string;
+	id: number;
 	title: string;
 	details: string;
 	tags?: {
 		color: string;
 		tag: string;
 	}[];
-	creationDate: Date;
-	dueDate?: Date | null;
-	position: number;
+	duedate?: Date | null;
+	creationdate: Date;
+	approvaldate: Date;
+	assignedmembers: IMember[];
 }

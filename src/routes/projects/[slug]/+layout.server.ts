@@ -25,6 +25,8 @@ export async function load({ params, cookies }: any) {
 			}
 		}
 
+		console.log(data);
+
 		const userJson = await fetch(`${API_URL}/currentUser`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`
@@ -42,7 +44,6 @@ export async function load({ params, cookies }: any) {
 			});
 
 		}
-
 
 		return { project: data, user: user, params:params };
 	}

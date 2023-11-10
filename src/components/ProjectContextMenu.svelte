@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { getContext } from 'svelte';
 	import IconPlus from '../Icons/Icon_plus.svelte';
 	import IconSettings from '../Icons/Icon_settings.svelte';
 	import { DIALOG_MANAGER } from '../routes/projects/[slug]/stores';
@@ -7,6 +8,8 @@
 	let show_context_menu = false;
 	let context_menu: HTMLElement;
 	let context_menu_position = { x: 220, y: 420 };
+
+	const project_id = getContext('project_id')
 
 	function handleClickOutside(event: MouseEvent) {
 		if (context_menu && !context_menu.contains(event.target as Node)) {
@@ -20,13 +23,12 @@
 	}
 
 	function handleSubmit({ formData }: any) {
-		// formData.set('project_id', $SELECTED_PROJECT!.id);
-		// formData.set('column_position', $SELECTED_PROJECT?.columns.length);
+		formData.set('project_id', project_id);
 		show_context_menu = false;
 	}
 </script>
 
-<svelte:document
+<svelte:window
 	on:contextmenu||preventDefault={handleContextmenu}
 	on:click={handleClickOutside}
 	on:scroll={() => (show_context_menu = false)}

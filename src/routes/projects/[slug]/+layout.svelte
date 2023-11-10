@@ -19,7 +19,7 @@
 
 </script>
 
-<div class="flex flex-col h-full w-full overflow-x-hidden">
+<div class="flex flex-col h-screen w-full overflow-x-hidden">
 	<nav
 		class="px-6 text-text_primary dark:text-text_primary_dark flex flex-row py-3 items-center justify-between w-full bg-background dark:bg-background_dark border-b border-primary dark:border-primary_dark">
 		<div class="flex gap-2 items-center">

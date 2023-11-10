@@ -7,15 +7,32 @@
 	import { page } from '$app/stores';
 	import IconMoreHorizontal from '../Icons/Icon_more_horizontal.svelte';
 	import { readable } from 'svelte/store';
+	import { enhance } from '$app/forms';
+	import IconCheck from '../Icons/Icon_check.svelte';
+	import IconPlus from '../Icons/Icon_plus.svelte';
+	import IconTrash from '../Icons/Icon_trash.svelte';
 
 	export let column: IColumn;
 
 	let drag_entered = false;
 	let is_dragging_card: boolean = false;
 
+	let editColumn: boolean = false;
+	let column_input: string;
+
 	// column.cards?.sort((cardA, cardB) => cardA.position - cardB.position);
 
 	const dispatch = createEventDispatcher();
+
+	function submitDialog({ formData }: any) {
+
+		formData.set('column_id', column.id);
+		formData.set('column_position', column.position);
+		formData.set('column_title', column_input);
+
+		editColumn = false;
+		column.title = column_input;
+	}
 
 	async function handleDrop(event: DragEvent) {
 		event.preventDefault();
@@ -42,6 +59,7 @@
 		drag_entered = false;
 	}
 
+
 	function dragDropCard(event: DragEvent, card: any) {
 		const jsonCard = JSON.stringify(card);
 		event.dataTransfer?.setData('application/json', jsonCard);
@@ -55,40 +73,81 @@
 	}
 
 	function handleEditCard(event: CustomEvent) {
-		$SELECTED_TASK = {...event.detail.task};
+		$SELECTED_TASK = { ...event.detail.task };
 		$SELECTED_COLUMN = column;
 		$DIALOG_MANAGER.task_dialog = true;
 	}
+
+
 </script>
 
 <div
-	class="w-full h-max flex flex-col bg-none dark:bg-background_dark"
+	class="w-96 h-max flex flex-col bg-none dark:bg-background_dark"
 	on:drop|preventDefault={(event) => {
 		handleDrop(event);
 	}}
 	on:dragover|preventDefault={() => (drag_entered = true)}
 	on:dragenter
+	on:contextmenu|stopPropagation|preventDefault
 	on:dragleave={() => (drag_entered = false)}
 	role="listbox"
 	tabindex="0">
-	<button
-		on:click={() => {}}
-		class="text-text_secondary dark:text-text_secondary_dark bg-primary dark:bg-primary_dark flex flex-row justify-between px-3 {drag_entered &&
+	<div
+		class="text-text_secondary dark:text-text_secondary_dark bg-primary dark:bg-primary_dark px-3 {drag_entered &&
 			'opacity-80'} w-full">
-		<h1 class="font-sans py-3 text-3xl text-ellipsis overflow-hidden">{column.title}</h1>
-		<button
+		{#if editColumn}
+		<div class="flex flex-col p-2">
+
+			<form method="POST" action="?/editColumn" use:enhance={submitDialog} class="flex items-center italic gap-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark">
+				<input type="text" class="text-2xl bg-primary dark:bg-primary_dark w-max border border-secondary dark:border-secondary_dark m-1 py-2 text-secondary dark:text-secondary_dark" required id="project_title" name="project_title" bind:value={column_input}/>
+				<button
+					type="submit"
+					class="active:scale-95 border-secondary dark:border-secondary_dark border hover:scale-105">
+					<IconCheck styles=""/>
+				</button>
+				<button
+					type="button"
+					on:click={()=>editColumn = false}
+					class="active:scale-95 border-secondary dark:border-secondary_dark border hover:scale-105">
+					<IconPlus styles="rotate-45"/>
+				</button>
+			</form>
+			Move left
+			Move right
+			<form action="?/deleteColumn" method="POST" use:enhance={submitDialog} class="pt-16">
+				<button
+					tabindex="0"
+					title="Click to remove the task"
+					class="cursor-pointer active:scale-90 stroke-secondary flex hover:scale-105 group "
+				>
+				Delete Column
+					<IconTrash styles="group-hover:scale-105 group-active:scale-90"/>
+				</button>
+			</form>
+		</div>
+		{:else}
+			<h1
+				on:dblclick={() => {
+					editColumn = true;
+					column_input = column.title;
+				}}
+				class="font-sans py-3 w-full text-3xl overflow-hidden text-ellipsis whitespace-nowrap">
+				{column.title}
+			</h1>
+		{/if}
+		<!-- <button
 			class="self-center active:scale-110"
 			on:click={() => {
 				$DIALOG_MANAGER.column_dialog = true;
 				$SELECTED_COLUMN = column;
 			}}>
 			<IconMoreHorizontal />
-		</button>
-	</button>
+		</button> -->
+	</div>
 	<div
 		class="border border-primary dark:border-primary_dark bg-background dark:bg-background_dark {drag_entered &&
 			'brightness-105'}">
-		<section class="flex flex-col pb-6">
+		<section class="flex flex-col pb-6 {editColumn && "blur-sm"}">
 			{#each column.cards || [] as card (card.id)}
 				<Card
 					{card}

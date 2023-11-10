@@ -5,10 +5,10 @@ import { json } from '@sveltejs/kit';
 export async function PUT({ request, cookies }: any) {
 	const task = await request.json();
 
-	console.log(task);
-
 	const jwt = cookies.get('jwt');
-	task.tags = JSON.stringify(task.tags) ?? null;
+
+	if(task.tags !== null)
+	task.tags = JSON.stringify(task.tags);
 
 	const response = await fetch(`${API_URL}/Card/${task.id}`, {
 		method: 'PUT',

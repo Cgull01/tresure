@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { ICard } from '$lib/types';
 	import { createEventDispatcher } from 'svelte';
 	import { enhance } from '$app/forms';
 	import IconTrash from '../Icons/Icon_trash.svelte';

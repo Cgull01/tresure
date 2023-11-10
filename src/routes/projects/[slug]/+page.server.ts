@@ -74,13 +74,13 @@ export const actions = {
 		return { sucess: true };
 	},
 
+
+
 	deleteTask: async ({ request, cookies }: any) => {
 		const data = await request.formData();
 
 		let task_id = data.get('task_id');
 		const jwt = cookies.get('jwt');
-
-		console.warn(task_id);
 
 		try {
 			await fetch(`${API_URL}/Card/${task_id}`, {
@@ -97,6 +97,27 @@ export const actions = {
 
 		return { success: true };
 	},
+	// createColumn: async ({ request, cookies }: any) => {
+	// 	const data = await request.formData();
+
+	// 	let task_id = data.get('task_id');
+	// 	const jwt = cookies.get('jwt');
+
+	// 	try {
+	// 		await fetch(`${API_URL}/Card/${task_id}`, {
+	// 			method: 'DELETE',
+	// 			headers: {
+	// 				'Content-Type': 'application/json',
+	// 				Accept: 'application/json',
+	// 				Authorization: `Bearer ${jwt}`
+	// 			}
+	// 		});
+	// 	} catch (error) {
+	// 		console.error(`Failed to delete a card: ${error}`);
+	// 	}
+
+	// 	return { success: true };
+	// },
 
 	editProject: async ({ request, cookies, params }: any) => {
 		const data = await request.formData();
@@ -108,14 +129,16 @@ export const actions = {
 		if (project_title.length <= 0)
 			return fail(400, { project_title, message: 'Missing Project Title' });
 
-		await fetch(`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`, {
+		const response = await fetch(`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
 				Authorization: `Bearer ${jwt}`
-			}
+			},
 		});
+
+		console.log(response.json);
 
 		return { success: true };
 	},
@@ -136,31 +159,72 @@ export const actions = {
 		});
 
 		throw redirect(303, '/projects');
-	}
-	// renameColumn: async ({ request }: any) => {
-	//     const data = await request.formData();
+	},
+	addColumn: async ({ request, cookies }: any) => {
+		const data = await request.formData();
 
-	//     const column_id = data.get('column_id');
-	//     const column_title = data.get('column_title');
+		const project_id = data.get('project_id');
 
-	//     await prisma.column.update({
-	//         where: { id: column_id },
-	//         data: { title: column_title }
-	//     });
-	//     return { success: true }
+		const jwt = cookies.get('jwt');
 
-	// },
-	// deleteColumn: async ({ request }: any) => {
-	//     const data = await request.formData();
+		const response = await fetch(`${API_URL}/Column?project_id=${project_id}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+		});
 
-	//     const column_id = data.get('column_id');
+		return { success: true };
+	},
+	editColumn: async ({ request, cookies}: any) => {
+	    const data = await request.formData();
 
-	//     await prisma.column.delete({
-	//         where: { id: column_id }
-	//     });
-	//     return { success: true }
+	    const column_id = data.get('column_id');
+	    const column_title = data.get('column_title');
+	    const column_position = data.get('column_position');
 
-	// },
+		const jwt = cookies.get('jwt');
+
+		const parseData = {
+			id: column_id,
+			title: column_title ?? "",
+			position: column_position
+		};
+
+		const response = await fetch(`${API_URL}/Column/${column_id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+			body: JSON.stringify(parseData)
+		});
+
+	    return { success: true }
+
+	},
+	deleteColumn: async ({ request, cookies }: any) => {
+	    const data = await request.formData();
+
+	    const column_id = data.get('column_id');
+
+		const jwt = cookies.get('jwt');
+
+		const response = await fetch(`${API_URL}/Column/${column_id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+		});
+
+	    return { success: true }
+
+	},
 	// addColumn: async ({ request }: any) => {
 	//     const data = await request.formData();
 
