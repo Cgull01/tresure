@@ -1,12 +1,9 @@
 <script lang="ts">
-	import type { ICard, IColumn } from '$lib/types';
+	import type { IColumn } from '$lib/types';
 	import PlusButton from './PlusButton.svelte';
 	import Card from './Card.svelte';
 	import { createEventDispatcher, setContext } from 'svelte';
 	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
-	import { page } from '$app/stores';
-	import IconMoreHorizontal from '../Icons/Icon_more_horizontal.svelte';
-	import { readable } from 'svelte/store';
 	import { enhance } from '$app/forms';
 	import IconCheck from '../Icons/Icon_check.svelte';
 	import IconPlus from '../Icons/Icon_plus.svelte';
@@ -25,7 +22,6 @@
 	const dispatch = createEventDispatcher();
 
 	function submitDialog({ formData }: any) {
-
 		formData.set('column_id', column.id);
 		formData.set('column_position', column.position);
 		formData.set('column_title', column_input);
@@ -59,7 +55,6 @@
 		drag_entered = false;
 	}
 
-
 	function dragDropCard(event: DragEvent, card: any) {
 		const jsonCard = JSON.stringify(card);
 		event.dataTransfer?.setData('application/json', jsonCard);
@@ -77,12 +72,10 @@
 		$SELECTED_COLUMN = column;
 		$DIALOG_MANAGER.task_dialog = true;
 	}
-
-
 </script>
 
 <div
-	class="w-96 h-max flex flex-col bg-none dark:bg-background_dark"
+	class="w-96 h-max flex flex-col bg-none dark:bg-background_dark order-{column.position}"
 	on:drop|preventDefault={(event) => {
 		handleDrop(event);
 	}}
@@ -93,38 +86,50 @@
 	role="listbox"
 	tabindex="0">
 	<div
-		class="text-text_secondary dark:text-text_secondary_dark bg-primary dark:bg-primary_dark px-3 {drag_entered &&
+		class="text-text_secondary dark:text-text_secondary_dark bg-primary dark:bg-primary_dark px-3 h-full {drag_entered &&
 			'opacity-80'} w-full">
 		{#if editColumn}
-		<div class="flex flex-col p-2">
-
-			<form method="POST" action="?/editColumn" use:enhance={submitDialog} class="flex items-center italic gap-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark">
-				<input type="text" class="text-2xl bg-primary dark:bg-primary_dark w-max border border-secondary dark:border-secondary_dark m-1 py-2 text-secondary dark:text-secondary_dark" required id="project_title" name="project_title" bind:value={column_input}/>
-				<button
-					type="submit"
-					class="active:scale-95 border-secondary dark:border-secondary_dark border hover:scale-105">
-					<IconCheck styles=""/>
-				</button>
-				<button
-					type="button"
-					on:click={()=>editColumn = false}
-					class="active:scale-95 border-secondary dark:border-secondary_dark border hover:scale-105">
-					<IconPlus styles="rotate-45"/>
-				</button>
-			</form>
-			Move left
-			Move right
-			<form action="?/deleteColumn" method="POST" use:enhance={submitDialog} class="pt-16">
-				<button
-					tabindex="0"
-					title="Click to remove the task"
-					class="cursor-pointer active:scale-90 stroke-secondary flex hover:scale-105 group "
-				>
-				Delete Column
-					<IconTrash styles="group-hover:scale-105 group-active:scale-90"/>
-				</button>
-			</form>
-		</div>
+			<div class="flex flex-col p-2 h-full">
+				<form
+					method="POST"
+					action="?/editColumn"
+					use:enhance={submitDialog}
+					class="flex flex-col items-center italic gap-2 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark">
+					<input
+						type="text"
+						class="text-xl select-auto bg-primary dark:bg-primary_dark w-full border border-secondary dark:border-secondary_dark py-2 px-1 text-secondary dark:text-secondary_dark"
+						required
+						id="project_title"
+						name="project_title"
+						bind:value={column_input} />
+					<div class="flex justify-between w-full">
+						<button
+							type="submit"
+							class="active:scale-95 px-3 border-secondary dark:border-secondary_dark border hover:scale-105">
+							<IconCheck styles="m-auto" />
+						</button>
+						<button
+							type="button"
+							on:click={() => (editColumn = false)}
+							class="active:scale-95 px-3 border-secondary dark:border-secondary_dark border hover:scale-105">
+							<IconPlus styles="rotate-45 m-auto" />
+						</button>
+					</div>
+				</form>
+				<form
+					action="?/deleteColumn"
+					method="POST"
+					use:enhance={submitDialog}
+					class="pt-16 m-auto select-none">
+					<button
+						tabindex="0"
+						title="Click to remove the task"
+						class="cursor-pointer active:scale-90 stroke-secondary flex hover:scale-105 group">
+						Delete Column
+						<IconTrash styles="group-hover:scale-105 group-active:scale-90" />
+					</button>
+				</form>
+			</div>
 		{:else}
 			<h1
 				on:dblclick={() => {
@@ -147,7 +152,7 @@
 	<div
 		class="border border-primary dark:border-primary_dark bg-background dark:bg-background_dark {drag_entered &&
 			'brightness-105'}">
-		<section class="flex flex-col pb-6 {editColumn && "blur-sm"}">
+		<section class="flex flex-col pb-6 {editColumn && 'blur-sm'}">
 			{#each column.cards || [] as card (card.id)}
 				<Card
 					{card}
