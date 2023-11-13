@@ -13,11 +13,18 @@ export async function load({ cookies }: any) {
 			}
 		});
 
-		if(response.ok)
-		{
-			const data = await response.json();
+		const user = await fetch(`${API_URL}/currentUser`, {
+			headers: {
+				Authorization: `Bearer ${jwt}`
+			}
+		});
 
-			return { projects: data };
+		if(response.ok && user.ok)
+		{
+			const project_data = await response.json();
+			const user_data = await user.json();
+
+			return { projects: project_data, user: user_data };
 
 		}
 		else

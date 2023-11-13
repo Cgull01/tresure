@@ -17,8 +17,8 @@ protected column api route, add collumn action, put column action, remove column
 - remove columns
 - ~~move columns~~ if i want to move a column i need to change swap positions of 2 columns and that sucks, OR i could create a new api route to swap columns but this sounds bad
 - fix edit columns menu
-- show logged in user name < here
-- dates on tasks
+- show logged in user name
+- dates on tasks < here
 - loading animation after login/register other stuff
 - member search and addition
 - expired cookies mess things up, unauthorized gives 500

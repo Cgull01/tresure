@@ -1,6 +1,7 @@
 <script lang="ts">
+	import logout from '$lib/functions';
+	import IconLogout from '../../Icons/Icon_logout.svelte';
 	import IconPlus from '../../Icons/Icon_plus.svelte';
-	import LogOutButton from '../../components/LogOutButton.svelte';
 	import NavBar from '../../components/NavBar.svelte';
 	import PlusButton from '../../components/PlusButton.svelte';
 	import NewProjectDialog from '../../components/dialogs/NewProjectDialog.svelte';
@@ -18,7 +19,12 @@
 <NewProjectDialog />
 <div class="flex flex-col h-screen m-auto background-pattern bg-radial-gradient dark:bg-radial-gradient_dark  ">
 	<NavBar>
-		<LogOutButton />
+		<div class="text-xl text-text_primary dark:text-text_primary_dark flex gap-4 items-center ">
+			<h2 class="">{data.user.username}</h2>
+			<button on:click={logout} class="hover:scale-110 active:scale-95">
+				<IconLogout/>
+			</button>
+		</div>
 	</NavBar>
 	<div class="sm:w-1/3 w-full mt-0 sm:mt-32  sm:self-center self-start">
 		<div class="flex flex-row items-center justify-between text-text_secondary dark:text-text_secondary_dark bg-primary dark:bg-primary_dark">

@@ -1,9 +1,10 @@
 <script lang="ts">
+	import logout from '$lib/functions';
 	import IconChevronDown from '../Icons/Icon_ChevronDown.svelte';
 	import IconTresure from '../Icons/Icon_Tresure.svelte';
 	import IconTresureLogo from '../Icons/Icon_TresureLogo.svelte';
 	import IconDirectionRight from '../Icons/Icon_direction_right.svelte';
-	import LogOutButton from '../components/LogOutButton.svelte';
+	import IconLogout from '../Icons/Icon_logout.svelte';
 	import NavBar from '../components/NavBar.svelte';
 
 	export let data: any;
@@ -17,7 +18,12 @@
 				href="/projects"
 				>My Projects
 			</a>
-			<LogOutButton />
+			<div class="text-xl text-text_primary dark:text-text_primary_dark flex gap-4 items-center ">
+				<h2 class="">{data.user.username}</h2>
+				<button on:click={logout} class="hover:scale-110 active:scale-95">
+					<IconLogout/>
+				</button>
+			</div>
 		{:else}
 			<a
 				class="hover:underline underline-offset-2 text-text_primary dark:text-text_primary_dark font-bold bg-secondary dark:bg-secondary_dark border-primary dark:border-primary_dark border px-2 text-3xl flex items-center py-1 active:bg-primary dark:active:bg-primary_dark active:text-text_secondary dark:active:text-text_secondary_dark"
@@ -129,10 +135,12 @@
 <footer
 	class="w-full items-center justify-between bg-background dark:bg-background_dark text-text_primary dark:text-text_primary_dark flex border-t border-primary dark:border-primary_dark py-6 px-3 gap-16">
 	<IconTresure styles="fill-text_primary dark:fill-text_primary_dark" />
-	<div class="flex flex-row gap-4 items-center">
+	<div class="flex flex-row gap-6 items-center">
 		{#if data.user !== null}
 			<a class="hover:underline underline-offset-2 text-xl" href="/projects">Your Projects</a>
-			<LogOutButton />
+			<button on:click={logout} class="hover:underline underline-offset-2 text-xl">
+				Log Out
+			</button>
 		{:else}
 			<a class="hover:underline underline-offset-2 text-xl" href="/register">Register</a>
 			<a class="hover:underline underline-offset-2 text-xl" href="/login">Login</a>

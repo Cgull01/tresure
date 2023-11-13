@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
+	import logout from '$lib/functions';
 	import IconTresureLogo from '../../../Icons/Icon_TresureLogo.svelte';
 	import IconCheck from '../../../Icons/Icon_check.svelte';
 	import IconDirectionLeft from '../../../Icons/Icon_direction_left.svelte';
 	import IconEdit from '../../../Icons/Icon_edit.svelte';
+	import IconLogout from '../../../Icons/Icon_logout.svelte';
 	import IconPlus from '../../../Icons/Icon_plus.svelte';
-	import LogOutButton from '../../../components/LogOutButton.svelte';
 	import ThemeButton from '../../../components/ThemeButton.svelte';
 	import { DIALOG_MANAGER } from './stores';
 
 	export let data: any;
 
 	let editProjectTitle = false;
-	let title_input:string;
+	let title_input: string;
 
 	$: currentRoute = $page.url.pathname;
-
 </script>
 
 <div class="flex flex-col h-screen w-full overflow-x-hidden">
@@ -32,23 +32,41 @@
 				</a>
 				{#if editProjectTitle}
 					<div class="flex items-center">
-						<form method="POST" action="?/editProject" use:enhance={()=>{editProjectTitle = false; data.project.title = title_input}} class="flex items-center gap-2">
-							<input type="text" class="form_input text-2xl" required id="project_title" name="project_title" bind:value={title_input}/>
+						<form
+							method="POST"
+							action="?/editProject"
+							use:enhance={() => {
+								editProjectTitle = false;
+								data.project.title = title_input;
+							}}
+							class="flex items-center gap-2">
+							<input
+								type="text"
+								class="form_input text-2xl"
+								required
+								id="project_title"
+								name="project_title"
+								bind:value={title_input} />
 							<button
 								type="submit"
 								class="active:scale-95 border-primary dark:border-primary_dark border hover:scale-105">
-								<IconCheck styles=""/>
+								<IconCheck styles="" />
 							</button>
 							<button
 								type="button"
-								on:click={()=>editProjectTitle = false}
+								on:click={() => (editProjectTitle = false)}
 								class="active:scale-95 border-primary dark:border-primary_dark border hover:scale-105">
-								<IconPlus styles="rotate-45"/>
+								<IconPlus styles="rotate-45" />
 							</button>
 						</form>
 					</div>
 				{:else}
-					<h1 class="text-3xl font-semibold" on:dblclick={() => {editProjectTitle = true; title_input = data.project.title}}>
+					<h1
+						class="text-3xl font-semibold"
+						on:dblclick={() => {
+							editProjectTitle = true;
+							title_input = data.project.title;
+						}}>
 						{data.project.title}
 					</h1>
 				{/if}
@@ -104,8 +122,13 @@
 				Progress
 			</a> -->
 		</div>
-		<div class="flex gap-4">
-			<LogOutButton />
+		<div class="flex gap-8">
+			<div class="text-xl text-text_primary dark:text-text_primary_dark flex gap-4 items-center ">
+				<h2 class="">{data.user.username}</h2>
+				<button on:click={logout} class="hover:scale-110 active:scale-95">
+					<IconLogout/>
+				</button>
+			</div>
 			<ThemeButton />
 		</div>
 	</nav>
