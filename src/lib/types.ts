@@ -41,8 +41,8 @@ export interface ICard {
 		color: string;
 		tag: string;
 	}[];
-	duedate?: Date | null;
-	creationdate: Date;
-	approvaldate: Date;
-	assignedmembers: IMember[];
+	dueDate?: Date | null;
+	creationDate: Date;
+	approvalDate: Date;
+	assignedMembers: IMember[];
 }

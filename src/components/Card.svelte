@@ -3,8 +3,10 @@
 	import { enhance } from '$app/forms';
 	import IconTrash from '../Icons/Icon_trash.svelte';
 	import IconEdit from '../Icons/Icon_edit.svelte';
+	import type { ICard } from '$lib/types';
+	import IconClock from '../Icons/Icon_clock.svelte';
 
-	export let card: any;
+	export let card: ICard;
 
 	let show_deletion_menu = false;
 
@@ -15,6 +17,9 @@
 			task: card
 		});
 	}
+
+	function pad(n:number){return n<10 ? '0'+n : n}
+
 
 </script>
 
@@ -68,6 +73,12 @@
 			</div>
 		</div>
 	</div>
+	{#if card.dueDate}
+	<div class="flex gap-2 ml-auto w-max pb-2">
+		<IconClock/>
+		<span class="text-text_primary dark:text-text_primary_dark">{pad(card.dueDate.getMonth()+1)}/{pad(card.dueDate.getDate())}</span>
+	</div>
+	{/if}
 
 	<hr class="w-full border-t-1 border-primary dark:border-primary_dark self-center" />
 </div>

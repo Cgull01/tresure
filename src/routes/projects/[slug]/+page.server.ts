@@ -55,11 +55,9 @@ export const actions = {
 			details: task_json.details ?? null,
 			tags: JSON.stringify(task_json.tags) ?? null,
 			dueDate: task_json.dueDate ?? null,
-			creationDate: new Date(),
 			assignedMembers: task_json.assignedMembers ?? null,
 			columnId: task_json.columnId
 		};
-
 
 		const response = await fetch(`${API_URL}/Card`, {
 			method: 'POST',
@@ -138,7 +136,6 @@ export const actions = {
 			},
 		});
 
-		console.log(response.json);
 
 		return { success: true };
 	},

@@ -10,7 +10,6 @@
 
 	export let data: {project: IProject};
 
-	console.log(data.project);
 
 	$PROJECT_ID = data.project.id;
 

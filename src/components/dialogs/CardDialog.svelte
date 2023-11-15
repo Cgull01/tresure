@@ -201,6 +201,7 @@
 							bind:value={$SELECTED_TASK.details}
 							class="form_input min-h-[2rem]" />
 					</div>
+					<input type="date" class="form_input" name="dueDate" id="dueDate" bind:value={$SELECTED_TASK.dueDate}/>
 				</div>
 				<button class="form_button"> Save changes</button>
 			</form>

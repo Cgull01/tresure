@@ -22,10 +22,18 @@ export async function load({ params, cookies }: any) {
 				} catch {
 					card.tags = [];
 				}
+
+				if(card.dueDate)
+				{
+					card.dueDate = new Date(card.dueDate).getFullYear() > 1000 ? new Date(card.dueDate) : null;
+				}
+				else
+				{
+					card.dueDate = null;
+				}
 			}
 		}
 
-		console.log(data);
 
 		const userJson = await fetch(`${API_URL}/currentUser`, {
 			headers: {

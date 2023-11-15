@@ -7,6 +7,9 @@ export async function PUT({ request, cookies }: any) {
 
 	const jwt = cookies.get('jwt');
 
+	console.log("edit task")
+	console.log(JSON.stringify(task))
+
 	if(task.tags !== null)
 	task.tags = JSON.stringify(task.tags);
 
