@@ -7,7 +7,8 @@ export const PROJECT_ID: Writable<Number | null> = writable(null);
 export const THEME_TOGGLE: Writable<Boolean> = writable(false);
 
 export interface DialogStates {
-	task_dialog: boolean;
+	editTask_dialog: boolean;
+	createTask_dialog: boolean;
 	project_dialog: boolean;
 	column_dialog: boolean;
 	new_project_dialog: boolean;
@@ -15,7 +16,8 @@ export interface DialogStates {
 }
 
 export const DIALOG_MANAGER: Writable<DialogStates> = writable({
-	task_dialog: false,
+	editTask_dialog: false,
+	createTask_dialog: false,
 	project_dialog: false,
 	column_dialog: false,
 	new_project_dialog: false,
@@ -24,4 +26,4 @@ export const DIALOG_MANAGER: Writable<DialogStates> = writable({
 
 // export const SELECTED_PROJECT: Writable<any | null> = writable(null);
 
-export const SELECTED_TASK: Writable<any | null> = writable(null);
+export const SELECTED_TASK: Writable<ICard | null> = writable(null);

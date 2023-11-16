@@ -54,7 +54,7 @@
 						type="text"
 						id="searchMember"
 						name="searchmember"
-						class="form_input" />
+						class="form_input w-full" />
 					<button
 						type="button"
 						class="bg-background group dark:bg-background_dark text-text_primary dark:text-text_primary_dark border p-1 select-none font-semibold border-primary dark:border-primary_dark transition-colors">

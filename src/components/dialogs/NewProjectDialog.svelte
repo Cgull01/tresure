@@ -54,7 +54,7 @@
 							name="project_title"
 							bind:value={project_title_input}
 							placeholder="Project title"
-							class="form_input"
+							class="form_input w-full"
 						/>
 					</div>
 				</div>

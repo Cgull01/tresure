@@ -60,7 +60,7 @@
 }
 
 .form_input {
-	@apply p-1 border bg-secondary dark:bg-secondary_dark border-background dark:border-background_dark hover:border-accent dark:hover:border-accent_dark focus:border-primary dark:focus:border-primary_dark  outline-none w-full;
+	@apply p-1 border bg-secondary dark:bg-secondary_dark border-background dark:border-background_dark hover:border-accent dark:hover:border-accent_dark focus:border-primary dark:focus:border-primary_dark outline-none;
 }
 
 

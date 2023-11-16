@@ -63,14 +63,13 @@
 
 	function handleAddCard() {
 		$SELECTED_COLUMN = column;
-		$SELECTED_TASK = {};
-		$DIALOG_MANAGER.task_dialog = true;
+		$DIALOG_MANAGER.createTask_dialog = true;
 	}
 
 	function handleEditCard(event: CustomEvent) {
 		$SELECTED_TASK = { ...event.detail.task };
 		$SELECTED_COLUMN = column;
-		$DIALOG_MANAGER.task_dialog = true;
+		$DIALOG_MANAGER.editTask_dialog = true;
 	}
 </script>
 

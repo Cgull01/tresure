@@ -21,10 +21,10 @@
 			autoComplete="username"
 			id="username"
 			name="username"
-			class="form_input" />
+			class="form_input w-full" />
 		<label for="email" class="font-semibold">Email:</label>
 
-		<input required type="email" autoComplete="email" id="email" name="email" class="form_input" />
+		<input required type="email" autoComplete="email" id="email" name="email" class="form_input w-full" />
 
 		<label for="password" class="font-semibold">Password:</label>
 		<input
@@ -33,7 +33,7 @@
 			autoComplete="new-password"
 			id="password"
 			name="password"
-			class="form_input" />
+			class="form_input w-full" />
 
 		<label for="RepeatPassword" class="font-semibold">Repeat Password:</label>
 		<input
@@ -42,7 +42,7 @@
 			autoComplete="new-password"
 			id="RepeatPassword"
 			name="RepeatPassword"
-			class="form_input" />
+			class="form_input w-full" />
 	</div>
 	<button class="form_button">Continue</button>
 </form>

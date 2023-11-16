@@ -25,7 +25,7 @@
 			autoComplete="email"
 			id="email"
 			name="email"
-			class="form_input"
+			class="form_input w-full"
 			value={form?.email || 'test@test.com'} />
 
 		<label for="password" class="font-semibold">Password:</label>
@@ -35,7 +35,7 @@
 			autoComplete="current-password"
 			id="password"
 			name="password"
-			class="form_input"
+			class="form_input w-full"
 			value="T3st" />
 	</div>
 

@@ -34,15 +34,15 @@ export interface IMember{
 }
 
 export interface ICard {
-	id: number;
-	title: string;
-	details: string;
+	id?: number;
+	title?: string;
+	details?: string;
 	tags?: {
-		color: string;
-		tag: string;
+		color?: string;
+		tag?: string;
 	}[];
 	dueDate?: Date | null;
-	creationDate: Date;
-	approvalDate: Date;
-	assignedMembers: IMember[];
+	creationDate?: Date;
+	approvalDate?: Date;
+	assignedMembers?: IMember[];
 }

@@ -2,11 +2,11 @@
 	import Column from '../../../components/Column.svelte';
 	import { PROJECT_ID } from './stores';
 	import { invalidateAll } from '$app/navigation';
-	import CardDialog from '../../../components/dialogs/CardDialog.svelte';
-	import MemberDialog from '../../../components/dialogs/MemberDialog.svelte';
 	import ProjectContextMenu from '../../../components/ProjectContextMenu.svelte';
 	import type { IProject } from '$lib/types';
 	import { setContext } from 'svelte';
+	import AddCardDialog from '../../../components/dialogs/AddCardDialog.svelte';
+	import EditCardDialog from '../../../components/dialogs/EditCardDialog.svelte';
 
 	export let data: {project: IProject};
 
@@ -26,8 +26,8 @@
 
 <ProjectContextMenu />
 
-<CardDialog />
-<MemberDialog members={data.project.members} />
+<AddCardDialog/>
+<EditCardDialog/>
 
 <div
 	class="w-full self-center sm:flex-row sm:items-start items-center flex-col flex h-full sm:justify-center p-6 gap-4 overflow-x-auto">

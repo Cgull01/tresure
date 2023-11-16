@@ -15,18 +15,18 @@ protected column api route, add collumn action, put column action, remove column
 - add columns
 - rename columns
 - remove columns
-- ~~move columns~~ if i want to move a column i need to change swap positions of 2 columns and that sucks, OR i could create a new api route to swap columns but this sounds bad
 - fix edit columns menu
 - show logged in user name
 - dates on tasks
-- loading animation after login/register other stuff < here
 - display date in input when editing, maybe just spawn a div with ability to click to delete
-- member search and addition
+- member search and addition  < here
 - expired cookies mess things up, unauthorized gives 500
 - add members, assign roles to them
+- loading animation after login/register other stuff - not important
 - moving tasks up and down
 - marking tasks for review/done
 - assigning members to tasks
+- ~~move columns~~ if i want to move a column i need to change swap positions of 2 columns and that sucks, OR i could create a new api route to swap columns but this sounds bad
 
 - project repoort: tasks finished within some period, assigned, busy members, timeline
 

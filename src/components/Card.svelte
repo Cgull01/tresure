@@ -5,6 +5,7 @@
 	import IconEdit from '../Icons/Icon_edit.svelte';
 	import type { ICard } from '$lib/types';
 	import IconClock from '../Icons/Icon_clock.svelte';
+	import { pad } from '$lib/functions';
 
 	export let card: ICard;
 
@@ -18,7 +19,6 @@
 		});
 	}
 
-	function pad(n:number){return n<10 ? '0'+n : n}
 
 
 </script>

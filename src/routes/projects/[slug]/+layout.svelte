@@ -42,7 +42,7 @@
 							class="flex items-center gap-2">
 							<input
 								type="text"
-								class="form_input text-2xl"
+								class="form_input text-2xl w-full"
 								required
 								id="project_title"
 								name="project_title"
