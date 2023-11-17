@@ -72,8 +72,6 @@ export const actions = {
 		return { sucess: true };
 	},
 
-
-
 	deleteTask: async ({ request, cookies }: any) => {
 		const data = await request.formData();
 
@@ -95,27 +93,6 @@ export const actions = {
 
 		return { success: true };
 	},
-	// createColumn: async ({ request, cookies }: any) => {
-	// 	const data = await request.formData();
-
-	// 	let task_id = data.get('task_id');
-	// 	const jwt = cookies.get('jwt');
-
-	// 	try {
-	// 		await fetch(`${API_URL}/Card/${task_id}`, {
-	// 			method: 'DELETE',
-	// 			headers: {
-	// 				'Content-Type': 'application/json',
-	// 				Accept: 'application/json',
-	// 				Authorization: `Bearer ${jwt}`
-	// 			}
-	// 		});
-	// 	} catch (error) {
-	// 		console.error(`Failed to delete a card: ${error}`);
-	// 	}
-
-	// 	return { success: true };
-	// },
 
 	editProject: async ({ request, cookies, params }: any) => {
 		const data = await request.formData();
@@ -222,20 +199,6 @@ export const actions = {
 	    return { success: true }
 
 	},
-	// addColumn: async ({ request }: any) => {
-	//     const data = await request.formData();
 
-	//     const project_id = data.get('project_id');
-	//     const column_position = parseInt(data.get('column_position'));
 
-	//     await prisma.column.create({
-	//         data: {
-	//             title: 'New Column',
-	//             projectId: project_id,
-	//             position: column_position,
-	//         }
-	//     });
-	//     return { success: true }
-
-	// }
 };

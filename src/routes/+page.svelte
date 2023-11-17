@@ -84,10 +84,9 @@
 				Snappy fast UI!
 			</h2>
 			<p class="break-words text-xl pt-6 bg-secondary dark:bg-secondary_dark">
-				Lightning-fast and responsive user interface makes managing your tasks a breeze. Experience
-				seamless navigation and quick load times, ensuring you can stay productive without any lag.
+				Lightning-fast and responsive user interface makes managing your tasks a breeze.
 				With our minimalistic design, you can focus on your work without distractions, streamlining
-				your workflow like never before.
+				your kanban workflow like never before.
 			</p>
 		</div>
 		<img
@@ -119,10 +118,8 @@
 				Effortless Collaboration
 			</h2>
 			<p class="break-words text-xl pt-6 bg-secondary dark:bg-secondary_dark">
-				Invite members to your projects and streamline teamwork like never before. Tresure allows
-				you to effortlessly collaborate with colleagues, friends, or family members by inviting them
-				to your projects. Assign tasks, share ideas, and work together in real-time. Connect with
-				your team and achieve your goals together, all in one easy-to-use website.
+				Tresure allows you to effortlessly collaborate with colleagues, friends, or family members by inviting them
+				to your projects. Assign tasks, share ideas, and work together in real-time.
 			</p>
 		</div>
 		<img

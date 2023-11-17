@@ -20,8 +20,10 @@ protected column api route, add collumn action, put column action, remove column
 - dates on tasks
 - display date in input when editing, maybe just spawn a div with ability to click to delete
 - member search and addition  < here
-- expired cookies mess things up, unauthorized gives 500
+- leave project
+- accept project invitation?
 - add members, assign roles to them
+- expired cookies mess things up, unauthorized gives 500
 - loading animation after login/register other stuff - not important
 - moving tasks up and down
 - marking tasks for review/done

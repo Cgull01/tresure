@@ -31,7 +31,7 @@
 		show_deletion_menu = false;
 	}}
 	role="listitem"
-	class="group/card select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-150 bg-background dark:bg-background_dark hover:cursor-grab active:cursor-grabbing transition-shadow p-3">
+	class="group/card select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-125 bg-background dark:bg-background_dark hover:cursor-grab active:cursor-grabbing transition-shadow p-3">
 	{#if show_deletion_menu}
 		<form
 			method="POST"
@@ -74,9 +74,9 @@
 		</div>
 	</div>
 	{#if card.dueDate}
-	<div class="flex gap-2 ml-auto w-max pb-2">
+	<div class="flex gap-2 ml-auto w-max pb-2 text-text_primary dark:text-text_primary_dark">
 		<IconClock/>
-		<span class="text-text_primary dark:text-text_primary_dark">{pad(card.dueDate.getMonth()+1)}/{pad(card.dueDate.getDate())}</span>
+		<span >{pad(card.dueDate.getMonth()+1)}/{pad(card.dueDate.getDate())}</span>
 	</div>
 	{/if}
 
