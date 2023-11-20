@@ -1,11 +1,17 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import type { ResolvedServerUrls } from 'vite';
 	import IconSearch from '../../../../Icons/Icon_search.svelte';
 	import IconTrash from '../../../../Icons/Icon_trash.svelte';
 	import type { ActionData } from './$types';
+	import { Roles } from '$lib/types';
 
 	export let data: any;
 	export let form: ActionData;
+
+	const isAdmin = (role: any) => role.role.name == Roles.Admin;
+	const isTaskMaster = (role: any) => role.role.name == Roles.TaskMaster;
+	console.log(data.project.members);
 </script>
 
 <svelte:head>
@@ -20,23 +26,34 @@
 				class="border-b border-primary dark:border-primary_dark w-full py-3 px-2 text-text_secondary dark:text-text_secondary_dark text-2xl bg-primary dark:bg-primary_dark">
 				Existing members:
 			</h1>
-			<div class="flex flex-col sm:flex-row px-3 py-3 justify-between">
+			<div class="flex flex-col gap-4 px-3 py-3 justify-between">
 				{#each data.project.members as member}
-					<div class="flex gap-4 py-1 border-b border-primary dark:border-primary_dark w-full items-center justify-between">
-						{#if member.email != data.user.email}
-							<button class="group flex-2"><IconTrash styles="group-hover:scale-105" /></button>
+					<div
+						class="flex gap-4 py-1 border-b border-primary dark:border-primary_dark w-full items-center justify-between">
+						{#if member.user.email != data.user.email}
+							<form method="POST" use:enhance action="?/removeMember">
+								<input type="hidden" name="member_id" value={member.id} />
+								<button class="group flex-2"><IconTrash styles="group-hover:scale-105" /></button>
+							</form>
 						{:else}
 							<span class="text-text_primary dark:text-text_primary_dark">(you)</span>
 						{/if}
 
 						<div class="flex gap-4 flex-1">
-							<span class="font-semibold">{member.username}</span>
-							<span class="font-semibold">{member.email}</span>
+							<span class="font-semibold">{member.user.username}</span>
+							<span class="font-semibold">{member.user.email}</span>
 						</div>
 						<div class="flex gap-3 flex-2">
-							<button class="w-5 h-5 rounded-full bg-gray-400" />
-							<button class="w-5 h-5 rounded-full bg-gray-400" />
-							<button class="w-5 h-5 rounded-full bg-gray-400" />
+							<button
+								title="task editing privileges"
+								class="w-5 h-5 rounded-full {member.roles.some(isAdmin)
+									? 'bg-red-400'
+									: 'bg-gray-500'}" />
+							<button
+								title="task editing privileges"
+								class="w-5 h-5 rounded-full {member.roles.some(isTaskMaster)
+									? 'bg-orange-400'
+									: 'bg-gray-500'}" />
 						</div>
 					</div>
 				{/each}
@@ -62,20 +79,22 @@
 					</button>
 				</div>
 			</form>
-				{#if form?.error}
-					<p>Error: {form.error}</p>
-				{:else if form?.user}
-				<form class="flex gap-4 w-4/5 m-auto px-6 py-1 border-y border-primary dark:border-primary_dark items-center" method="POST" use:enhance action="?/addUser">
-					<input
-					type="hidden"
-					name="user_id"
-					class="form_input w-full" />
-
+			{#if form?.error}
+				<p>Error: {form.error}</p>
+			{:else if form?.user}
+				<form
+					class="flex gap-4 w-4/5 m-auto px-6 py-1 border-y border-primary dark:border-primary_dark items-center"
+					method="POST"
+					use:enhance
+					action="?/addMember">
+					<input type="hidden" name="user_id" class="form_input w-full" value={form.user.id} />
 					<p>{form.user.email}</p>
 					<p>{form.user.username}</p>
-					<button class="ml-auto bg-secondary hover:bg-primary dark:hover:bg-primary_dark hover:text-secondary dark:hover:text-secondary_dark dark:bg-secondary_dark p-1 active:scale-95">ADD</button>
+					<button
+						class="ml-auto bg-secondary hover:bg-primary dark:hover:bg-primary_dark hover:text-secondary dark:hover:text-secondary_dark dark:bg-secondary_dark p-1 active:scale-95"
+						>ADD</button>
 				</form>
-				{/if}
+			{/if}
 		</div>
 	</div>
 </div>

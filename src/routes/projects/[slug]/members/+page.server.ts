@@ -68,5 +68,53 @@ export const actions = {
 		} catch (err: any) {
 			return { error: err.message };
 		}
+	},
+	addMember: async ({ request, cookies, params }: any) => {
+		try {
+			const data = await request.formData();
+			const user_id = data.get('user_id');
+			const jwt = cookies.get('jwt');
+
+			const parseData = {
+				userId : user_id,
+				projectId: params.slug,
+			}
+			console.log(parseData);
+
+			const response = await fetch(`${API_URL}/Member`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${jwt}`
+				},
+				body: JSON.stringify(parseData)
+			});
+
+			return { success: true };
+		} catch (err: any) {
+			return { error: err.message };
+		}
+	},
+	removeMember: async ({ request, cookies }: any) => {
+		try {
+			const data = await request.formData();
+			const member_id = data.get('member_id');
+			const jwt = cookies.get('jwt');
+
+			const response = await fetch(`${API_URL}/Member/${member_id}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${jwt}`
+				},
+			});
+
+			return { success: true };
+		} catch (err: any) {
+			return { error: err.message };
+		}
 	}
+
 };

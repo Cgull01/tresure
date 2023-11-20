@@ -19,7 +19,8 @@ protected column api route, add collumn action, put column action, remove column
 - show logged in user name
 - dates on tasks
 - display date in input when editing, maybe just spawn a div with ability to click to delete
-- member search and addition  < here
+- member search and addition
+- member role assigning < here
 - leave project
 - accept project invitation?
 - add members, assign roles to them

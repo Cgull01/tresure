@@ -53,7 +53,7 @@ export async function load({ params, cookies }: any) {
 
 		}
 
-		return { project: data, user: user, params:params };
+		return { project: data, user: user };
 	}
 
 	throw redirect(308, '/login');

@@ -17,8 +17,8 @@ export interface IColumn {
 	position: number;
 }
 
-enum Roles {
-	Admin,
+export enum Roles {
+	Admin = 0,
 	Member,
 	TaskMaster
 }

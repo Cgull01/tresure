@@ -16,6 +16,8 @@
 	let editProjectTitle = false;
 	let title_input: string;
 
+	console.log(data);
+
 	$: currentRoute = $page.url.pathname;
 </script>
 
@@ -77,23 +79,23 @@
 			<!-- TODO: burger menu -->
 			<div>
 				<a
-					href="/projects/{data.params.slug}"
+					href="/projects/{data.project.id}"
 					class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
-						`/projects/${data.params.slug}` &&
+						`/projects/${data.project.id}` &&
 						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
 					Board
 				</a>
 				<a
-					href="/projects/{data.params.slug}/members"
+					href="/projects/{data.project.id}/members"
 					class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
-						`/projects/${data.params.slug}/members` &&
+						`/projects/${data.project.id}/members` &&
 						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
 					Members
 				</a>
 				<a
-					href="/projects/{data.params.slug}/progress"
+					href="/projects/{data.project.id}/progress"
 					class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
-						`/projects/${data.params.slug}/progress` &&
+						`/projects/${data.project.id}/progress` &&
 						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
 					Progress
 				</a>
@@ -101,16 +103,16 @@
 		</div>
 		<div class="hidden sm:flex gap-4 items-center self-end text-xl">
 			<a
-				href="/projects/{data.params.slug}"
+				href="/projects/{data.project.id}"
 				class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
-					`/projects/${data.params.slug}` &&
+					`/projects/${data.project.id}` &&
 					'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
 				Board
 			</a>
 			<a
-				href="/projects/{data.params.slug}/members"
+				href="/projects/{data.project.id}/members"
 				class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
-					`/projects/${data.params.slug}/members` &&
+					`/projects/${data.project.id}/members` &&
 					'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
 				Members
 			</a>
