@@ -43,18 +43,31 @@
 							<span class="font-semibold">{member.user.username}</span>
 							<span class="font-semibold">{member.user.email}</span>
 						</div>
-						<div class="flex gap-3 flex-2">
+						<form class="flex gap-3 flex-2" method="POST" use:enhance action="?/editMember">
+							<input type="hidden" name="member_id" value={member.id} />
 							<button
+								name="role_admin"
 								title="task editing privileges"
-								class="w-5 h-5 rounded-full {member.roles.some(isAdmin)
-									? 'bg-red-400'
-									: 'bg-gray-500'}" />
+								value="0"
+								class="w-full px-2 border border-primary dark:border-primary_dark text-text_primary {member.roles.some(
+									isAdmin
+								)
+									? 'bg-accent dark:bg-accent_dark dark:text-text_secondary_dark'
+									: 'bg-background dark:bg-background_dark dark:text-text_primary_dark'}">
+								Admin
+							</button>
 							<button
+								name="role_taskMaster"
 								title="task editing privileges"
-								class="w-5 h-5 rounded-full {member.roles.some(isTaskMaster)
-									? 'bg-orange-400'
-									: 'bg-gray-500'}" />
-						</div>
+								value="2"
+								class="w-full px-2 border border-primary dark:border-primary_dark text-text_primary {member.roles.some(
+									isTaskMaster
+								)
+									? 'bg-accent dark:bg-accent_dark dark:text-text_secondary_dark'
+									: 'bg-background dark:bg-background_dark dark:text-text_primary_dark'}">
+								TaskMaster
+							</button>
+						</form>
 					</div>
 				{/each}
 			</div>

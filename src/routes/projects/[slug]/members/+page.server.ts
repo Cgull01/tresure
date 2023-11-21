@@ -96,6 +96,77 @@ export const actions = {
 			return { error: err.message };
 		}
 	},
+
+	editProject: async ({ request, cookies, params }: any) => {
+		const data = await request.formData();
+
+		const project_title = data.get('project_title');
+
+		const jwt = cookies.get('jwt');
+
+		if (project_title.length <= 0)
+			return fail(400, { project_title, message: 'Missing Project Title' });
+
+		const response = await fetch(`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+		});
+
+
+		return { success: true };
+	},
+	deleteProject: async ({ request, cookies }: any) => {
+		const data = await request.formData();
+
+		const project_id = data.get('project_id');
+
+		const jwt = cookies.get('jwt');
+
+		const response = await fetch(`${API_URL}/Project/${project_id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			}
+		});
+
+		throw redirect(303, '/projects');
+	},
+
+	editMember: async ({ request, cookies }: any) => {
+		try {
+			const data = await request.formData();
+			const member_id = data.get('member_id');
+			const newRole = data.get('role_admin') || data.get('role_taskMaster')
+			const jwt = cookies.get('jwt');
+
+			const parseData = {
+				id : member_id,
+				role : newRole,
+			}
+
+			const response = await fetch(`${API_URL}/Member/${member_id}`, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${jwt}`
+				},
+				body: JSON.stringify(parseData)
+			});
+
+
+
+			return { success: true };
+		} catch (err: any) {
+			return { error: err.message };
+		}
+	},
 	removeMember: async ({ request, cookies }: any) => {
 		try {
 			const data = await request.formData();

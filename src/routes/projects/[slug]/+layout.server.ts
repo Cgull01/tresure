@@ -1,5 +1,5 @@
-import { API_URL } from "$env/static/private";
-import { redirect } from "@sveltejs/kit";
+import { API_URL } from '$env/static/private';
+import { fail, redirect } from '@sveltejs/kit';
 
 export const ssr = false;
 
@@ -15,6 +15,7 @@ export async function load({ params, cookies }: any) {
 		});
 
 		const data = await response.json();
+
 		for (let col of data.columns) {
 			for (let card of col.cards) {
 				try {
@@ -23,17 +24,14 @@ export async function load({ params, cookies }: any) {
 					card.tags = [];
 				}
 
-				if(card.dueDate)
-				{
-					card.dueDate = new Date(card.dueDate).getFullYear() > 1000 ? new Date(card.dueDate) : null;
-				}
-				else
-				{
+				if (card.dueDate) {
+					card.dueDate =
+						new Date(card.dueDate).getFullYear() > 1000 ? new Date(card.dueDate) : null;
+				} else {
 					card.dueDate = null;
 				}
 			}
 		}
-
 
 		const userJson = await fetch(`${API_URL}/currentUser`, {
 			headers: {
@@ -43,14 +41,12 @@ export async function load({ params, cookies }: any) {
 
 		const user = await userJson.json();
 
-		for(let i = 0; i < data.columns ;i++)
-		{
-			data.columns[i] = data.columns[i].cards?.sort((cardA:any, cardB:any) => {
+		for (let i = 0; i < data.columns; i++) {
+			data.columns[i] = data.columns[i].cards?.sort((cardA: any, cardB: any) => {
 				const dateA = new Date(cardA.creationDate).getTime();
 				const dateB = new Date(cardB.creationDate).getTime();
 				return dateA - dateB;
 			});
-
 		}
 
 		return { project: data, user: user };
@@ -58,3 +54,4 @@ export async function load({ params, cookies }: any) {
 
 	throw redirect(308, '/login');
 }
+
