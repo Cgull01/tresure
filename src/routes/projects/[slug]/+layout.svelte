@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
 	import logout from '$lib/functions';
+	import type { IProject, IUser } from '$lib/types';
 	import IconTresureLogo from '../../../Icons/Icon_TresureLogo.svelte';
 	import IconCheck from '../../../Icons/Icon_check.svelte';
 	import IconDirectionLeft from '../../../Icons/Icon_direction_left.svelte';
@@ -9,14 +10,18 @@
 	import IconLogout from '../../../Icons/Icon_logout.svelte';
 	import IconPlus from '../../../Icons/Icon_plus.svelte';
 	import ThemeButton from '../../../components/ThemeButton.svelte';
-	import { DIALOG_MANAGER } from './stores';
+	import { DIALOG_MANAGER, USER_ROLES } from './stores';
 
-	export let data: any;
+	export let data: { project: IProject; user: IUser };
 
 	let editProjectTitle = false;
 	let title_input: string;
 
-	console.log(data);
+	const user_roles = data.project.members.find((member) => member.user.email === data.user.email);
+
+	$USER_ROLES = user_roles!.roles;
+
+	console.warn($USER_ROLES);
 
 	$: currentRoute = $page.url.pathname;
 </script>
@@ -66,6 +71,7 @@
 					<h1
 						class="text-3xl font-semibold"
 						on:dblclick={() => {
+							if($USER_ROLES.admin)
 							editProjectTitle = true;
 							title_input = data.project.title;
 						}}>
@@ -125,10 +131,10 @@
 			</a> -->
 		</div>
 		<div class="flex gap-8">
-			<div class="text-xl text-text_primary dark:text-text_primary_dark flex gap-4 items-center ">
+			<div class="text-xl text-text_primary dark:text-text_primary_dark flex gap-4 items-center">
 				<h2 class="">{data.user.username}</h2>
 				<button on:click={logout} class="hover:scale-110 active:scale-95">
-					<IconLogout/>
+					<IconLogout />
 				</button>
 			</div>
 			<ThemeButton />

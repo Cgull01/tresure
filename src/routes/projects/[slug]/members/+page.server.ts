@@ -6,41 +6,6 @@ import { fail, json, redirect } from '@sveltejs/kit';
 export const ssr = false;
 export const prerender = false;
 
-// export async function load({ params, cookies }: any) {
-// 	// const response = await fetch(`https://localhost:7203/api/Projects/${params.slug}`);
-// 	const jwt = cookies.get('jwt');
-
-// 	if (jwt) {
-// 		const response = await fetch(`${API_URL}/Projects/${params.slug}`, {
-// 			headers: {
-// 				Authorization: `Bearer ${jwt}`
-// 			}
-// 		});
-
-// 		const data = await response.json();
-// 		for (let col of data.columns) {
-// 			for (let card of col.cards) {
-// 				try {
-// 					card.tags = JSON.parse(card.tags);
-// 				} catch {
-// 					card.tags = [];
-// 				}
-// 			}
-// 		}
-
-// 		const userJson = await fetch(`${API_URL}/currentUser`, {
-// 			headers: {
-// 				Authorization: `Bearer ${jwt}`
-// 			}
-// 		});
-
-// 		const user = await userJson.json();
-
-// 		return { project: data, user: user };
-// 	}
-
-// 	throw redirect(308, '/login');
-// }
 
 export const actions = {
 	findUser: async ({ request, cookies }: any) => {
@@ -63,7 +28,7 @@ export const actions = {
 			}
 
 			const userData = await response.json();
-			console.log(userData)
+			console.log(userData);
 			return { user: userData };
 		} catch (err: any) {
 			return { error: err.message };
@@ -76,9 +41,9 @@ export const actions = {
 			const jwt = cookies.get('jwt');
 
 			const parseData = {
-				userId : user_id,
-				projectId: params.slug,
-			}
+				userId: user_id,
+				projectId: params.slug
+			};
 			console.log(parseData);
 
 			const response = await fetch(`${API_URL}/Member`, {
@@ -107,15 +72,17 @@ export const actions = {
 		if (project_title.length <= 0)
 			return fail(400, { project_title, message: 'Missing Project Title' });
 
-		const response = await fetch(`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				Authorization: `Bearer ${jwt}`
-			},
-		});
-
+		const response = await fetch(
+			`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${jwt}`
+				}
+			}
+		);
 
 		return { success: true };
 	},
@@ -139,53 +106,50 @@ export const actions = {
 	},
 
 	editMember: async ({ request, cookies }: any) => {
-		try {
-			const data = await request.formData();
-			const member_id = data.get('member_id');
-			const newRole = data.get('role_admin') || data.get('role_taskMaster')
-			const jwt = cookies.get('jwt');
+		const data = await request.formData();
+		const member_id = data.get('member_id');
+		const newRole = data.get('role_admin') || data.get('role_taskMaster');
+		const jwt = cookies.get('jwt');
 
-			const parseData = {
-				id : member_id,
-				role : newRole,
-			}
+		const parseData = {
+			id: member_id,
+			role: newRole
+		};
 
-			const response = await fetch(`${API_URL}/Member/${member_id}`, {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-					Authorization: `Bearer ${jwt}`
-				},
-				body: JSON.stringify(parseData)
-			});
+		console.log(parseData);
 
+		const response = await fetch(`${API_URL}/Member/${member_id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+			body: JSON.stringify(parseData)
+		});
 
+		if (!response.ok) {
+			const res = await response.json();
 
-			return { success: true };
-		} catch (err: any) {
-			return { error: err.message };
+			console.log(res);
 		}
+
+		return { success: true };
 	},
 	removeMember: async ({ request, cookies }: any) => {
-		try {
-			const data = await request.formData();
-			const member_id = data.get('member_id');
-			const jwt = cookies.get('jwt');
+		const data = await request.formData();
+		const member_id = data.get('member_id');
+		const jwt = cookies.get('jwt');
 
-			const response = await fetch(`${API_URL}/Member/${member_id}`, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-					Accept: 'application/json',
-					Authorization: `Bearer ${jwt}`
-				},
-			});
+		const response = await fetch(`${API_URL}/Member/${member_id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			}
+		});
 
-			return { success: true };
-		} catch (err: any) {
-			return { error: err.message };
-		}
+		return { success: true };
 	}
-
 };

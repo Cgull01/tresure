@@ -1,4 +1,5 @@
 import { API_URL } from '$env/static/private';
+import { Roles, type UserRoles } from '$lib/types';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const ssr = false;
@@ -31,6 +32,36 @@ export async function load({ params, cookies }: any) {
 					card.dueDate = null;
 				}
 			}
+		}
+
+		for (let member of data.members) {
+			let memberRoles: UserRoles = {
+				admin: false,
+				member: false,
+				taskMaster: false,
+				owner: false
+			};
+
+				for (let r of member.roles) {
+					switch (r.role.name) {
+						case Roles.Admin:
+							memberRoles.admin = true;
+							break;
+						case Roles.Member:
+							memberRoles.member = true;
+							break;
+						case Roles.TaskMaster:
+							memberRoles.taskMaster = true;
+							break;
+						case Roles.Owner:
+							memberRoles.owner = true;
+							break;
+						default:
+							break;
+					}
+				}
+
+			member.roles = memberRoles;
 		}
 
 		const userJson = await fetch(`${API_URL}/currentUser`, {

@@ -4,14 +4,12 @@
 	import IconSearch from '../../../../Icons/Icon_search.svelte';
 	import IconTrash from '../../../../Icons/Icon_trash.svelte';
 	import type { ActionData } from './$types';
-	import { Roles } from '$lib/types';
+	import type { IProject, IUser } from '$lib/types';
 
-	export let data: any;
+	export let data: { project: IProject; user: IUser };
 	export let form: ActionData;
 
-	const isAdmin = (role: any) => role.role.name == Roles.Admin;
-	const isTaskMaster = (role: any) => role.role.name == Roles.TaskMaster;
-	console.log(data.project.members);
+
 </script>
 
 <svelte:head>
@@ -27,7 +25,7 @@
 				Existing members:
 			</h1>
 			<div class="flex flex-col gap-4 px-3 py-3 justify-between">
-				{#each data.project.members as member}
+				{#each data.project.members as member (member.id)}
 					<div
 						class="flex gap-4 py-1 border-b border-primary dark:border-primary_dark w-full items-center justify-between">
 						{#if member.user.email != data.user.email}
@@ -49,9 +47,8 @@
 								name="role_admin"
 								title="task editing privileges"
 								value="0"
-								class="w-full px-2 border border-primary dark:border-primary_dark text-text_primary {member.roles.some(
-									isAdmin
-								)
+								class="w-full px-2 border border-primary dark:border-primary_dark text-text_primary {member
+									.roles.admin === true
 									? 'bg-accent dark:bg-accent_dark dark:text-text_secondary_dark'
 									: 'bg-background dark:bg-background_dark dark:text-text_primary_dark'}">
 								Admin
@@ -60,9 +57,8 @@
 								name="role_taskMaster"
 								title="task editing privileges"
 								value="2"
-								class="w-full px-2 border border-primary dark:border-primary_dark text-text_primary {member.roles.some(
-									isTaskMaster
-								)
+								class="w-full px-2 border border-primary dark:border-primary_dark text-text_primary {member
+									.roles.taskMaster === true
 									? 'bg-accent dark:bg-accent_dark dark:text-text_secondary_dark'
 									: 'bg-background dark:bg-background_dark dark:text-text_primary_dark'}">
 								TaskMaster
@@ -78,7 +74,11 @@
 				class="border-b border-primary dark:border-primary_dark w-full py-3 px-2 text-text_secondary dark:text-text_secondary_dark text-2xl bg-primary dark:bg-primary_dark">
 				Invite members
 			</h1>
-			<form class="form px-3 py-2 border-none pb-6" method="POST" use:enhance action="?/findUser">
+			<form
+				class="form px-3 py-2 border-none pb-6"
+				method="POST"
+				use:enhance
+				action="?/findUser">
 				<div class="flex gap-2 items-center justify-between">
 					<input
 						placeholder="Member's email"

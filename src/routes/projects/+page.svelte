@@ -1,14 +1,17 @@
 <script lang="ts">
 	import logout from '$lib/functions';
+	import type { IProject, IUser } from '$lib/types';
+	import type { List } from 'postcss/lib/list';
 	import IconLogout from '../../Icons/Icon_logout.svelte';
 	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import NavBar from '../../components/NavBar.svelte';
 	import PlusButton from '../../components/PlusButton.svelte';
 	import NewProjectDialog from '../../components/dialogs/NewProjectDialog.svelte';
 	import type { PageData } from './$types';
-	import { DIALOG_MANAGER } from './[slug]/stores';
+	import { DIALOG_MANAGER, USER_ROLES } from './[slug]/stores';
 
-	export let data: PageData;
+	export let data: {projects:Iterable<any>; user:IUser};
+
 
 </script>
 

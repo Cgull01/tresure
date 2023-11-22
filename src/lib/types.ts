@@ -17,20 +17,36 @@ export interface IColumn {
 	position: number;
 }
 
+export interface IUser{
+	email:string,
+	id: string,
+	username: string,
+}
+
 export enum Roles {
 	Admin = 0,
 	Member,
-	TaskMaster
+	TaskMaster,
+	Owner
+}
+
+export interface UserRoles{
+	admin: boolean,
+	member: boolean,
+	taskMaster: boolean,
+	owner: boolean,
 }
 export interface IRole
 {
-	name: Roles;
+	role:{
+		name: Roles;
+	}
 }
-
 export interface IMember{
 	id: number;
 	userid: string;
-	roles: IRole[];
+	roles: UserRoles;
+	user: IUser;
 }
 
 export interface ICard {

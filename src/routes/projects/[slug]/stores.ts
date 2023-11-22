@@ -1,5 +1,5 @@
 import { writable, type Writable } from 'svelte/store';
-import type { IColumn, IProject, ICard } from '$lib/types';
+import type { IColumn, IProject, ICard, Roles, UserRoles, IUser } from '$lib/types';
 
 export const SELECTED_COLUMN: Writable<IColumn | null> = writable(null);
 
@@ -22,6 +22,13 @@ export const DIALOG_MANAGER: Writable<DialogStates> = writable({
 	column_dialog: false,
 	new_project_dialog: false,
 	member_dialog: false
+});
+
+export const USER_ROLES: Writable<UserRoles> = writable({
+	admin: false,
+	member: false,
+	taskMaster: false,
+	owner: false
 });
 
 // export const SELECTED_PROJECT: Writable<any | null> = writable(null);

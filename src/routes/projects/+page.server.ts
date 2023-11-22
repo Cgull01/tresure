@@ -29,7 +29,6 @@ export async function load({ cookies }: any) {
 		}
 		else
 		{
-			console.warn(response.statusText);
 			return fail(400);
 		}
 
