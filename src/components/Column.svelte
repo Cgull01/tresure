@@ -3,7 +3,7 @@
 	import PlusButton from './PlusButton.svelte';
 	import Card from './Card.svelte';
 	import { createEventDispatcher, setContext } from 'svelte';
-	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK } from '../routes/projects/[slug]/stores';
+	import { DIALOG_MANAGER, SELECTED_COLUMN, SELECTED_TASK, USER_ROLES } from '../routes/projects/[slug]/stores';
 	import { enhance } from '$app/forms';
 	import IconCheck from '../Icons/Icon_check.svelte';
 	import IconPlus from '../Icons/Icon_plus.svelte';
@@ -20,6 +20,8 @@
 	// column.cards?.sort((cardA, cardB) => cardA.position - cardB.position);
 
 	const dispatch = createEventDispatcher();
+
+	setContext('column_id', column.id);
 
 	function submitDialog({ formData }: any) {
 		formData.set('column_id', column.id);
@@ -161,10 +163,12 @@
 					on:edit={handleEditCard} />
 			{/each}
 		</section>
+		{#if $USER_ROLES.taskMaster || $USER_ROLES.admin}
 		<div class="flex flex-row">
 			<PlusButton
 				styles="text-text_primary dark:text-text_primary_dark border-primary dark:border-primary_dark border-r border-t bg-background dark:bg-background_dark"
 				on:click={handleAddCard} />
 		</div>
+		{/if}
 	</div>
 </div>

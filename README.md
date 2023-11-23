@@ -22,13 +22,17 @@ protected column api route, add collumn action, put column action, remove column
 - member search and addition
 - member role assigning
 - prevent owner from removing admin role from themselves
+
 - hide other role actions from other roles (edit project, delete task, invite members)  < here
+
+- fix card completed style (green checkmark at top right?)
 - fix status codes in backend
 - marking tasks for review/done
 - moving tasks up and down (optional)
 - assigning members to tasks
 - leave project (optional)
 - fetch request feedback
+- fix dates beind datetime.min in backend, dont fix them in frontend
 - accept project invitation? (optional)
 - expired cookies mess things up, unauthorized gives 500 (optional [fatal])
 - loading animation after login/register other stuff (optional)

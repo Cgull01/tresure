@@ -59,6 +59,7 @@ export interface ICard {
 	}[];
 	dueDate?: Date | null;
 	creationDate?: Date;
+	completionDate?: Date;
 	approvalDate?: Date;
 	assignedMembers?: IMember[];
 }

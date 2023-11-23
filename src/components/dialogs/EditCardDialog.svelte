@@ -28,10 +28,13 @@
 
 	$: card = <ICard>$SELECTED_TASK;
 
-	let formated_dueDate:any;
-	$: if(card)
-	{
-		formated_dueDate = card.dueDate ? `${card.dueDate.getFullYear()}-${pad(card.dueDate.getMonth()+1)}-${pad(card.dueDate.getDate())}` : " ";
+	let formated_dueDate: any;
+	$: if (card) {
+		formated_dueDate = card.dueDate
+			? `${card.dueDate.getFullYear()}-${pad(card.dueDate.getMonth() + 1)}-${pad(
+					card.dueDate.getDate()
+			  )}`
+			: ' ';
 	}
 
 	$: date_input = formated_dueDate;
@@ -53,7 +56,7 @@
 	}
 
 	function removeTag(index: number) {
-		card.tags = card.tags?.filter((t:any,i:number) => i != index);
+		card.tags = card.tags?.filter((t: any, i: number) => i != index);
 	}
 
 	function closeDialog() {
@@ -70,16 +73,13 @@
 
 		// card.columnId = $SELECTED_COLUMN!.id;
 		card.dueDate = new Date(date_input);
-		console.log(card.dueDate);
+
 		formData.set('task', JSON.stringify(card));
 
-		if (card.id) {
-			await fetch(`/api`, {
-				method: 'PUT',
-				body: JSON.stringify({...card, columnId: $SELECTED_COLUMN!.id})
-			});
-			cancel();
-		}
+		await fetch(`/api`, {
+			method: 'PUT',
+			body: JSON.stringify({ ...card, columnId: $SELECTED_COLUMN!.id })
+		});
 
 		closeDialog();
 		invalidateAll();
@@ -95,11 +95,9 @@
 
 	$: if ($DIALOG_MANAGER.editTask_dialog && dialog_ref) {
 		dialog_ref.showModal();
-
 	}
 
-	function selectTagColor(e:CustomEvent)
-	{
+	function selectTagColor(e: CustomEvent) {
 		tag_input.color = e.detail;
 	}
 
@@ -116,13 +114,14 @@
 		on:close={closeDialog}>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
-				<div class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center">
+				<div
+					class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center">
 					<h1 class="font-sans text-3xl px-4 pb-2 py-2">
 						{card.id ? 'Edit Task' : 'New Task'}
 					</h1>
 					{#if card.id}
 						<form method="POST" action="?/deleteTask" use:enhance>
-							<input class="hidden" type="number" value={card.id} id="task_id"/>
+							<input class="hidden" type="number" value={card.id} id="task_id" />
 							<button
 								name="deleteTask"
 								tabindex="0"
@@ -142,7 +141,10 @@
 			<form class="form" method="POST" action="?/createTask" use:enhance={onSubmitDialog}>
 				<div class="flex flex-col sm:flex-row px-3 py-3 justify-between">
 					<div class="flex flex-col gap-2">
-						<label for="tag" class="text-lg font-semibold select-none text-text_primary dark:text-text_primary_dark">Tags</label>
+						<label
+							for="tag"
+							class="text-lg font-semibold select-none text-text_primary dark:text-text_primary_dark"
+							>Tags</label>
 						<div
 							class="flex flex-row gap-2 text-secondary font-semibold overflow-hidden w-max overflow-x-auto">
 							{#if card.tags}
@@ -151,7 +153,7 @@
 										type="button"
 										on:click={() => removeTag(index)}
 										class="w-max h-max px-1 bg-{tag &&
-											tag.color} flex flex-row gap-2 items-center hover:shadow-md "
+											tag.color} flex flex-row gap-2 items-center hover:shadow-md"
 										title="click to remove">
 										{tag.tag}
 									</button>
@@ -160,7 +162,7 @@
 						</div>
 						<div class="flex flex-row items-center gap-1">
 							<div class="flex flex-row">
-								<ColorSelect on:colorSelect={selectTagColor}/>
+								<ColorSelect on:colorSelect={selectTagColor} />
 							</div>
 							<input
 								id="tag"
@@ -172,14 +174,18 @@
 								type="button"
 								on:click={addTag}
 								class="p-1 group border bg-background dark:bg-background_dark w-max h-max cursor-pointer group border-primary dark:border-primary_dark focus:border-primary dark:focus:border-primary_dark">
-								<IconPlus styles="group group-active:scale-110 text-primary dark:text-primary_dark" />
+								<IconPlus
+									styles="group group-active:scale-110 text-primary dark:text-primary_dark" />
 							</button>
 						</div>
 					</div>
 				</div>
 				<div class="px-3">
 					<div>
-						<label for="title" class="text-lg font-semibold text-text_primary dark:text-text_primary_dark">Title</label>
+						<label
+							for="title"
+							class="text-lg font-semibold text-text_primary dark:text-text_primary_dark"
+							>Title</label>
 						<input
 							type="text"
 							id="title"
@@ -188,14 +194,22 @@
 							class="form_input w-full" />
 					</div>
 					<div>
-						<label for="details" class="text-lg font-semibold text-text_primary dark:text-text_primary_dark">Details</label>
+						<label
+							for="details"
+							class="text-lg font-semibold text-text_primary dark:text-text_primary_dark"
+							>Details</label>
 						<textarea
 							id="details"
 							placeholder="Task details"
 							bind:value={card.details}
 							class="form_input w-full min-h-[2rem]" />
 					</div>
-					<input type="date" class="w-max form_input" name="dueDate" id="dueDate" bind:value={date_input}/>
+					<input
+						type="date"
+						class="w-max form_input"
+						name="dueDate"
+						id="dueDate"
+						bind:value={date_input} />
 				</div>
 				<button class="form_button"> Save changes</button>
 			</form>

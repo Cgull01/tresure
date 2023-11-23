@@ -4,8 +4,22 @@ import { fail, redirect } from '@sveltejs/kit';
 
 export const ssr = false;
 
+function fixInvalidDate(date:Date) : Date|null
+{
+	let modifiedDate;
+	if(date)
+	{
+		modifiedDate = new Date(date).getFullYear() > 1000 ? new Date(date) : null;
+	}
+	else
+	{
+		modifiedDate = null;
+	}
+
+	return modifiedDate;
+}
+
 export async function load({ params, cookies }: any) {
-	// const response = await fetch(`https://localhost:7203/api/Projects/${params.slug}`);
 	const jwt = cookies.get('jwt');
 
 	if (jwt) {
@@ -25,12 +39,8 @@ export async function load({ params, cookies }: any) {
 					card.tags = [];
 				}
 
-				if (card.dueDate) {
-					card.dueDate =
-						new Date(card.dueDate).getFullYear() > 1000 ? new Date(card.dueDate) : null;
-				} else {
-					card.dueDate = null;
-				}
+				card.dueDate = fixInvalidDate(card.dueDate)
+				card.completionDate = fixInvalidDate(card.completionDate)
 			}
 		}
 

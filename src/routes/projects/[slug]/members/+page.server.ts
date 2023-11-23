@@ -28,7 +28,6 @@ export const actions = {
 			}
 
 			const userData = await response.json();
-			console.log(userData);
 			return { user: userData };
 		} catch (err: any) {
 			return { error: err.message };
@@ -44,7 +43,6 @@ export const actions = {
 				userId: user_id,
 				projectId: params.slug
 			};
-			console.log(parseData);
 
 			const response = await fetch(`${API_URL}/Member`, {
 				method: 'POST',
@@ -116,7 +114,6 @@ export const actions = {
 			role: newRole
 		};
 
-		console.log(parseData);
 
 		const response = await fetch(`${API_URL}/Member/${member_id}`, {
 			method: 'PUT',
@@ -131,7 +128,6 @@ export const actions = {
 		if (!response.ok) {
 			const res = await response.json();
 
-			console.log(res);
 		}
 
 		return { success: true };

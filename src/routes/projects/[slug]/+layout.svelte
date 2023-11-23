@@ -21,8 +21,6 @@
 
 	$USER_ROLES = user_roles!.roles;
 
-	console.warn($USER_ROLES);
-
 	$: currentRoute = $page.url.pathname;
 </script>
 

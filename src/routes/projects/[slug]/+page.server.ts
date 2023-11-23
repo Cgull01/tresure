@@ -6,7 +6,6 @@ import { fail, json, redirect } from '@sveltejs/kit';
 export const ssr = false;
 export const prerender = false;
 
-
 export const actions = {
 	createTask: async ({ request, cookies }: any) => {
 		const data = await request.formData();
@@ -69,15 +68,17 @@ export const actions = {
 		if (project_title.length <= 0)
 			return fail(400, { project_title, message: 'Missing Project Title' });
 
-		const response = await fetch(`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`, {
-			method: 'PUT',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				Authorization: `Bearer ${jwt}`
-			},
-		});
-
+		const response = await fetch(
+			`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`,
+			{
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+					Authorization: `Bearer ${jwt}`
+				}
+			}
+		);
 
 		return { success: true };
 	},
@@ -112,23 +113,47 @@ export const actions = {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
 				Authorization: `Bearer ${jwt}`
-			},
+			}
 		});
 
 		return { success: true };
 	},
-	editColumn: async ({ request, cookies}: any) => {
-	    const data = await request.formData();
+	editTask: async ({ request, cookies }: any) => {
+		const data = await request.formData();
+		const jwt = cookies.get('jwt');
 
-	    const column_id = data.get('column_id');
-	    const column_title = data.get('column_title');
-	    const column_position = data.get('column_position');
+		const card = data.get('task');
+
+		console.log(card);
+		const response = await fetch(`${API_URL}/Card/${card.id}`, {
+			method: 'PUT',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+			body: card
+		});
+
+		if (!response.ok) {
+			let ans = await response.json();
+
+			console.warn(ans);
+		}
+		return { success: true };
+	},
+	editColumn: async ({ request, cookies }: any) => {
+		const data = await request.formData();
+
+		const column_id = data.get('column_id');
+		const column_title = data.get('column_title');
+		const column_position = data.get('column_position');
 
 		const jwt = cookies.get('jwt');
 
 		const parseData = {
 			id: column_id,
-			title: column_title ?? "",
+			title: column_title ?? '',
 			position: column_position
 		};
 
@@ -142,13 +167,12 @@ export const actions = {
 			body: JSON.stringify(parseData)
 		});
 
-	    return { success: true }
-
+		return { success: true };
 	},
 	deleteColumn: async ({ request, cookies }: any) => {
-	    const data = await request.formData();
+		const data = await request.formData();
 
-	    const column_id = data.get('column_id');
+		const column_id = data.get('column_id');
 
 		const jwt = cookies.get('jwt');
 
@@ -158,12 +182,9 @@ export const actions = {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
 				Authorization: `Bearer ${jwt}`
-			},
+			}
 		});
 
-	    return { success: true }
-
-	},
-
-
+		return { success: true };
+	}
 };
