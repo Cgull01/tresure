@@ -7,8 +7,7 @@ export async function PUT({ request, cookies }: any) {
 
 	const jwt = cookies.get('jwt');
 
-	if(card.tags !== null)
-	card.tags = JSON.stringify(card.tags);
+	if (card.tags !== null) card.tags = JSON.stringify(card.tags);
 
 	const parseData = {
 		id: card.id,
@@ -20,7 +19,7 @@ export async function PUT({ request, cookies }: any) {
 		completionDate: card.completionDate ?? null,
 		approvalDate: card.approvalDate ?? null,
 		assignedMembers: card.assignedMembers ?? null,
-		columnId: card.columnId,
+		columnId: card.columnId
 	};
 
 	const response = await fetch(`${API_URL}/Card/${card.id}`, {

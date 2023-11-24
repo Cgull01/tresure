@@ -2,14 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@layer base{
+@layer base {
 	:root {
 		--text-primary-color: #071627;
 		--text-secondary-color: #dcdada;
-		--background-color: #CCCCCC;
+		--background-color: #cccccc;
 		--primary-color: #071627;
-		--secondary-color: #E4E5E7;
+		--secondary-color: #e4e5e7;
 		--accent-color: #548896;
 
 		--text-primary-color-dark: #d6d9e3;
@@ -19,26 +18,26 @@
 		--secondary-color-dark: #111e4b;
 		--accent-color-dark: #d6b751;
 	}
-
 }
 
-
-	.PolkaPattern{
-		background-color: var(--background-color);
-		opacity: 1;
-		background-image:  radial-gradient(var(--background-color) 2px, transparent 2px), radial-gradient(var(--background-color) 2px, var(--secondary-color) 2px);
-		background-size: 80px 80px;
-		background-position: 0 0,40px 40px;
-		background-repeat: repeat;
-	}
-	.PolkaPatternDark{
-		background-color: var(--background-color-dark);
-		opacity: 1;
-		background-image:  radial-gradient(var(--background-color-dark) 2px, transparent 2px), radial-gradient(var(--background-color-dark) 2px, var(--secondary-color-dark) 2px);
-		background-size: 80px 80px;
-		background-position: 0 0,40px 40px;
-		background-repeat: repeat;
-	}
+.PolkaPattern {
+	background-color: var(--background-color);
+	opacity: 1;
+	background-image: radial-gradient(var(--background-color) 2px, transparent 2px),
+		radial-gradient(var(--background-color) 2px, var(--secondary-color) 2px);
+	background-size: 80px 80px;
+	background-position: 0 0, 40px 40px;
+	background-repeat: repeat;
+}
+.PolkaPatternDark {
+	background-color: var(--background-color-dark);
+	opacity: 1;
+	background-image: radial-gradient(var(--background-color-dark) 2px, transparent 2px),
+		radial-gradient(var(--background-color-dark) 2px, var(--secondary-color-dark) 2px);
+	background-size: 80px 80px;
+	background-position: 0 0, 40px 40px;
+	background-repeat: repeat;
+}
 
 @keyframes moveBackground {
 	0% {
@@ -48,7 +47,6 @@
 		background-position: 70px 70px, 105px 105px; /* Adjust the endpoint */
 	}
 }
-
 
 .form {
 	@apply border-primary dark:border-primary_dark border bg-background dark:bg-background_dark text-text_primary dark:text-text_primary_dark;
@@ -62,7 +60,6 @@
 .form_input {
 	@apply p-1 border bg-secondary dark:bg-secondary_dark border-background dark:border-background_dark hover:border-accent dark:hover:border-accent_dark focus:border-primary dark:focus:border-primary_dark outline-none;
 }
-
 
 /* *{
 	border: 1px inset orange;

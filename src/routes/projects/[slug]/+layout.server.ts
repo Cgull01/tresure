@@ -4,17 +4,10 @@ import { fail, redirect } from '@sveltejs/kit';
 
 export const ssr = false;
 
-function fixInvalidDate(date:Date) : Date|null
-{
+function fixInvalidDate(date: Date | null): Date | null {
 	let modifiedDate;
-	if(date)
-	{
-		modifiedDate = new Date(date).getFullYear() > 1000 ? new Date(date) : null;
-	}
-	else
-	{
-		modifiedDate = null;
-	}
+
+	modifiedDate = date ? new Date(date) : null;
 
 	return modifiedDate;
 }
@@ -39,8 +32,8 @@ export async function load({ params, cookies }: any) {
 					card.tags = [];
 				}
 
-				card.dueDate = fixInvalidDate(card.dueDate)
-				card.completionDate = fixInvalidDate(card.completionDate)
+				card.dueDate = fixInvalidDate(card.dueDate);
+				card.completionDate = fixInvalidDate(card.completionDate);
 			}
 		}
 
@@ -52,24 +45,24 @@ export async function load({ params, cookies }: any) {
 				owner: false
 			};
 
-				for (let r of member.roles) {
-					switch (r.role.name) {
-						case Roles.Admin:
-							memberRoles.admin = true;
-							break;
-						case Roles.Member:
-							memberRoles.member = true;
-							break;
-						case Roles.TaskMaster:
-							memberRoles.taskMaster = true;
-							break;
-						case Roles.Owner:
-							memberRoles.owner = true;
-							break;
-						default:
-							break;
-					}
+			for (let r of member.roles) {
+				switch (r.role.name) {
+					case Roles.Admin:
+						memberRoles.admin = true;
+						break;
+					case Roles.Member:
+						memberRoles.member = true;
+						break;
+					case Roles.TaskMaster:
+						memberRoles.taskMaster = true;
+						break;
+					case Roles.Owner:
+						memberRoles.owner = true;
+						break;
+					default:
+						break;
 				}
+			}
 
 			member.roles = memberRoles;
 		}
@@ -95,4 +88,3 @@ export async function load({ params, cookies }: any) {
 
 	throw redirect(308, '/login');
 }
-

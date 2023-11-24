@@ -42,9 +42,6 @@
 	let tag_input: ITag = { tag: '', color: TAG_COLORS[0] };
 	let dialog_ref: HTMLDialogElement;
 
-	let color_dropdown_visible = false;
-	let dropdown_element: HTMLElement;
-
 	function addTag() {
 		if (tag_input.tag.length === 0) return;
 
@@ -85,14 +82,6 @@
 		invalidateAll();
 	}
 
-	function handleClickOutsideColors(event: MouseEvent) {
-		if (dropdown_element && !dropdown_element.contains(event.target as Node)) {
-			color_dropdown_visible = false;
-		}
-	}
-
-	window.addEventListener('click', handleClickOutsideColors);
-
 	$: if ($DIALOG_MANAGER.editTask_dialog && dialog_ref) {
 		dialog_ref.showModal();
 	}
@@ -100,10 +89,6 @@
 	function selectTagColor(e: CustomEvent) {
 		tag_input.color = e.detail;
 	}
-
-	onDestroy(() => {
-		window.removeEventListener('click', handleClickOutsideColors);
-	});
 </script>
 
 {#if $DIALOG_MANAGER.editTask_dialog == true}
@@ -111,11 +96,13 @@
 		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/3 h-max shadow-md"
 		on:dblclick|self={closeDialog}
 		bind:this={dialog_ref}
-		on:close={closeDialog}>
+		on:close={closeDialog}
+	>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
 				<div
-					class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center">
+					class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center"
+				>
 					<h1 class="font-sans text-3xl px-4 pb-2 py-2">
 						{card.id ? 'Edit Task' : 'New Task'}
 					</h1>
@@ -126,7 +113,8 @@
 								name="deleteTask"
 								tabindex="0"
 								title="Click to remove the task"
-								class="flex cursor-pointer active:scale-105 stroke-text_secondary dark:stroke-text_secondary_dark">
+								class="flex cursor-pointer active:scale-105 stroke-text_secondary dark:stroke-text_secondary_dark"
+							>
 								<IconTrash />
 							</button>
 						</form>
@@ -134,7 +122,8 @@
 				</div>
 				<button
 					class="bg-primary group dark:bg-primary_dark w-16 h-auto text-text_secondary dark:text-text_secondary_dark border-l select-none font-semibold border-secondary dark:border-secondary_dark transition-colors"
-					on:click={closeDialog}>
+					on:click={closeDialog}
+				>
 					<IconPlus styles="rotate-45 m-auto" />
 				</button>
 			</div>
@@ -144,9 +133,11 @@
 						<label
 							for="tag"
 							class="text-lg font-semibold select-none text-text_primary dark:text-text_primary_dark"
-							>Tags</label>
+							>Tags</label
+						>
 						<div
-							class="flex flex-row gap-2 text-secondary font-semibold overflow-hidden w-max overflow-x-auto">
+							class="flex flex-row gap-2 text-secondary font-semibold overflow-hidden w-max overflow-x-auto"
+						>
 							{#if card.tags}
 								{#each card.tags as tag, index}
 									<button
@@ -154,7 +145,8 @@
 										on:click={() => removeTag(index)}
 										class="w-max h-max px-1 bg-{tag &&
 											tag.color} flex flex-row gap-2 items-center hover:shadow-md"
-										title="click to remove">
+										title="click to remove"
+									>
 										{tag.tag}
 									</button>
 								{/each}
@@ -169,13 +161,16 @@
 								type="text"
 								placeholder="tag name"
 								bind:value={tag_input.tag}
-								class="form_input w-full" />
+								class="form_input w-full"
+							/>
 							<button
 								type="button"
 								on:click={addTag}
-								class="p-1 group border bg-background dark:bg-background_dark w-max h-max cursor-pointer group border-primary dark:border-primary_dark focus:border-primary dark:focus:border-primary_dark">
+								class="p-1 group border bg-background dark:bg-background_dark w-max h-max cursor-pointer group border-primary dark:border-primary_dark focus:border-primary dark:focus:border-primary_dark"
+							>
 								<IconPlus
-									styles="group group-active:scale-110 text-primary dark:text-primary_dark" />
+									styles="group group-active:scale-110 text-primary dark:text-primary_dark"
+								/>
 							</button>
 						</div>
 					</div>
@@ -185,31 +180,36 @@
 						<label
 							for="title"
 							class="text-lg font-semibold text-text_primary dark:text-text_primary_dark"
-							>Title</label>
+							>Title</label
+						>
 						<input
 							type="text"
 							id="title"
 							bind:value={card.title}
 							placeholder="Task title"
-							class="form_input w-full" />
+							class="form_input w-full"
+						/>
 					</div>
 					<div>
 						<label
 							for="details"
 							class="text-lg font-semibold text-text_primary dark:text-text_primary_dark"
-							>Details</label>
+							>Details</label
+						>
 						<textarea
 							id="details"
 							placeholder="Task details"
 							bind:value={card.details}
-							class="form_input w-full min-h-[2rem]" />
+							class="form_input w-full min-h-[2rem]"
+						/>
 					</div>
 					<input
 						type="date"
 						class="w-max form_input"
 						name="dueDate"
 						id="dueDate"
-						bind:value={date_input} />
+						bind:value={date_input}
+					/>
 				</div>
 				<button class="form_button"> Save changes</button>
 			</form>

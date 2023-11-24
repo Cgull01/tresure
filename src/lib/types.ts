@@ -17,10 +17,10 @@ export interface IColumn {
 	position: number;
 }
 
-export interface IUser{
-	email:string,
-	id: string,
-	username: string,
+export interface IUser {
+	email: string;
+	id: string;
+	username: string;
 }
 
 export enum Roles {
@@ -30,19 +30,18 @@ export enum Roles {
 	Owner
 }
 
-export interface UserRoles{
-	admin: boolean,
-	member: boolean,
-	taskMaster: boolean,
-	owner: boolean,
+export interface UserRoles {
+	admin: boolean;
+	member: boolean;
+	taskMaster: boolean;
+	owner: boolean;
 }
-export interface IRole
-{
-	role:{
+export interface IRole {
+	role: {
 		name: Roles;
-	}
+	};
 }
-export interface IMember{
+export interface IMember {
 	id: number;
 	userid: string;
 	roles: UserRoles;

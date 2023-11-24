@@ -9,13 +9,15 @@ export default {
 			backgroundImage: {
 				'radial-gradient': 'radial-gradient(circle,  #6fb0aa, var(--accent-color))',
 				'radial-gradient_dark': 'radial-gradient(circle, #09233b, #131126)',
-				'polkadot-pattern': 'radial-gradient(var(--background-color) 2px, transparent 2px), radial-gradient(var(--background-color) 4px, var(--secondary-color) 2px)',
-				'polkadot-pattern_dark': 'radial-gradient(var(--background-color-dark) 2px, transparent 2px), radial-gradient(var(--background-color-dark) 2px, var(--secondary-color-dark) 2px)',
+				'polkadot-pattern':
+					'radial-gradient(var(--background-color) 2px, transparent 2px), radial-gradient(var(--background-color) 4px, var(--secondary-color) 2px)',
+				'polkadot-pattern_dark':
+					'radial-gradient(var(--background-color-dark) 2px, transparent 2px), radial-gradient(var(--background-color-dark) 2px, var(--secondary-color-dark) 2px)'
 			},
 			colors: {
 				text_primary: 'var(--text-primary-color)',
 				text_secondary: 'var(--text-secondary-color)',
-				background:'var(--background-color)',
+				background: 'var(--background-color)',
 				primary: 'var(--primary-color)',
 				secondary: 'var(--secondary-color)',
 				accent: 'var(--accent-color)',
@@ -25,9 +27,9 @@ export default {
 				background_dark: 'var(--background-color-dark)',
 				primary_dark: 'var(--primary-color-dark)',
 				secondary_dark: 'var(--secondary-color-dark)',
-				accent_dark: 'var(--accent-color-dark)',
-		},
-	},
+				accent_dark: 'var(--accent-color-dark)'
+			}
+		}
 	},
 	safelist: [
 		{
@@ -39,7 +41,7 @@ export default {
 		'accent',
 		'background',
 		'dark',
-		'light',
+		'light'
 	],
 	plugins: [
 		plugin(function ({ addVariant, e }) {
@@ -50,4 +52,4 @@ export default {
 			});
 		})
 	]
-}
+};

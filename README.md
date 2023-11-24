@@ -1,4 +1,3 @@
-
 EXTRAS:
 attachments
 members?
@@ -11,6 +10,7 @@ dotnet watch --no-hot-reload
 
 TODO:
 protected column api route, add collumn action, put column action, remove column action
+
 - create types from api objects
 - add columns
 - rename columns
@@ -22,14 +22,15 @@ protected column api route, add collumn action, put column action, remove column
 - member search and addition
 - member role assigning
 - prevent owner from removing admin role from themselves
-
-- hide other role actions from other roles (edit project, delete task, invite members)  < here
-
+- hide other role actions from other roles (edit project, delete task, invite members)
+- remove identity role from backend?
 - fix card completed style (green checkmark at top right?)
-- fix status codes in backend
-- marking tasks for review/done
-- moving tasks up and down (optional)
+
+- marking tasks for review/done < here
+
 - assigning members to tasks
+- fix status codes in backend
+- moving tasks up and down (optional)
 - leave project (optional)
 - fetch request feedback
 - fix dates beind datetime.min in backend, dont fix them in frontend
@@ -41,8 +42,17 @@ protected column api route, add collumn action, put column action, remove column
 - project repoort: tasks finished within some period, assigned, busy members, timeline (optional)
 
 v.2:
+
 - add cards in any place you want (spawn divs in between to register location)
 - suggested tags, show a dropdown for existing tags, tag autocomplete
 - keyboard shortcuts
 - markdown/json export
 - desktop app using tauri
+
+marking tasks for review:
+if regular member:
+if(task.completiondate)
+mark/unmark task for review
+
+if taskmaster/admin:
+complete/incomplete task

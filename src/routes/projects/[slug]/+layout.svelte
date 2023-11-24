@@ -26,7 +26,8 @@
 
 <div class="flex flex-col h-screen w-full overflow-x-hidden">
 	<nav
-		class="px-6 text-text_primary dark:text-text_primary_dark flex flex-row py-3 items-center justify-between w-full bg-background dark:bg-background_dark border-b border-primary dark:border-primary_dark">
+		class="px-6 text-text_primary dark:text-text_primary_dark flex flex-row py-3 items-center justify-between w-full bg-background dark:bg-background_dark border-b border-primary dark:border-primary_dark"
+	>
 		<div class="flex gap-2 items-center">
 			<a href="/" class="cursor-pointer sm:block hidden">
 				<IconTresureLogo styles="fill-text_primary dark:fill-text_primary_dark" />
@@ -44,23 +45,27 @@
 								editProjectTitle = false;
 								data.project.title = title_input;
 							}}
-							class="flex items-center gap-2">
+							class="flex items-center gap-2"
+						>
 							<input
 								type="text"
 								class="form_input text-2xl w-full"
 								required
 								id="project_title"
 								name="project_title"
-								bind:value={title_input} />
+								bind:value={title_input}
+							/>
 							<button
 								type="submit"
-								class="active:scale-95 border-primary dark:border-primary_dark border hover:scale-105">
+								class="active:scale-95 border-primary dark:border-primary_dark border hover:scale-105"
+							>
 								<IconCheck styles="" />
 							</button>
 							<button
 								type="button"
 								on:click={() => (editProjectTitle = false)}
-								class="active:scale-95 border-primary dark:border-primary_dark border hover:scale-105">
+								class="active:scale-95 border-primary dark:border-primary_dark border hover:scale-105"
+							>
 								<IconPlus styles="rotate-45" />
 							</button>
 						</form>
@@ -69,10 +74,10 @@
 					<h1
 						class="text-3xl font-semibold"
 						on:dblclick={() => {
-							if($USER_ROLES.admin)
-							editProjectTitle = true;
+							if ($USER_ROLES.admin) editProjectTitle = true;
 							title_input = data.project.title;
-						}}>
+						}}
+					>
 						{data.project.title}
 					</h1>
 				{/if}
@@ -86,21 +91,24 @@
 					href="/projects/{data.project.id}"
 					class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
 						`/projects/${data.project.id}` &&
-						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
+						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}"
+				>
 					Board
 				</a>
 				<a
 					href="/projects/{data.project.id}/members"
 					class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
 						`/projects/${data.project.id}/members` &&
-						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
+						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}"
+				>
 					Members
 				</a>
 				<a
 					href="/projects/{data.project.id}/progress"
 					class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
 						`/projects/${data.project.id}/progress` &&
-						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
+						'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}"
+				>
 					Progress
 				</a>
 			</div>
@@ -110,14 +118,16 @@
 				href="/projects/{data.project.id}"
 				class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
 					`/projects/${data.project.id}` &&
-					'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
+					'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}"
+			>
 				Board
 			</a>
 			<a
 				href="/projects/{data.project.id}/members"
 				class="cursor-pointer hover:underline underline-offset-2 decoration-primary dark:decoration-primary_dark {currentRoute ==
 					`/projects/${data.project.id}/members` &&
-					'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}">
+					'underline decoration-double !decoration-accent dark:!decoration-accent_dark '}"
+			>
 				Members
 			</a>
 			<!-- <a

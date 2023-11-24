@@ -19,19 +19,14 @@ export async function load({ cookies }: any) {
 			}
 		});
 
-		if(response.ok && user.ok)
-		{
+		if (response.ok && user.ok) {
 			const project_data = await response.json();
 			const user_data = await user.json();
 
 			return { projects: project_data, user: user_data };
-
-		}
-		else
-		{
+		} else {
 			return fail(400);
 		}
-
 	}
 
 	throw redirect(308, '/login');

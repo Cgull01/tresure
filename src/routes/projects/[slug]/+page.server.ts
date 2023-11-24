@@ -122,17 +122,29 @@ export const actions = {
 		const data = await request.formData();
 		const jwt = cookies.get('jwt');
 
-		const card = data.get('task');
+		let card_json = JSON.parse(data.get('task'));
 
-		console.log(card);
-		const response = await fetch(`${API_URL}/Card/${card.id}`, {
+		const parseData = {
+			id: card_json.id,
+			title: card_json.title ?? null,
+			details: card_json.details ?? null,
+			tags: JSON.stringify(card_json.tags) ?? null,
+			dueDate: card_json.dueDate ?? null,
+			creationDate: card_json.creationDate ?? null,
+			completionDate: card_json.completionDate ?? null,
+			approvalDate: card_json.approvalDate ?? null,
+			assignedMembers: card_json.assignedMembers ?? null,
+			columnId: card_json.columnId
+		};
+
+		const response = await fetch(`${API_URL}/Card/${parseData.id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
 				Authorization: `Bearer ${jwt}`
 			},
-			body: card
+			body: JSON.stringify(parseData)
 		});
 
 		if (!response.ok) {

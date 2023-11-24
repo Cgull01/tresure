@@ -22,13 +22,13 @@
 
 	const dispatch = createEventDispatcher();
 
-    function handleClickOutsideColors(event: MouseEvent) {
+	function handleClickOutsideColors(event: MouseEvent) {
 		if (dropdown_element && !dropdown_element.contains(event.target as Node)) {
 			color_dropdown_visible = false;
 		}
 	}
 
-    window.addEventListener('click', handleClickOutsideColors);
+	window.addEventListener('click', handleClickOutsideColors);
 
 	onDestroy(() => {
 		window.removeEventListener('click', handleClickOutsideColors);
@@ -40,18 +40,24 @@
 	class="p-1 group border rounded-md bg-background dark:bg-background_dark w-max h-max cursor-pointer group border-primary dark:border-primary_dark hover:border-gray-400 focus:border-primary"
 	on:click|stopPropagation={() => {
 		color_dropdown_visible = !color_dropdown_visible;
-	}}>
+	}}
+>
 	<IconColors styles="fill-{icon_color} w-6 h-6 group group-active:scale-110" />
 </button>
 {#if color_dropdown_visible}
 	<div class="absolute mt-8" bind:this={dropdown_element}>
 		<div
-			class="grid grid-cols-4 grid-rows-2 bg-background dark:bg-background_dark p-2 border border-primary dark:border-primary_dark gap-2">
+			class="grid grid-cols-4 grid-rows-2 bg-background dark:bg-background_dark p-2 border border-primary dark:border-primary_dark gap-2"
+		>
 			{#each TAG_COLORS as color, i}
 				<button
 					type="button"
 					class={`rounded-full w-6 h-6 bg-${color} hover:scale-95 cursor-pointer`}
-					on:click={() => {dispatch('colorSelect', color); icon_color = color}} />
+					on:click={() => {
+						dispatch('colorSelect', color);
+						icon_color = color;
+					}}
+				/>
 			{/each}
 		</div>
 	</div>

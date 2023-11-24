@@ -29,12 +29,15 @@
 	>
 		<div class="sticky m-auto">
 			<div class="flex flex-row justify-between">
-				<div class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center">
+				<div
+					class="flex flex-row gap-4 bg-primary dark:bg-primary_dark text-text_secondary dark:text-text_secondary_dark w-full items-center"
+				>
 					<h1 class="font-sans text-3xl px-4 pb-2 py-2">New Project</h1>
 				</div>
 				<button
 					class="bg-primary group dark:bg-primary_dark w-16 h-auto text-text_secondary dark:text-text_secondary_dark border-l select-none font-semibold border-secondary dark:border-secondary_dark transition-colors"
-					on:click={closeDialog}>
+					on:click={closeDialog}
+				>
 					<IconPlus styles="group-hover:scale-110 group-active:scale-90 rotate-45 m-auto" />
 				</button>
 			</div>
@@ -47,7 +50,9 @@
 			>
 				<div class="px-3">
 					<div>
-						<label for="project_title" class="text-lg font-semibold py-1 block">Enter New Project title</label>
+						<label for="project_title" class="text-lg font-semibold py-1 block"
+							>Enter New Project title</label
+						>
 						<input
 							type="text"
 							id="project_title"

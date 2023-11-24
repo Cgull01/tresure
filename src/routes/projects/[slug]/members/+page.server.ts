@@ -6,7 +6,6 @@ import { fail, json, redirect } from '@sveltejs/kit';
 export const ssr = false;
 export const prerender = false;
 
-
 export const actions = {
 	findUser: async ({ request, cookies }: any) => {
 		try {
@@ -114,7 +113,6 @@ export const actions = {
 			role: newRole
 		};
 
-
 		const response = await fetch(`${API_URL}/Member/${member_id}`, {
 			method: 'PUT',
 			headers: {
@@ -127,7 +125,6 @@ export const actions = {
 
 		if (!response.ok) {
 			const res = await response.json();
-
 		}
 
 		return { success: true };

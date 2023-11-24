@@ -9,7 +9,7 @@
 	let context_menu: HTMLElement;
 	let context_menu_position = { x: 220, y: 420 };
 
-	const project_id = getContext('project_id')
+	const project_id = getContext('project_id');
 
 	function handleClickOutside(event: MouseEvent) {
 		if (context_menu && !context_menu.contains(event.target as Node)) {
@@ -40,13 +40,14 @@
 		class="fixed z-50"
 		style="top: {context_menu_position.y}px; left: {context_menu_position.x}px;"
 	>
-		<ul class="shadow-md border border-accent dark:border-accent_dark w-full bg-background dark:bg-background_dark">
-
+		<ul
+			class="shadow-md border border-accent dark:border-accent_dark w-full bg-background dark:bg-background_dark"
+		>
 			<li
 				class="py-1 hover:bg-primary dark:hover:bg-primary_dark text-text_primary dark:text-text_primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors px-2 cursor-pointer active:scale-95 select-none not-last:border-b border-primary dark:border-primary_dark"
 			>
 				<form action="?/addColumn" method="POST" use:enhance={handleSubmit}>
-					<button class="flex gap-2"> <IconPlus/> Add column</button>
+					<button class="flex gap-2"> <IconPlus /> Add column</button>
 				</form>
 			</li>
 		</ul>
