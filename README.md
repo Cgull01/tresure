@@ -25,10 +25,10 @@ protected column api route, add collumn action, put column action, remove column
 - hide other role actions from other roles (edit project, delete task, invite members)
 - remove identity role from backend?
 - fix card completed style (green checkmark at top right?)
+- marking tasks for review/done
 
-- marking tasks for review/done < here
+- assigning members to tasks < here
 
-- assigning members to tasks
 - fix status codes in backend
 - moving tasks up and down (optional)
 - leave project (optional)

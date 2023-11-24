@@ -137,6 +137,8 @@ export const actions = {
 			columnId: card_json.columnId
 		};
 
+		console.warn(parseData);
+
 		const response = await fetch(`${API_URL}/Card/${parseData.id}`, {
 			method: 'PUT',
 			headers: {

@@ -34,6 +34,7 @@ export async function load({ params, cookies }: any) {
 
 				card.dueDate = fixInvalidDate(card.dueDate);
 				card.completionDate = fixInvalidDate(card.completionDate);
+				card.approvalDate = fixInvalidDate(card.approvalDate);
 			}
 		}
 
