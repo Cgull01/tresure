@@ -1,5 +1,5 @@
 import { API_URL } from '$env/static/private';
-import { Roles, type UserRoles } from '$lib/types';
+import { Roles, type IProject, type UserRoles, type IMember } from '$lib/types';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const ssr = false;
@@ -22,15 +22,23 @@ export async function load({ params, cookies }: any) {
 			}
 		});
 
-		const data = await response.json();
+		const data:IProject|any = await response.json();
 
 		for (let col of data.columns) {
-			for (let card of col.cards) {
+			for (let card of col.cards || []) {
 				try {
 					card.tags = JSON.parse(card.tags);
 				} catch {
 					card.tags = [];
 				}
+
+				if (card.assignedMembers) {
+					card.assignedMembers = card.assignedMembers.map((m:any) => ({
+						id: m.id,
+						username: data.members.find((pm:any) => pm.id === m.id)?.user.username
+					}));
+				}
+
 
 				card.dueDate = fixInvalidDate(card.dueDate);
 				card.completionDate = fixInvalidDate(card.completionDate);
@@ -84,7 +92,9 @@ export async function load({ params, cookies }: any) {
 			});
 		}
 
-		return { project: data, user: user };
+		const user_memberId = data.members.find((m:IMember) => m.user.username === user.username).id;
+
+		return { project: data, user: {...user, member_id: user_memberId} };
 	}
 
 	throw redirect(308, '/login');

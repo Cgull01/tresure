@@ -12,7 +12,7 @@
 	import ThemeButton from '../../../components/ThemeButton.svelte';
 	import { DIALOG_MANAGER, USER_ROLES } from './stores';
 
-	export let data: { project: IProject; user: IUser };
+	export let data: { project: IProject, user: IUser };
 
 	let editProjectTitle = false;
 	let title_input: string;

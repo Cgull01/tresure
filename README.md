@@ -26,13 +26,16 @@ protected column api route, add collumn action, put column action, remove column
 - remove identity role from backend?
 - fix card completed style (green checkmark at top right?)
 - marking tasks for review/done
+- prevent members from moving cards
+- assigning members to tasks
 
-- assigning members to tasks < here
+- fix status codes in backend  < here
 
-- fix status codes in backend
-- moving tasks up and down (optional)
-- leave project (optional)
+- websockets
 - fetch request feedback
+- moving tasks up and down (optional)
+- merge back editcarddialog with addcarddialog because too much repetition
+- leave project (optional)
 - fix dates beind datetime.min in backend, dont fix them in frontend
 - accept project invitation? (optional)
 - expired cookies mess things up, unauthorized gives 500 (optional [fatal])
@@ -48,11 +51,3 @@ v.2:
 - keyboard shortcuts
 - markdown/json export
 - desktop app using tauri
-
-marking tasks for review:
-if regular member:
-if(task.completiondate)
-mark/unmark task for review
-
-if taskmaster/admin:
-complete/incomplete task

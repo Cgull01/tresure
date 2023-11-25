@@ -21,6 +21,7 @@ export interface IUser {
 	email: string;
 	id: string;
 	username: string;
+	member_id: number;
 }
 
 export enum Roles {
@@ -60,5 +61,5 @@ export interface ICard {
 	creationDate?: Date;
 	completionDate?: Date;
 	approvalDate?: Date;
-	assignedMembers?: IMember[];
+	assignedMembers?: {id: number, username?: string}[];
 }

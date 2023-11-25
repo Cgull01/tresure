@@ -6,16 +6,17 @@
 	import type { ICard } from '$lib/types';
 	import IconClock from '../Icons/Icon_clock.svelte';
 	import { pad } from '$lib/functions';
-	import { SELECTED_COLUMN, USER_ROLES } from '../routes/projects/[slug]/stores';
+	import { USER_ROLES } from '../routes/projects/[slug]/stores';
 	import IconCheck from '../Icons/Icon_check.svelte';
 	import IconPlus from '../Icons/Icon_plus.svelte';
 
 	export let card: ICard;
 
-	let show_deletion_menu = false;
-	let column_id = getContext('column_id');
+	let show_deletion_menu: boolean = false;
+	let column_id: number = getContext('column_id');
 
-	console.warn(card);
+	const user_memberId = getContext('user_memberId');
+
 	const dispatch = createEventDispatcher();
 
 	function handleClick() {
@@ -45,14 +46,16 @@
 </script>
 
 <div
-	draggable="true"
+	draggable={$USER_ROLES.admin || $USER_ROLES.taskMaster ? 'true' : 'false'}
 	on:dragstart
 	on:contextmenu|preventDefault|stopPropagation={() => (show_deletion_menu = !show_deletion_menu)}
 	on:mouseleave={() => {
 		show_deletion_menu = false;
 	}}
 	role="listitem"
-	class="group/card select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-125 bg-background dark:bg-background_dark hover:cursor-grab active:cursor-grabbing transition-shadow p-3">
+	class="group/card select-none hover:shadow-2xl hover:brightness-105 dark:hover:brightness-125 bg-background dark:bg-background_dark {($USER_ROLES.admin ||
+		$USER_ROLES.taskMaster) &&
+		'hover:cursor-grab active:cursor-grabbing'} transition-shadow p-3">
 	{#if show_deletion_menu}
 		<div
 			class="absolute top-0 left-0 w-full h-full flex flex-row gap-4 backdrop-blur-md items-center justify-between px-6">
@@ -129,11 +132,13 @@
 			{/each}
 		</div>
 
-		<button
-			class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100 text-text_primary dark:text-text_primary_dark"
-			on:click={handleClick}>
-			<IconEdit styles="group-hover/card:block hidden transition-all" />
-		</button>
+		{#if $USER_ROLES.taskMaster || $USER_ROLES.admin}
+			<button
+				class="w-6 h-6 cursor-pointer hover:scale-105 active:scale-100 text-text_primary dark:text-text_primary_dark"
+				on:click={handleClick}>
+				<IconEdit styles="group-hover/card:block hidden transition-all" />
+			</button>
+		{/if}
 	</div>
 	<div class="flex flex-row justify-between pb-2">
 		<div class="flex flex-col items-start w-full text-text_primary dark:text-text_primary_dark">
@@ -150,18 +155,33 @@
 			{/if}
 		</div>
 	</div>
-	<div class="flex gap-2 ml-auto w-max pb-2 text-text_primary dark:text-text_primary_dark">
+	<div
+		class="flex gap-2 ml-auto w-full pb-2 text-text_primary dark:text-text_primary_dark justify-between">
+		{#if card.assignedMembers}
+			<div class="flex gap-1">
+				{#each card.assignedMembers as member}
+					<div
+						title={member.username}
+						class="bg-secondary {member.id === user_memberId && "border-2 border-accent"} text-accent capitalize dark:bg-secondary_dark rounded-full w-8 h-8 flex items-center justify-center">
+						{member.username?.at(0)}
+					</div>
+				{/each}
+			</div>
+		{/if}
 		{#if card.approvalDate}
 			<i class="text-accent font-semibold dark:text-accent_dark"
 				>Completed {pad(card.approvalDate.getMonth() + 1)}/{pad(card.approvalDate.getDate())}</i>
 		{:else if card.completionDate}
-			<p class="text-accent font-semibold dark:text-accent_dark"
-				>Waiting approval {pad(card.completionDate.getMonth() + 1)}/{pad(
+			<p class="text-accent font-semibold dark:text-accent_dark">
+				Waiting approval {pad(card.completionDate.getMonth() + 1)}/{pad(
 					card.completionDate.getDate()
-				)}</p>
+				)}
+			</p>
 		{:else if card.dueDate}
-			<IconClock />
-			<span>{pad(card.dueDate.getMonth() + 1)}/{pad(card.dueDate.getDate())}</span>
+			<div class="flex">
+				<IconClock />
+				<span>{pad(card.dueDate.getMonth() + 1)}/{pad(card.dueDate.getDate())}</span>
+			</div>
 		{/if}
 	</div>
 

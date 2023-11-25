@@ -3,16 +3,18 @@
 	import { PROJECT_ID } from './stores';
 	import { invalidateAll } from '$app/navigation';
 	import ProjectContextMenu from '../../../components/ProjectContextMenu.svelte';
-	import type { IProject } from '$lib/types';
+	import type { IProject, IUser } from '$lib/types';
 	import { setContext } from 'svelte';
 	import AddCardDialog from '../../../components/dialogs/AddCardDialog.svelte';
 	import EditCardDialog from '../../../components/dialogs/EditCardDialog.svelte';
 
-	export let data: { project: IProject };
+	export let data: { project: IProject , user: IUser};
 
 	$PROJECT_ID = data.project.id;
 
 	setContext('project_id', data.project.id);
+	setContext('project', data.project);
+	setContext('user_memberId', data.user.member_id);
 
 	async function refreshColumns() {
 		invalidateAll();
