@@ -5,40 +5,40 @@
 	import IconSettings from '../Icons/Icon_settings.svelte';
 	import { DIALOG_MANAGER } from '../routes/projects/[slug]/stores';
 
-	let show_context_menu = false;
-	let context_menu: HTMLElement;
-	let context_menu_position = { x: 220, y: 420 };
+	let showContextMenu = false;
+	let contextMenu: HTMLElement;
+	let contextMenuPosition = { x: 220, y: 420 };
 
 	const project_id = getContext('project_id');
 
 	function handleClickOutside(event: MouseEvent) {
-		if (context_menu && !context_menu.contains(event.target as Node)) {
-			show_context_menu = false;
+		if (contextMenu && !contextMenu.contains(event.target as Node)) {
+			showContextMenu = false;
 		}
 	}
 
 	function handleContextmenu(event: MouseEvent) {
-		context_menu_position = { x: event.clientX, y: event.clientY };
-		show_context_menu = true;
+		contextMenuPosition = { x: event.clientX, y: event.clientY };
+		showContextMenu = true;
 	}
 
 	function handleSubmit({ formData }: any) {
 		formData.set('project_id', project_id);
-		show_context_menu = false;
+		showContextMenu = false;
 	}
 </script>
 
 <svelte:window
 	on:contextmenu||preventDefault={handleContextmenu}
 	on:click={handleClickOutside}
-	on:scroll={() => (show_context_menu = false)}
+	on:scroll={() => (showContextMenu = false)}
 />
 
-{#if show_context_menu}
+{#if showContextMenu}
 	<div
-		bind:this={context_menu}
+		bind:this={contextMenu}
 		class="fixed z-50"
-		style="top: {context_menu_position.y}px; left: {context_menu_position.x}px;"
+		style="top: {contextMenuPosition.y}px; left: {contextMenuPosition.x}px;"
 	>
 		<ul
 			class="shadow-md border border-accent dark:border-accent_dark w-full bg-background dark:bg-background_dark"

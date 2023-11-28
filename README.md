@@ -28,11 +28,12 @@ protected column api route, add collumn action, put column action, remove column
 - marking tasks for review/done
 - prevent members from moving cards
 - assigning members to tasks
-
-- fix status codes in backend  < here
-
-- websockets
+- fix status codes in backend
 - fetch request feedback
+
+- websockets < here
+
+- prevent from inviting same user. (optional)
 - moving tasks up and down (optional)
 - merge back editcarddialog with addcarddialog because too much repetition
 - leave project (optional)

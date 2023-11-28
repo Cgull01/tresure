@@ -12,12 +12,11 @@
 
 	export let card: ICard;
 
-	let show_deletion_menu: boolean = false;
-	let column_id: number = getContext('column_id');
-
+	const column_id: number = getContext('column_id');
 	const user_memberId = getContext('user_memberId');
-
 	const dispatch = createEventDispatcher();
+
+	let show_deletion_menu: boolean = false;
 
 	function handleClick() {
 		dispatch('edit', {
@@ -162,7 +161,8 @@
 				{#each card.assignedMembers as member}
 					<div
 						title={member.username}
-						class="bg-secondary {member.id === user_memberId && "border-2 border-accent"} text-accent capitalize dark:bg-secondary_dark rounded-full w-8 h-8 flex items-center justify-center">
+						class="bg-secondary {member.id === user_memberId &&
+							'border-2 border-accent'} text-accent capitalize dark:bg-secondary_dark rounded-full w-8 h-8 flex items-center justify-center">
 						{member.username?.at(0)}
 					</div>
 				{/each}
@@ -172,12 +172,14 @@
 			<i class="text-accent font-semibold dark:text-accent_dark"
 				>Completed {pad(card.approvalDate.getMonth() + 1)}/{pad(card.approvalDate.getDate())}</i>
 		{:else if card.completionDate}
+
 			<p class="text-accent font-semibold dark:text-accent_dark">
 				Waiting approval {pad(card.completionDate.getMonth() + 1)}/{pad(
 					card.completionDate.getDate()
 				)}
 			</p>
 		{:else if card.dueDate}
+
 			<div class="flex">
 				<IconClock />
 				<span>{pad(card.dueDate.getMonth() + 1)}/{pad(card.dueDate.getDate())}</span>

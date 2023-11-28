@@ -15,37 +15,29 @@
 	import ColorSelect from '../ColorSelect.svelte';
 	import IconGroup from '../../Icons/Icon_group.svelte';
 
-	const TAG_COLORS = [
-		'red-700',
-		'blue-700',
-		'green-700',
-		'yellow-700',
-		'purple-700',
-		'pink-700',
-		'orange-700',
-		'indigo-700'
-	];
+	const projectContext: IProject = getContext('project');
+	const projectMembers = projectContext.members;
+
+	let tagInput: ITag = { tag: '', color: 'primary' };
+	let dialogRef: HTMLDialogElement;
+
+	let selectedMembers: Array<number> = [];
+	let isSelectingMembers: boolean = false;
 
 	$: card = <ICard>{};
 
-	let tag_input: ITag = { tag: '', color: TAG_COLORS[0] };
-	let dialog_ref: HTMLDialogElement;
-
-	let selected_members: Array<number> = [];
-	let select_members: boolean = false;
-
-	let projectContext: IProject = getContext('project');
-
-	let members = projectContext.members;
+	$: if ($DIALOG_MANAGER.createTask_dialog && dialogRef) {
+		dialogRef.showModal();
+	}
 
 	function addTag() {
-		if (tag_input.tag.length === 0) return;
+		if (tagInput.tag.length === 0) return;
 
-		const newTag = { ...tag_input };
+		const newTag = { ...tagInput };
 
 		card.tags = card ? [...(card.tags || []), newTag] : [newTag];
 
-		tag_input.tag = '';
+		tagInput.tag = '';
 	}
 
 	function removeTag(index: number) {
@@ -56,10 +48,10 @@
 		$DIALOG_MANAGER.createTask_dialog = false;
 		$SELECTED_TASK = null;
 
-		tag_input = { tag: '', color: TAG_COLORS[0] };
+		tagInput = { tag: '', color: 'primary' };
 		card.tags = [];
-		selected_members = [];
-		select_members = false;
+		selectedMembers = [];
+		isSelectingMembers = false;
 		card = <ICard>{};
 	}
 
@@ -68,7 +60,7 @@
 			throw new Error('no title or no details');
 		}
 
-		card.assignedMembers = selected_members.map((m) => ({ id: m }));
+		card.assignedMembers = selectedMembers.map((m) => ({ id: m }));
 
 		formData.set('task', JSON.stringify({ ...card, columnId: $SELECTED_COLUMN?.id }));
 
@@ -76,12 +68,8 @@
 		invalidateAll();
 	}
 
-	$: if ($DIALOG_MANAGER.createTask_dialog && dialog_ref) {
-		dialog_ref.showModal();
-	}
-
 	function selectTagColor(e: CustomEvent) {
-		tag_input.color = e.detail;
+		tagInput.color = e.detail;
 	}
 </script>
 
@@ -89,7 +77,7 @@
 	<dialog
 		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/3 h-max shadow-md"
 		on:dblclick|self={closeDialog}
-		bind:this={dialog_ref}
+		bind:this={dialogRef}
 		on:close={closeDialog}>
 		<div class="m-auto w-full h-full">
 			<div class="flex flex-row justify-between">
@@ -104,7 +92,7 @@
 				</button>
 			</div>
 			<form class="form" method="POST" action="?/createTask" use:enhance={onSubmitDialog}>
-				{#if !select_members}
+				{#if !isSelectingMembers}
 					<div class="flex flex-col sm:flex-row px-3 py-3 justify-between">
 						<div class="flex flex-col gap-2 w-full">
 							<label
@@ -134,7 +122,7 @@
 									id="tag"
 									type="text"
 									placeholder="tag name"
-									bind:value={tag_input.tag}
+									bind:value={tagInput.tag}
 									class="form_input w-1/3" />
 								<button
 									type="button"
@@ -145,7 +133,7 @@
 								</button>
 								<button
 									type="button"
-									on:click={() => (select_members = true)}
+									on:click={() => (isSelectingMembers = true)}
 									class="ml-auto flex w-max h-max items-center p-1 border border-primary group group-active:scale-105 dark:border-primary_dark focus:border-primary dark:focus:border-primary_dark">
 									<IconGroup styles="p-1 w-max h-max cursor-pointer group group-active:scale-105" />
 								</button>
@@ -193,16 +181,16 @@
 									>Assign Members:</legend>
 								<button
 									type="button"
-									on:click={() => (select_members = false)}
+									on:click={() => (isSelectingMembers = false)}
 									class="flex w-max h-max ml-auto items-center p-1 border border-primary group group-active:scale-105 dark:border-primary_dark focus:border-primary dark:focus:border-primary_dark">
 									<IconGroup styles="p-1 w-max h-max cursor-pointer group group-active:scale-105" />
 								</button>
 							</div>
-							{#each members as member, i}
+							{#each projectMembers as member, i}
 								<div class="text-xl flex items-center gap-2">
 									<input
 										class="h-6 w-6 cursor-pointer"
-										bind:group={selected_members}
+										bind:group={selectedMembers}
 										type="checkbox"
 										id="member_{i}"
 										value={member.id} />

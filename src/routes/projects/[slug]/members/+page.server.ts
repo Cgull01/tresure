@@ -1,6 +1,7 @@
 import { invalidateAll } from '$app/navigation';
 import { API_URL } from '$env/static/private';
 import type { IColumn, IProject, ICard } from '$lib/types.js';
+import { HubConnectionBuilder } from '@microsoft/signalr';
 import { fail, json, redirect } from '@sveltejs/kit';
 
 export const ssr = false;
@@ -23,7 +24,7 @@ export const actions = {
 			});
 
 			if (!response.ok) {
-				throw new Error('Failed to fetch user data');
+				throw new Error('User not found');
 			}
 
 			const userData = await response.json();
@@ -142,6 +143,27 @@ export const actions = {
 				Authorization: `Bearer ${jwt}`
 			}
 		});
+
+		return { success: true };
+	},
+	refreshProject: async ({ request, cookies }: any) => {
+		let projectUpdate = 'pu';
+		const jwt = cookies.get('jwt');
+		const data = await request.formData();
+		const user = data.get('user_id');
+
+		const response = await fetch(`${API_URL}/Project/UpdateProject?user=${user}&projectUpdate=${projectUpdate}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			},
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
 
 		return { success: true };
 	}

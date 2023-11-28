@@ -3,27 +3,27 @@
 	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import { DIALOG_MANAGER } from '../../routes/projects/[slug]/stores';
 
-	let dialog_ref: HTMLDialogElement;
-	let project_title_input: string;
+	let dialogRef: HTMLDialogElement;
+	let projectTitleInput: string;
 
 	function closeDialog() {
 		$DIALOG_MANAGER.new_project_dialog = false;
-		project_title_input = '';
+		projectTitleInput = '';
 	}
 
 	function submitDialog() {
 		closeDialog();
 	}
 
-	$: if ($DIALOG_MANAGER.new_project_dialog && dialog_ref) {
-		dialog_ref.showModal();
+	$: if ($DIALOG_MANAGER.new_project_dialog && dialogRef) {
+		dialogRef.showModal();
 	}
 </script>
 
 {#if $DIALOG_MANAGER.new_project_dialog}
 	<dialog
 		class="absolute flex-col justify-center items-center z-10 backdrop:backdrop-blur-sm w-1/3 h-max"
-		bind:this={dialog_ref}
+		bind:this={dialogRef}
 		on:dblclick|self={closeDialog}
 		on:close={closeDialog}
 	>
@@ -57,7 +57,7 @@
 							type="text"
 							id="project_title"
 							name="project_title"
-							bind:value={project_title_input}
+							bind:value={projectTitleInput}
 							placeholder="Project title"
 							class="form_input w-full"
 						/>
