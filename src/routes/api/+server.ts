@@ -1,15 +1,7 @@
 import { API_URL } from '$env/static/private';
 import { formatData } from '$lib/functions';
-import type {
-	Roles,
-	ICard,
-	IColumn,
-	IMember,
-	IProject,
-	UserRoles
-} from '$lib/types';
+import type { Roles, ICard, IColumn, IMember, IProject, UserRoles } from '$lib/types';
 import { error, json, redirect } from '@sveltejs/kit';
-
 
 export async function PUT({ request, cookies }: any) {
 	const card = await request.json();
@@ -43,12 +35,29 @@ export async function PUT({ request, cookies }: any) {
 
 	return json(response);
 }
+export async function POST({ request, cookies }: any) {
+	const jwt = cookies.get('jwt');
 
+	const response = await fetch(`${API_URL}/Project/UpdateProject`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Accept: 'application/json',
+			Authorization: `Bearer ${jwt}`
+		}
+	});
+
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+
+	return json(response);
+}
 
 export async function GET({ url, cookies }: any) {
 	const jwt = cookies.get('jwt');
 
-    const slug = url.searchParams.get('project');
+	const slug = url.searchParams.get('project');
 
 	if (jwt) {
 		const response = await fetch(`${API_URL}/Project/${slug}`, {
@@ -69,14 +78,15 @@ export async function GET({ url, cookies }: any) {
 			}
 		});
 
+
 		const user = await userJson.json();
 
 		const user_member = data.members.find((m: IMember) => m.user.username === user.username);
 		const user_memberId = user_member?.id;
 
-		return json({ project: data, user: { ...user, member_id: user_memberId } });
+
+		return json({ project: data, user: { ...user, member_id: user_memberId }});
 	}
 
 	throw redirect(308, '/login');
-
 }

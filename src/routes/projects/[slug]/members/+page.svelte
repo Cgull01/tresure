@@ -1,24 +1,15 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import type { ResolvedServerUrls } from 'vite';
 	import IconSearch from '../../../../Icons/Icon_search.svelte';
 	import IconTrash from '../../../../Icons/Icon_trash.svelte';
 	import type { ActionData } from './$types';
 	import type { IProject, IUser } from '$lib/types';
 	import { USER_ROLES } from '../stores';
-	import { HubConnectionBuilder } from '@microsoft/signalr';
 
-	export let data: { project: IProject; user: IUser };
+	export let data: { project: IProject; user: IUser, user_roles: any };
 	export let form: ActionData;
 
-
-	let connection = new HubConnectionBuilder().withUrl(`http://localhost:5096/projectHub`).build();
-
-	connection.on('ReceiveProjectUpdate', (user, projectUpdate) => {
-		console.warn(user);
-	});
-
-	connection.start().catch((err) => console.error(err.toString()));
+	console.warn($USER_ROLES.admin);
 
 </script>
 
@@ -129,14 +120,4 @@
 			</div>
 		{/if}
 	</div>
-	<!-- <form
-		class="flex gap-4 w-4/5 m-auto px-6 py-1 border-y border-primary dark:border-primary_dark items-center"
-		method="POST"
-		use:enhance
-		action="?/refreshProject">
-		<input type="hidden" name="user_id" class="form_input w-full" value={data.user.username} />
-		<button
-			class="ml-auto bg-secondary hover:bg-primary dark:hover:bg-primary_dark hover:text-secondary dark:hover:text-secondary_dark dark:bg-secondary_dark p-1 active:scale-95"
-			>REFRESH</button>
-	</form> -->
 </div>

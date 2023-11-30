@@ -32,15 +32,16 @@ protected column api route, add collumn action, put column action, remove column
 - fetch request feedback
 
 - websockets < here
+- socket reload does not refresh roles
 
+- loading animation after login/register other stuff (optional)
+- expired cookies mess things up, unauthorized gives 500 (optional [fatal])
 - prevent from inviting same user. (optional)
 - moving tasks up and down (optional)
 - merge back editcarddialog with addcarddialog because too much repetition
 - leave project (optional)
 - fix dates beind datetime.min in backend, dont fix them in frontend
 - accept project invitation? (optional)
-- expired cookies mess things up, unauthorized gives 500 (optional [fatal])
-- loading animation after login/register other stuff (optional)
 - ~~move columns~~ if i want to move a column i need to change swap positions of 2 columns and that sucks, OR i could create a new api route to swap columns but this sounds bad (optional)
 
 - project repoort: tasks finished within some period, assigned, busy members, timeline (optional)

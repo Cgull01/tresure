@@ -146,25 +146,5 @@ export const actions = {
 
 		return { success: true };
 	},
-	refreshProject: async ({ request, cookies }: any) => {
-		let projectUpdate = 'pu';
-		const jwt = cookies.get('jwt');
-		const data = await request.formData();
-		const user = data.get('user_id');
 
-		const response = await fetch(`${API_URL}/Project/UpdateProject?user=${user}&projectUpdate=${projectUpdate}`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				Authorization: `Bearer ${jwt}`
-			},
-		});
-
-		if (!response.ok) {
-			throw new Error(`HTTP error! status: ${response.status}`);
-		}
-
-		return { success: true };
-	}
 };
