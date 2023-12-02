@@ -22,39 +22,14 @@
 
 	$USER_ROLES = data.user_roles;
 
-	let connection = new HubConnectionBuilder().withUrl(`http://localhost:5096/projectHub`).build();
-
-	connection.on('ReceiveProjectUpdate', async () => {
-		const res = await fetch(`/api?project=${data.project.id}`, {
-			method: 'GET'
-		});
-		console.warn("got res");
-
-		//repeated in layout.server.ts - not good
-		data = await res.json();
-
-		data.project = formatData(data.project);
-		data.user_roles = data.project.members.find((member) => member.user.email === data.user.email)?.roles;
-
-		$USER_ROLES = data.user_roles;
-
+	poll();
+	async function poll() {
 		invalidateAll();
-	});
 
-	connection.start().catch((err) => console.error(err.toString()));
 
-	invokesocket();
-	function invokesocket() {
-		connection.invoke('SendProjectUpdate');
-
-		setTimeout(invokesocket, 5000);
+		setTimeout(poll, 5000);
 
 	}
-
-	onDestroy(async () => {
-		console.warn('ending connection');
-		await connection.stop();
-	});
 
 	$: currentRoute = $page.url.pathname;
 </script>

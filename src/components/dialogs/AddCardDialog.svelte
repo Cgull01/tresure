@@ -22,6 +22,7 @@
 	let dialogRef: HTMLDialogElement;
 
 	let selectedMembers: Array<number> = [];
+
 	let isSelectingMembers: boolean = false;
 
 	$: card = <ICard>{};
