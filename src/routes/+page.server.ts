@@ -10,9 +10,16 @@ export async function load({ cookies }: any) {
 			}
 		});
 
-		const data = await response.json();
+		if(response.ok)
+		{
+			const data = await response.json();
+			return { user: data };
+		}
+		else
+		{
+			return {user: null}
+		}
 
-		return { user: data };
 	} else {
 		return { user: null };
 	}

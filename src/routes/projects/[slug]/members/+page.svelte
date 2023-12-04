@@ -6,10 +6,8 @@
 	import type { IProject, IUser } from '$lib/types';
 	import { USER_ROLES } from '../stores';
 
-	export let data: { project: IProject; user: IUser, user_roles: any };
+	export let data: { project: IProject; user: IUser; user_roles: any };
 	export let form: ActionData;
-
-	console.warn($USER_ROLES.admin);
 
 </script>
 
@@ -48,31 +46,31 @@
 							<span class="font-semibold">{member.user.email}</span>
 						</div>
 
-						{#if $USER_ROLES.admin}
-							<form class="flex gap-3 flex-2" method="POST" use:enhance action="?/editMember">
-								<input type="hidden" name="member_id" value={member.id} />
-								<button
-									name="role_admin"
-									title="task editing privileges"
-									value="0"
-									class="w-full px-2 border border-primary dark:border-primary_dark text-text_primary {member
-										.roles.admin === true
-										? 'bg-accent dark:bg-accent_dark dark:text-text_secondary_dark'
-										: 'bg-background dark:bg-background_dark dark:text-text_primary_dark'}">
-									Admin
-								</button>
-								<button
-									name="role_taskMaster"
-									title="task editing privileges"
-									value="2"
-									class="w-full px-2 border border-primary dark:border-primary_dark text-text_primary {member
-										.roles.taskMaster === true
-										? 'bg-accent dark:bg-accent_dark dark:text-text_secondary_dark'
-										: 'bg-background dark:bg-background_dark dark:text-text_primary_dark'}">
-									TaskMaster
-								</button>
-							</form>
-						{/if}
+						<form class="flex gap-3 flex-2" method="POST" use:enhance action="?/editMember">
+							<input type="hidden" name="member_id" value={member.id} />
+							<button
+								name="role_admin"
+								title="task editing privileges"
+								value="0"
+								class="w-full px-2 border {$USER_ROLES.admin
+									? 'border-primary dark:border-primary_dark'
+									: 'border-none'} text-text_primary {member.roles.admin === true
+									? 'bg-accent dark:bg-accent_dark dark:text-text_secondary_dark'
+									: 'bg-background dark:bg-background_dark dark:text-text_primary_dark'}">
+								Admin
+							</button>
+							<button
+								name="role_taskMaster"
+								title="task editing privileges"
+								value="2"
+								class="w-full px-2 border {$USER_ROLES.admin
+									? 'border-primary dark:border-primary_dark'
+									: 'border-none'} text-text_primary {member.roles.taskMaster === true
+									? 'bg-accent dark:bg-accent_dark dark:text-text_secondary_dark'
+									: 'bg-background dark:bg-background_dark dark:text-text_primary_dark'}">
+								TaskMaster
+							</button>
+						</form>
 					</div>
 				{/each}
 			</div>
@@ -112,9 +110,16 @@
 						<input type="hidden" name="user_id" class="form_input w-full" value={form.user.id} />
 						<p>{form.user.email}</p>
 						<p>{form.user.username}</p>
-						<button
-							class="ml-auto bg-secondary hover:bg-primary dark:hover:bg-primary_dark hover:text-secondary dark:hover:text-secondary_dark dark:bg-secondary_dark p-1 active:scale-95"
-							>ADD</button>
+						{#if data.project.members.some((m) => m.user.email === form?.user.email)}
+							<div
+								class="ml-auto p-1">
+								( Already Invited )
+							</div>
+						{:else}
+							<button
+								class="ml-auto bg-secondary hover:bg-primary dark:hover:bg-primary_dark hover:text-secondary dark:hover:text-secondary_dark dark:bg-secondary_dark p-1 active:scale-95"
+								>ADD</button>
+						{/if}
 					</form>
 				{/if}
 			</div>

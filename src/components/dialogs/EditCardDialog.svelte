@@ -112,8 +112,8 @@
 						{card.id ? 'Edit Task' : 'New Task'}
 					</h1>
 					{#if card.id}
-						<form method="POST" action="?/deleteTask" use:enhance>
-							<input class="hidden" type="number" value={card.id} id="task_id" />
+						<form method="POST" action="?/deleteTask" use:enhance={()=> closeDialog()}>
+							<input class="hidden" type="number" value={card.id} name="task_id" />
 							<button
 								name="deleteTask"
 								tabindex="0"

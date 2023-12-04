@@ -15,7 +15,7 @@
 	import { onDestroy } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
 
-	export let data: { project: IProject; user: IUser, user_roles: any};
+	export let data: { project: IProject; user: IUser; user_roles: any };
 
 	let editProjectTitle = false;
 	let title_input: string;
@@ -23,12 +23,13 @@
 	$USER_ROLES = data.user_roles;
 
 	poll();
+
 	async function poll() {
 		invalidateAll();
 
+		$USER_ROLES = data.user_roles;
 
 		setTimeout(poll, 5000);
-
 	}
 
 	$: currentRoute = $page.url.pathname;
