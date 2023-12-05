@@ -3,6 +3,7 @@ import { formatData } from '$lib/functions';
 import type { Roles, ICard, IColumn, IMember, IProject, UserRoles } from '$lib/types';
 import { error, json, redirect } from '@sveltejs/kit';
 
+// card drag event
 export async function PUT({ request, cookies }: any) {
 	const card = await request.json();
 
@@ -35,24 +36,25 @@ export async function PUT({ request, cookies }: any) {
 
 	return json(response);
 }
-export async function POST({ request, cookies }: any) {
-	const jwt = cookies.get('jwt');
+/// for websockets, not needed at the moment
+// export async function POST({ request, cookies }: any) {
+// 	const jwt = cookies.get('jwt');
 
-	const response = await fetch(`${API_URL}/Project/UpdateProject`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-			Authorization: `Bearer ${jwt}`
-		}
-	});
+// 	const response = await fetch(`${API_URL}/Project/UpdateProject`, {
+// 		method: 'POST',
+// 		headers: {
+// 			'Content-Type': 'application/json',
+// 			Accept: 'application/json',
+// 			Authorization: `Bearer ${jwt}`
+// 		}
+// 	});
 
-	if (!response.ok) {
-		throw new Error(`HTTP error! status: ${response.status}`);
-	}
+// 	if (!response.ok) {
+// 		throw new Error(`HTTP error! status: ${response.status}`);
+// 	}
 
-	return json(response);
-}
+// 	return json(response);
+// }
 
 export async function GET({ url, cookies }: any) {
 	const jwt = cookies.get('jwt');
@@ -77,7 +79,6 @@ export async function GET({ url, cookies }: any) {
 				Authorization: `Bearer ${jwt}`
 			}
 		});
-
 
 		const user = await userJson.json();
 

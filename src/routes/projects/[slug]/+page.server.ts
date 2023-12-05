@@ -82,24 +82,6 @@ export const actions = {
 
 		return { success: true };
 	},
-	deleteProject: async ({ request, cookies }: any) => {
-		const data = await request.formData();
-
-		const project_id = data.get('project_id');
-
-		const jwt = cookies.get('jwt');
-
-		const response = await fetch(`${API_URL}/Project/${project_id}`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				Authorization: `Bearer ${jwt}`
-			}
-		});
-
-		throw redirect(303, '/projects');
-	},
 	addColumn: async ({ request, cookies }: any) => {
 		const data = await request.formData();
 

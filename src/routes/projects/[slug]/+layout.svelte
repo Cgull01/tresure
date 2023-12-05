@@ -50,7 +50,7 @@
 					<div class="flex items-center">
 						<form
 							method="POST"
-							action="?/editProject"
+							action={`/projects/${data.project.id}?/editProject`}
 							use:enhance={() => {
 								editProjectTitle = false;
 								data.project.title = title_input;
