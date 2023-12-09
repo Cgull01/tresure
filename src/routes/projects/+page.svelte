@@ -16,8 +16,7 @@
 </svelte:head>
 
 <NewProjectDialog />
-<div
-	class="flex flex-col h-screen m-auto background-pattern bg-radial-gradient dark:bg-radial-gradient_dark">
+<div class="flex flex-col h-screen m-auto background-pattern bg-light dark:bg-dark">
 	<NavBar>
 		<div class="text-xl text-text_primary dark:text-text_primary_dark flex gap-4 items-center">
 			<h2 class="">{data.user.username}</h2>

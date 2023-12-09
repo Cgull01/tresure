@@ -7,12 +7,8 @@ export default {
 	theme: {
 		extend: {
 			backgroundImage: {
-				'radial-gradient': 'radial-gradient(circle,  #6fb0aa, var(--accent-color))',
-				'radial-gradient_dark': 'radial-gradient(circle, #09233b, #131126)',
-				'polkadot-pattern':
-					'radial-gradient(var(--background-color) 2px, transparent 2px), radial-gradient(var(--background-color) 4px, var(--secondary-color) 2px)',
-				'polkadot-pattern_dark':
-					'radial-gradient(var(--background-color-dark) 2px, transparent 2px), radial-gradient(var(--background-color-dark) 2px, var(--secondary-color-dark) 2px)'
+				'light': 'linear-gradient(to right, #8c5cfc, #6A82FB);',
+				'dark': 'linear-gradient(to right, #070d23, #070d23);'
 			},
 			colors: {
 				text_primary: 'var(--text-primary-color)',

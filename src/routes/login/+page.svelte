@@ -7,9 +7,9 @@
 	export let form;
 </script>
 
-<div class="w-full h-full bg-radial-gradient dark:bg-radial-gradient_dark">
+<div class="w-full h-full bg-light dark:bg-dark">
 	<NavBar />
-	<div class="w-full h-max py-52 flex flex-col items-center gap-6 justify-center">
+	<div class="w-full h-max absolute top-1/4 flex flex-col items-center gap-6 justify-center">
 		<Container title="Login">
 			<LoginForm {form} />
 		</Container>
