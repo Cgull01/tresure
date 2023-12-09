@@ -24,7 +24,7 @@ export async function PUT({ request, cookies }: any) {
 		columnId: card.columnId
 	};
 
-	const response = await fetch(`${API_URL}/Card/${card.id}`, {
+	const response = await fetch(`${API_URL}/api/Card/${card.id}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export async function GET({ url, cookies }: any) {
 	const slug = url.searchParams.get('project');
 
 	if (jwt) {
-		const response = await fetch(`${API_URL}/Project/${slug}`, {
+		const response = await fetch(`${API_URL}/api/Project/${slug}`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`
 			}
@@ -74,7 +74,7 @@ export async function GET({ url, cookies }: any) {
 
 		if (!data) return error(422, 'Failed to Process project data');
 
-		const userJson = await fetch(`${API_URL}/currentUser`, {
+		const userJson = await fetch(`${API_URL}/api/currentUser`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`
 			}
@@ -85,8 +85,7 @@ export async function GET({ url, cookies }: any) {
 		const user_member = data.members.find((m: IMember) => m.user.username === user.username);
 		const user_memberId = user_member?.id;
 
-
-		return json({ project: data, user: { ...user, member_id: user_memberId }});
+		return json({ project: data, user: { ...user, member_id: user_memberId } });
 	}
 
 	throw redirect(308, '/login');

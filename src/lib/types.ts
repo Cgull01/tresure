@@ -45,7 +45,7 @@ export interface IRole {
 export interface IMember {
 	id: number;
 	userid: string;
-	roles: UserRoles| any;
+	roles: UserRoles | any;
 	user: IUser;
 }
 
@@ -61,5 +61,5 @@ export interface ICard {
 	creationDate?: Date;
 	completionDate?: Date;
 	approvalDate?: Date;
-	assignedMembers?: {id: number, username?: string}[];
+	assignedMembers?: { id: number; username?: string }[];
 }

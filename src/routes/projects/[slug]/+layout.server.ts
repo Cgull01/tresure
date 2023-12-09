@@ -10,11 +10,12 @@ export async function load({ params, fetch }: any) {
 		method: 'GET'
 	});
 
-	const data:{project: IProject, user: IUser, user_roles: any} = await res.json();
+	const data: { project: IProject; user: IUser; user_roles: any } = await res.json();
 
 	data.project = formatData(data.project);
-	data.user_roles = data.project.members.find((member) => member.user.email === data.user.email)?.roles;
+	data.user_roles = data.project.members.find(
+		(member) => member.user.email === data.user.email
+	)?.roles;
 
 	return data;
 }
-

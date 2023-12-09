@@ -2,7 +2,6 @@
 	import type { ITag } from '$lib/types';
 	import { createEventDispatcher, onDestroy } from 'svelte';
 	import IconColors from '../Icons/Icon_colors.svelte';
-	import IconCheck from '../Icons/Icon_check.svelte';
 
 	const TAG_COLORS = [
 		'red-700',
@@ -15,7 +14,7 @@
 		'indigo-700'
 	];
 
-	let icon_color: string = TAG_COLORS[0];
+	export let tag: ITag;
 
 	let color_dropdown_visible = false;
 	let dropdown_element: HTMLElement;
@@ -41,7 +40,7 @@
 	on:click|stopPropagation={() => {
 		color_dropdown_visible = !color_dropdown_visible;
 	}}>
-	<IconColors styles="fill-{icon_color} w-6 h-6 group group-active:scale-110" />
+	<IconColors styles="fill-{tag.color} w-6 h-6 group group-active:scale-110" />
 </button>
 {#if color_dropdown_visible}
 	<div class="absolute mt-8" bind:this={dropdown_element}>
@@ -53,7 +52,7 @@
 					class={`rounded-full w-6 h-6 bg-${color} hover:scale-95 cursor-pointer`}
 					on:click={() => {
 						dispatch('colorSelect', color);
-						icon_color = color;
+						tag.color = color;
 					}} />
 			{/each}
 		</div>

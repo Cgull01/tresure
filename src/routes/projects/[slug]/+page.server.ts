@@ -23,7 +23,7 @@ export const actions = {
 			columnId: task_json.columnId
 		};
 
-		const response = await fetch(`${API_URL}/Card`, {
+		const response = await fetch(`${API_URL}/api/Card`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export const actions = {
 		const jwt = cookies.get('jwt');
 
 		try {
-			await fetch(`${API_URL}/Card/${task_id}`, {
+			await fetch(`${API_URL}/api/Card/${task_id}`, {
 				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export const actions = {
 			return fail(400, { project_title, message: 'Missing Project Title' });
 
 		const response = await fetch(
-			`${API_URL}/Project/${params.slug}?projectTitle=${project_title}`,
+			`${API_URL}/api/Project/${params.slug}?projectTitle=${project_title}`,
 			{
 				method: 'PUT',
 				headers: {
@@ -89,7 +89,7 @@ export const actions = {
 
 		const jwt = cookies.get('jwt');
 
-		const response = await fetch(`${API_URL}/Column?project_id=${project_id}`, {
+		const response = await fetch(`${API_URL}/api/Column?project_id=${project_id}`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ export const actions = {
 			columnId: card_json.columnId
 		};
 
-		const response = await fetch(`${API_URL}/Card/${parseData.id}`, {
+		const response = await fetch(`${API_URL}/api/Card/${parseData.id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -151,7 +151,7 @@ export const actions = {
 			position: column_position
 		};
 
-		const response = await fetch(`${API_URL}/Column/${column_id}`, {
+		const response = await fetch(`${API_URL}/api/Column/${column_id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -170,7 +170,7 @@ export const actions = {
 
 		const jwt = cookies.get('jwt');
 
-		const response = await fetch(`${API_URL}/Column/${column_id}`, {
+		const response = await fetch(`${API_URL}/api/Column/${column_id}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',

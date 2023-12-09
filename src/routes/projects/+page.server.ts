@@ -5,13 +5,13 @@ export async function load({ cookies }: any) {
 	const jwt = cookies.get('jwt');
 
 	if (jwt) {
-		const response = await fetch(`${API_URL}/Project`, {
+		const response = await fetch(`${API_URL}/api/Project`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`
 			}
 		});
 
-		const user = await fetch(`${API_URL}/currentUser`, {
+		const user = await fetch(`${API_URL}/api/currentUser`, {
 			headers: {
 				Authorization: `Bearer ${jwt}`
 			}
@@ -20,7 +20,6 @@ export async function load({ cookies }: any) {
 		if (response.ok && user.ok) {
 			const project_data = await response.json();
 			const user_data = await user.json();
-
 
 			return { projects: project_data, user: user_data };
 		} else {
@@ -38,7 +37,7 @@ export const actions = {
 
 		const jwt = cookies.get('jwt');
 
-		const response = await fetch(`${API_URL}/Project`, {
+		const response = await fetch(`${API_URL}/api/Project`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -56,7 +55,7 @@ export const actions = {
 
 		const jwt = cookies.get('jwt');
 
-		const response = await fetch(`${API_URL}/Project/${project_id}`, {
+		const response = await fetch(`${API_URL}/api/Project/${project_id}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
@@ -65,11 +64,10 @@ export const actions = {
 			}
 		});
 
-
 		if (response.ok) {
 			return { success: true };
 		} else {
-			return fail(500)
+			return fail(500);
 		}
 	}
 };

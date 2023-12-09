@@ -172,14 +172,12 @@
 			<i class="text-accent font-semibold dark:text-accent_dark"
 				>Completed {pad(card.approvalDate.getMonth() + 1)}/{pad(card.approvalDate.getDate())}</i>
 		{:else if card.completionDate}
-
 			<p class="text-accent font-semibold dark:text-accent_dark">
 				Waiting approval {pad(card.completionDate.getMonth() + 1)}/{pad(
 					card.completionDate.getDate()
 				)}
 			</p>
 		{:else if card.dueDate}
-
 			<div class="flex">
 				<IconClock />
 				<span>{pad(card.dueDate.getMonth() + 1)}/{pad(card.dueDate.getDate())}</span>

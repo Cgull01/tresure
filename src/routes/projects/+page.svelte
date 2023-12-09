@@ -1,22 +1,14 @@
 <script lang="ts">
 	import logout from '$lib/functions';
-	import type { IProject, IUser } from '$lib/types';
-	import type { List } from 'postcss/lib/list';
+	import type { IUser } from '$lib/types';
 	import IconLogout from '../../Icons/Icon_logout.svelte';
 	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import NavBar from '../../components/NavBar.svelte';
-	import PlusButton from '../../components/PlusButton.svelte';
 	import NewProjectDialog from '../../components/dialogs/NewProjectDialog.svelte';
-	import type { PageData } from './$types';
-	import { DIALOG_MANAGER, USER_ROLES } from './[slug]/stores';
-	import { enhance } from '$app/forms';
-	import ContextMenu from '../../components/ContextMenu.svelte';
-	import IconTrash from '../../Icons/Icon_trash.svelte';
+	import { DIALOG_MANAGER } from './[slug]/stores';
 	import ProjectTitleCard from '../../components/ProjectTitleCard.svelte';
 
 	export let data: { projects: Iterable<any>; user: IUser };
-
-
 </script>
 
 <svelte:head>
@@ -50,8 +42,8 @@
 			<div
 				class="flex flex-col p-3 pb-48 bg-background dark:bg-background_dark text-text_primary dark:text-text_primary_dark">
 				{#each data.projects as project}
-				<ProjectTitleCard project = {{id: project.id, title: project.title, userMember : project.userAsMember}}/>
-
+					<ProjectTitleCard
+						project={{ id: project.id, title: project.title, userMember: project.userAsMember }} />
 				{/each}
 			</div>
 		</div>

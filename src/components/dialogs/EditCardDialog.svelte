@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getContext, onDestroy } from 'svelte';
+	import { getContext } from 'svelte';
 	import type { ITag, ICard, IProject } from '$lib/types';
 	import {
 		DIALOG_MANAGER,
@@ -8,8 +8,6 @@
 	} from '../../routes/projects/[slug]/stores';
 	import { enhance } from '$app/forms';
 	import IconTrash from '../../Icons/Icon_trash.svelte';
-	import IconColors from '../../Icons/Icon_colors.svelte';
-	import PlusButton from '../PlusButton.svelte';
 	import { invalidateAll } from '$app/navigation';
 	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import { pad } from '$lib/functions';
@@ -21,7 +19,7 @@
 
 	let dialogRef: HTMLDialogElement;
 
-	let tagInput: ITag = { tag: '', color: "primary" };
+	let tagInput: ITag = { tag: '', color: 'red-700' };
 
 	let selectedMembers: Array<Number> = [];
 	let isSelectingMembers: boolean = false;
@@ -43,11 +41,9 @@
 		dialogRef.showModal();
 	}
 
-	SELECTED_TASK.subscribe((task)=> {
-		if(task)
-		selectedMembers = task.assignedMembers?.map(m => m.id) || [];
-
-	})
+	SELECTED_TASK.subscribe((task) => {
+		if (task) selectedMembers = task.assignedMembers?.map((m) => m.id) || [];
+	});
 
 	function addTag() {
 		if (tagInput.tag.length === 0) return;
@@ -67,7 +63,7 @@
 		$DIALOG_MANAGER.editTask_dialog = false;
 		$SELECTED_TASK = null;
 
-		tagInput = { tag: '', color: "primary" };
+		tagInput = { tag: '', color: 'primary' };
 		isSelectingMembers = false;
 	}
 
@@ -112,7 +108,7 @@
 						{card.id ? 'Edit Task' : 'New Task'}
 					</h1>
 					{#if card.id}
-						<form method="POST" action="?/deleteTask" use:enhance={()=> closeDialog()}>
+						<form method="POST" action="?/deleteTask" use:enhance={() => closeDialog()}>
 							<input class="hidden" type="number" value={card.id} name="task_id" />
 							<button
 								name="deleteTask"
@@ -155,7 +151,7 @@
 							</div>
 							<div class="flex flex-row w-full items-center gap-1">
 								<div class="flex flex-row">
-									<ColorSelect on:colorSelect={onSelectTagColor} />
+									<ColorSelect on:colorSelect={onSelectTagColor} bind:tag={tagInput} />
 								</div>
 								<input
 									id="tag"

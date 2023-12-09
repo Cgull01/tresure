@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	export let visible = false;
 
 	let contextMenu: HTMLElement;
@@ -14,21 +13,18 @@
 	function handleContextmenu(event: MouseEvent) {
 		contextMenuPosition = { x: event.clientX, y: event.clientY };
 	}
-
 </script>
 
 <svelte:window
 	on:contextmenu||preventDefault={handleContextmenu}
 	on:click={handleClickOutside}
-	on:scroll={() => (visible = false)}
-/>
+	on:scroll={() => (visible = false)} />
 
 {#if visible}
 	<div
 		bind:this={contextMenu}
 		class="fixed z-50"
-		style="top: {contextMenuPosition.y}px; left: {contextMenuPosition.x}px;"
-	>
-		<slot/>
+		style="top: {contextMenuPosition.y}px; left: {contextMenuPosition.x}px;">
+		<slot />
 	</div>
 {/if}

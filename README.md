@@ -32,7 +32,7 @@ protected column api route, add collumn action, put column action, remove column
 - fetch request feedback
 - project deletion, exiting project
 - prevent from inviting same user. (prevented in front-end)
- < here
+  < here
 - expired cookies mess things up, unauthorized gives 500 (optional [fatal])
 - socket reload does not refresh roles
 - websockets - not needed at the moment

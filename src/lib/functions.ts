@@ -81,3 +81,5 @@ export function formatData(data: IProject) {
 
 	return data;
 }
+
+export function connectWebSocket() {}

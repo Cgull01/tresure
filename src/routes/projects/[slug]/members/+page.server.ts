@@ -14,7 +14,7 @@ export const actions = {
 			const email = data.get('user_email');
 			const jwt = cookies.get('jwt');
 
-			const response = await fetch(`${API_URL}/user?userEmail=${email}`, {
+			const response = await fetch(`${API_URL}/api/user?userEmail=${email}`, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export const actions = {
 				projectId: params.slug
 			};
 
-			const response = await fetch(`${API_URL}/Member`, {
+			const response = await fetch(`${API_URL}/api/Member`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ export const actions = {
 			role: newRole
 		};
 
-		const response = await fetch(`${API_URL}/Member/${member_id}`, {
+		const response = await fetch(`${API_URL}/api/Member/${member_id}`, {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ export const actions = {
 		const member_id = data.get('member_id');
 		const jwt = cookies.get('jwt');
 
-		const response = await fetch(`${API_URL}/Member/${member_id}`, {
+		const response = await fetch(`${API_URL}/api/Member/${member_id}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
@@ -102,6 +102,5 @@ export const actions = {
 		});
 
 		return { success: true };
-	},
-
+	}
 };

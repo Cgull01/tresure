@@ -7,7 +7,6 @@
 </svelte:head>
 
 <div
-	class="flex flex-row gap-4 background-pattern bg-background dark:bg-background_dark w-full h-full"
->
+	class="flex flex-row gap-4 background-pattern bg-background dark:bg-background_dark w-full h-full">
 	asdf
 </div>

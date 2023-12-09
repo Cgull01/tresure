@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getContext, onDestroy } from 'svelte';
+	import { getContext } from 'svelte';
 	import type { ITag, ICard, IProject } from '$lib/types';
 	import {
 		DIALOG_MANAGER,
@@ -7,9 +7,6 @@
 		SELECTED_COLUMN
 	} from '../../routes/projects/[slug]/stores';
 	import { enhance } from '$app/forms';
-	import IconTrash from '../../Icons/Icon_trash.svelte';
-	import IconColors from '../../Icons/Icon_colors.svelte';
-	import PlusButton from '../PlusButton.svelte';
 	import { invalidateAll } from '$app/navigation';
 	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import ColorSelect from '../ColorSelect.svelte';
@@ -18,7 +15,7 @@
 	const projectContext: IProject = getContext('project');
 	const projectMembers = projectContext.members;
 
-	let tagInput: ITag = { tag: '', color: 'primary' };
+	let tagInput: ITag = { tag: '', color: 'red-700' };
 	let dialogRef: HTMLDialogElement;
 
 	let selectedMembers: Array<number> = [];
@@ -117,7 +114,7 @@
 							</div>
 							<div class="flex flex-row w-full items-center gap-1">
 								<div class="flex flex-row">
-									<ColorSelect on:colorSelect={selectTagColor} />
+									<ColorSelect on:colorSelect={selectTagColor} bind:tag={tagInput} />
 								</div>
 								<input
 									id="tag"

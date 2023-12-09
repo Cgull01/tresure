@@ -1,5 +1,4 @@
 <script>
-	import IconLogo from '../../Icons/Icon_Logo.svelte';
 	import IconDirectionRight from '../../Icons/Icon_direction_right.svelte';
 	import Container from '../../components/Container.svelte';
 	import LoginForm from '../../components/LoginForm.svelte';
@@ -16,8 +15,7 @@
 		</Container>
 		<a
 			href="/register"
-			class="select-none text-text_primary dark:text-text_primary_dark flex bg-background dark:bg-background_dark flex-row cursor-pointer mt-6 border border-primary dark:border-primary_dark px-3 hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors group"
-		>
+			class="select-none text-text_primary dark:text-text_primary_dark flex bg-background dark:bg-background_dark flex-row cursor-pointer mt-6 border border-primary dark:border-primary_dark px-3 hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors group">
 			Create an account <IconDirectionRight />
 		</a>
 	</div>

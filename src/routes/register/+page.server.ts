@@ -21,7 +21,7 @@ export const actions = {
 			repeatPassword: repeat_password
 		};
 
-		const response = await fetch(`${API_URL}/register`, {
+		const response = await fetch(`${API_URL}/api/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
