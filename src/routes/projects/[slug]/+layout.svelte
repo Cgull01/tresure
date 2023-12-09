@@ -1,36 +1,40 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { page } from '$app/stores';
-	import logout, { formatData } from '$lib/functions';
+	import logout from '$lib/functions';
 	import type { IProject, IUser } from '$lib/types';
-	import { HubConnectionBuilder } from '@microsoft/signalr';
 	import IconTresureLogo from '../../../Icons/Icon_TresureLogo.svelte';
 	import IconCheck from '../../../Icons/Icon_check.svelte';
 	import IconDirectionLeft from '../../../Icons/Icon_direction_left.svelte';
-	import IconEdit from '../../../Icons/Icon_edit.svelte';
 	import IconLogout from '../../../Icons/Icon_logout.svelte';
 	import IconPlus from '../../../Icons/Icon_plus.svelte';
 	import ThemeButton from '../../../components/ThemeButton.svelte';
-	import { DIALOG_MANAGER, USER_ROLES } from './stores';
+	import { USER_ROLES } from './stores';
 	import { onDestroy } from 'svelte';
 	import { invalidateAll } from '$app/navigation';
+	import { WebSocketManager } from '$lib/WebSocketManager';
+	import type { ActionData } from './$types';
 
 	export let data: { project: IProject; user: IUser; user_roles: any };
+	export let form: ActionData;
 
 	let editProjectTitle = false;
 	let title_input: string;
+	let wsManager = WebSocketManager.getInstance();
 
 	$USER_ROLES = data.user_roles;
 
-	poll();
-
-	async function poll() {
+	wsManager.on('ReceiveProjectUpdate', async () => {
 		invalidateAll();
+	});
 
-		$USER_ROLES = data.user_roles;
-
-		setTimeout(poll, 5000);
+	$: if (form?.success) {
+		wsManager.invoke('SendProjectUpdate');
 	}
+
+	onDestroy(async () => {
+		wsManager.stop();
+	});
 
 	$: currentRoute = $page.url.pathname;
 </script>

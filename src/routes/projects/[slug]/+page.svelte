@@ -1,32 +1,40 @@
 <script lang="ts">
 	import Column from '../../../components/Column.svelte';
 	import { PROJECT_ID } from './stores';
-	import { invalidateAll } from '$app/navigation';
 	import type { IProject, IUser } from '$lib/types';
-	import { createEventDispatcher, setContext } from 'svelte';
+	import { setContext } from 'svelte';
 	import AddCardDialog from '../../../components/dialogs/AddCardDialog.svelte';
 	import EditCardDialog from '../../../components/dialogs/EditCardDialog.svelte';
 	import ContextMenu from '../../../components/ContextMenu.svelte';
 	import { enhance } from '$app/forms';
 	import IconPlus from '../../../Icons/Icon_plus.svelte';
+	import type { ActionData } from './$types';
+	import { WebSocketManager } from '$lib/WebSocketManager';
 
 	export let data: { project: IProject; user: IUser };
+	export let form: ActionData;
+
 	let showContext: boolean = false;
+	let wsManager = WebSocketManager.getInstance();
 
 	$PROJECT_ID = data.project.id;
 
-	setContext('project_id', data.project.id);
-	setContext('project', data.project);
-	setContext('user_memberId', data.user.member_id);
-
 	async function refreshColumns() {
-		invalidateAll();
+		wsManager.invoke('SendProjectUpdate');
 	}
 
 	function handleAddColumn({ formData }: any) {
 		formData.set('project_id', data.project.id);
 		showContext = false;
 	}
+
+	$: if (form?.success) {
+		wsManager.invoke('SendProjectUpdate');
+	}
+
+	setContext('project_id', data.project.id);
+	setContext('project', data.project);
+	setContext('user_memberId', data.user.member_id);
 </script>
 
 <svelte:head>

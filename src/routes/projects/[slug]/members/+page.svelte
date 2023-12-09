@@ -5,10 +5,16 @@
 	import type { ActionData } from './$types';
 	import type { IProject, IUser } from '$lib/types';
 	import { USER_ROLES } from '../stores';
+	import { WebSocketManager } from '$lib/WebSocketManager';
 
 	export let data: { project: IProject; user: IUser; user_roles: any };
 	export let form: ActionData;
 
+	let wsManager = WebSocketManager.getInstance();
+
+	$: if (form?.success) {
+		wsManager.invoke('SendProjectUpdate');
+	}
 </script>
 
 <svelte:head>
@@ -111,10 +117,7 @@
 						<p>{form.user.email}</p>
 						<p>{form.user.username}</p>
 						{#if data.project.members.some((m) => m.user.email === form?.user.email)}
-							<div
-								class="ml-auto p-1">
-								( Already Invited )
-							</div>
+							<div class="ml-auto p-1">( Already Invited )</div>
 						{:else}
 							<button
 								class="ml-auto bg-secondary hover:bg-primary dark:hover:bg-primary_dark hover:text-secondary dark:hover:text-secondary_dark dark:bg-secondary_dark p-1 active:scale-95"
