@@ -63,7 +63,7 @@
 		$DIALOG_MANAGER.editTask_dialog = false;
 		$SELECTED_TASK = null;
 
-		tagInput = { tag: '', color: 'primary' };
+		tagInput = { tag: '', color: 'red-700' };
 		isSelectingMembers = false;
 	}
 

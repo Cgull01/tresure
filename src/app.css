@@ -37,3 +37,23 @@
 	border: 1px inset orange;
 
   } */
+
+  @layer utilities {
+	.scrollbar::-webkit-scrollbar {
+	  width: 20px;
+	  height: 20px;
+	}
+
+	.scrollbar::-webkit-scrollbar-track {
+	  background: var(--background-color);
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb {
+	  background: #939292;
+	  border: 1px solid var(--primary-color);
+	}
+
+	.scrollbar::-webkit-scrollbar-thumb:hover {
+	  background: #46737f;
+	}
+  }

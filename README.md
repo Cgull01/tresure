@@ -32,8 +32,9 @@ protected column api route, add collumn action, put column action, remove column
 - fetch request feedback
 - project deletion, exiting project
 - prevent from inviting same user. (prevented in front-end)
-- websockets  < here
-- fill with data
+- websockets
+- guide page
+- fill with data < here
 - expired cookies mess things up, unauthorized gives 500 (optional [fatal])
 - leave project (optional)
 - merge back editcarddialog with addcarddialog because too much repetition

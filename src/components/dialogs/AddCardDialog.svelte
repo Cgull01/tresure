@@ -46,7 +46,7 @@
 		$DIALOG_MANAGER.createTask_dialog = false;
 		$SELECTED_TASK = null;
 
-		tagInput = { tag: '', color: 'primary' };
+		tagInput = { tag: '', color: 'red-700' };
 		card.tags = [];
 		selectedMembers = [];
 		isSelectingMembers = false;
@@ -198,7 +198,7 @@
 						</fieldset>
 					</div>
 				{/if}
-				<button class="form_button"> Save changes</button>
+				<button class="form_button"> Add New Task</button>
 			</form>
 		</div>
 	</dialog>
