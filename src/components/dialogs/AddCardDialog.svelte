@@ -6,7 +6,7 @@
 		SELECTED_TASK,
 		SELECTED_COLUMN
 	} from '../../routes/projects/[slug]/stores';
-	import { enhance } from '$app/forms';
+	import { applyAction, deserialize, enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import IconPlus from '../../Icons/Icon_plus.svelte';
 	import ColorSelect from '../ColorSelect.svelte';
@@ -17,6 +17,7 @@
 
 	let tagInput: ITag = { tag: '', color: 'red-700' };
 	let dialogRef: HTMLDialogElement;
+	let projectId = getContext('project_id')
 
 	let selectedMembers: Array<number> = [];
 
@@ -63,7 +64,6 @@
 		formData.set('task', JSON.stringify({ ...card, columnId: $SELECTED_COLUMN?.id }));
 
 		closeDialog();
-		invalidateAll();
 	}
 
 	function selectTagColor(e: CustomEvent) {
@@ -198,7 +198,7 @@
 						</fieldset>
 					</div>
 				{/if}
-				<button class="form_button"> Add New Task</button>
+				<button class="form_button">Add New Task</button>
 			</form>
 		</div>
 	</dialog>

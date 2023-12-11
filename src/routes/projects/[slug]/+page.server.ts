@@ -33,7 +33,12 @@ export const actions = {
 			body: JSON.stringify(parseData)
 		});
 
-		return { sucess: true };
+		if (!response.ok) {
+			let ans = await response.json();
+
+			console.warn(ans);
+		}
+		return { success: true };
 	},
 
 	deleteTask: async ({ request, cookies }: any) => {

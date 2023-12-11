@@ -24,6 +24,7 @@
 	let selectedMembers: Array<Number> = [];
 	let isSelectingMembers: boolean = false;
 	let formatedDueDate: any;
+	let projectId = getContext('project_id')
 
 	$: card = <ICard>$SELECTED_TASK;
 
@@ -78,15 +79,9 @@
 
 		card.dueDate = new Date(date_input);
 
-		formData.set('task', JSON.stringify(card));
-
-		await fetch(`/api`, {
-			method: 'PUT',
-			body: JSON.stringify({ ...card, columnId: $SELECTED_COLUMN!.id })
-		});
+		formData.set('task', JSON.stringify({...card, columnId: $SELECTED_COLUMN!.id}));
 
 		closeDialog();
-		invalidateAll();
 	}
 
 	function onSelectTagColor(e: CustomEvent) {
@@ -108,7 +103,7 @@
 						{card.id ? 'Edit Task' : 'New Task'}
 					</h1>
 					{#if card.id}
-						<form method="POST" action="?/deleteTask" use:enhance={() => closeDialog()}>
+						<form method="POST" action="?/deleteTask" use:enhance={closeDialog}>
 							<input class="hidden" type="number" value={card.id} name="task_id" />
 							<button
 								name="deleteTask"
@@ -126,7 +121,7 @@
 					<IconPlus styles="rotate-45 m-auto" />
 				</button>
 			</div>
-			<form class="form" method="POST" action="?/createTask" use:enhance={onSubmitDialog}>
+			<form class="form" method="POST" action="?/editTask" use:enhance={onSubmitDialog}>
 				{#if !isSelectingMembers}
 					<div class="flex flex-col sm:flex-row px-3 py-3 justify-between">
 						<div class="flex flex-col gap-2 w-full">

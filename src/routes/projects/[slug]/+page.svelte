@@ -29,6 +29,7 @@
 	}
 
 	$: if (form?.success) {
+		console.warn(form);
 		wsManager.invoke('SendProjectUpdate');
 	}
 

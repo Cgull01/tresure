@@ -13,6 +13,7 @@
 	let wsManager = WebSocketManager.getInstance();
 
 	$: if (form?.success) {
+		console.warn(form);
 		wsManager.invoke('SendProjectUpdate');
 	}
 </script>

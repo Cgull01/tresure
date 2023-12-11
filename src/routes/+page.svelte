@@ -66,22 +66,22 @@
 			{:else}
 			<a
 			href="/register"
-			class="bg-secondary dark:bg-secondary_dark text-text_primary dark:text-text_primary_dark font-semibold w-max px-16 py-3 text-3xl border-spacing-5 border-primary dark:border-primary_dark border hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors">
+			class="bg-secondary italic dark:bg-secondary_dark text-text_primary dark:text-text_primary_dark font-semibold w-max px-16 py-3 text-3xl border-spacing-5 border-primary dark:border-primary_dark border hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors">
 			Start Now
 		</a>
 		{/if}
 		<a
 			href="/guide"
-			class="bg-secondary mt-6 dark:bg-secondary_dark text-text_primary dark:text-text_primary_dark font-semibold w-max px-12 py-1 text-3xl border-spacing-5 border-primary dark:border-primary_dark border hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors">
+			class="bg-secondary text-xl mt-6 dark:bg-secondary_dark text-text_primary dark:text-text_primary_dark font-semibold w-max px-12 py-1 border-spacing-5 border-primary dark:border-primary_dark border hover:bg-primary dark:hover:bg-primary_dark hover:text-text_secondary dark:hover:text-text_secondary_dark transition-colors">
 			Read a guide
 		</a>
 
 		<img
 			src="/images/projectExample.png"
 			alt="Example of a Tresure Project"
-			class="py-8 sm:block hidden px-6 pt-24 sm:w-2/3" />
+			class="pt-16 sm:block hidden px-6 sm:w-2/3" />
 
-		<a href="#about" class="absolute bottom-12">
+		<a href="#about" class="">
 			<IconChevronDown styles="h-12 w-12 text-primary dark:text-primary_dark" />
 		</a>
 	</div>
