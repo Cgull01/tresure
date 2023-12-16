@@ -24,6 +24,7 @@ export async function PUT({ request, cookies }: any) {
 		columnId: card.columnId
 	};
 
+
 	const response = await fetch(`${API_URL}/api/Card/${card.id}`, {
 		method: 'PUT',
 		headers: {
@@ -36,25 +37,6 @@ export async function PUT({ request, cookies }: any) {
 
 	return json(response);
 }
-/// for websockets, not needed at the moment
-// export async function POST({ request, cookies }: any) {
-// 	const jwt = cookies.get('jwt');
-
-// 	const response = await fetch(`${API_URL}/Project/UpdateProject`, {
-// 		method: 'POST',
-// 		headers: {
-// 			'Content-Type': 'application/json',
-// 			Accept: 'application/json',
-// 			Authorization: `Bearer ${jwt}`
-// 		}
-// 	});
-
-// 	if (!response.ok) {
-// 		throw new Error(`HTTP error! status: ${response.status}`);
-// 	}
-
-// 	return json(response);
-// }
 
 export async function GET({ url, cookies }: any) {
 	const jwt = cookies.get('jwt');

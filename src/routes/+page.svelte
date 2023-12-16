@@ -41,6 +41,7 @@
 	</NavBar>
 	<div class="w-full h-full flex flex-col px-16 items-center pt-16">
 		<div class="text-center">
+			<IconTresure styles="w-80 m-auto fill-primary dark:fill-primary_dark"/>
 			<h1
 				class="text-3xl font-extrabold pt-6 sm:px-16 text-text_primary dark:text-text_primary_dark sm:text-5xl break-words">
 				Project management made <span

@@ -17,7 +17,6 @@
 
 	let tagInput: ITag = { tag: '', color: 'red-700' };
 	let dialogRef: HTMLDialogElement;
-	let projectId = getContext('project_id')
 
 	let selectedMembers: Array<number> = [];
 
