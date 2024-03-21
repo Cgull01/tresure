@@ -6,7 +6,9 @@
 
 	export let form;
 </script>
-
+<svelte:head>
+	<title>TRESURE - login</title>
+</svelte:head>
 <div class="w-full h-full bg-light dark:bg-dark">
 	<NavBar />
 	<div class="w-full h-max absolute top-1/4 flex flex-col items-center gap-6 justify-center">

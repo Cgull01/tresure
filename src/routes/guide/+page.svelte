@@ -7,6 +7,10 @@
 	import ThemeButton from '../../components/ThemeButton.svelte';
 </script>
 
+<svelte:head>
+	<title>TRESURE - guide</title>
+</svelte:head>
+
 <div class="w-full h-screen overflow-y-hidden">
 	<nav
 		class="relative px-6 text-text_primary dark:text-text_primary_dark flex flex-row py-3 items-center justify-between w-full bg-background dark:bg-background_dark border-b border-primary dark:border-primary_dark">

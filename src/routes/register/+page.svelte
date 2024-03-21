@@ -8,7 +8,9 @@
 
 	export let form;
 </script>
-
+<svelte:head>
+	<title>TRESURE - sign up</title>
+</svelte:head>
 <div class="h-full w-full bg-light dark:bg-dark">
 	<NavBar />
 

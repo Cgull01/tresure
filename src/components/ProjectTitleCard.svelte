@@ -28,14 +28,14 @@
 			</button>
 		</form>
 	{:else}
-		<form action="?/removeMember" method="POST" use:enhance class="select-none">
-			<input type="hidden" name="member_id" value={project.id} />
+		<!-- <form action="?/removeMember" method="POST" use:enhance class="select-none">
+			<input type="hidden" name="member_id" value={project.userMember.find((m)=> m.userId === )} />
 			<button
 				title="Click to delete project"
 				class="cursor-pointer active:scale-90 stroke-secondary hover:scale-110 flex group/delete">
 				<IconPlus styles="rotate-45 group/delete-active:scale-90" />
 			</button>
-		</form>
+		</form> -->
 	{/if}
 </div>
 

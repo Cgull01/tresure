@@ -12,6 +12,10 @@
 	export let data: any;
 </script>
 
+<svelte:head>
+	<title>TRESURE</title>
+</svelte:head>
+
 <div class="w-full h-screen overflow-y-hidden">
 	<NavBar>
 		{#if data.user !== null}

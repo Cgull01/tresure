@@ -69,5 +69,21 @@ export const actions = {
 		} else {
 			return fail(500);
 		}
+	},
+	removeMember: async ({ request, cookies }: any) => {
+		const data = await request.formData();
+		const member_id = data.get('member_id');
+		const jwt = cookies.get('jwt');
+
+		const response = await fetch(`${API_URL}/api/Member/${member_id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${jwt}`
+			}
+		});
+
+		return { success: true };
 	}
 };
